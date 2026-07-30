@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import elephantImage from "../assets/animal-library/animals/savanna_3_elephant.jpg";
 import farmBackground from "../assets/animal-library/backgrounds/farm_bg.jpg";
 import riverLakeBackground from "../assets/animal-library/backgrounds/river_lake_bg.jpg";
 import savannaBackground from "../assets/animal-library/backgrounds/savanna_bg.jpg";
+import { animals } from "../data/animals/animals";
 import { animalGameCopy, type HabitatId } from "../modules/animal-game/gameCopy";
 import { useI18n } from "../shared/i18n";
 
@@ -19,6 +19,8 @@ export function AnimalsPage() {
   const { language } = useI18n();
   const [selectedHabitat, setSelectedHabitat] = useState<HabitatId | null>(null);
   const copy = animalGameCopy[language];
+  const elephantAnimal = animals.find((animal) => animal.id === "elephant");
+  const animalImage = elephantAnimal?.image ?? "";
   const hasCorrectAnswer = selectedHabitat === correctHabitat;
 
   function chooseHabitat(habitat: HabitatId) {
@@ -38,7 +40,7 @@ export function AnimalsPage() {
       </div>
 
       <section aria-labelledby="animal-game-question" className="animal-game__question">
-        <img alt={copy.animalName} className="animal-game__animal" src={elephantImage} />
+        <img alt={copy.animalName} className="animal-game__animal" src={animalImage} />
         <h2 id="animal-game-question">{copy.question}</h2>
       </section>
 

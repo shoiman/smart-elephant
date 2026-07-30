@@ -6,10 +6,10 @@ export function HomePage() {
   const { t } = useI18n();
   const navigate = useNavigate();
 
-  //return ;
   return(
     <div className="home-page">
       <h1>{t("home.title")}</h1>
+      <p>"слон works"</p>
       <button className="go-button" onClick={() => navigate("/games")}>
         Go
       </button>
