@@ -1,0 +1,82 @@
+Smart Elephant Vision Update – Hebrew Speech & Language Development
+Platform
+
+Project Vision
+
+Smart Elephant evolves from a general educational game into a speech and
+language development platform for preschool children (ages 2–5), with
+the first release focused on Hebrew.
+
+Mission
+
+Help children develop vocabulary, comprehension, sentence building, and
+speaking skills through interactive play with animated animals.
+
+Target Audience
+
+-   Hebrew-speaking preschool children.
+-   Bilingual families (Hebrew + Russian, English, etc.).
+-   Parents looking for daily educational activities.
+-   Speech therapists and early childhood educators (future direction).
+
+Core Learning Flow
+
+1.  Look – the child sees an object or animal.
+2.  Listen – the child hears the correct pronunciation.
+3.  Identify – the child selects the correct object.
+4.  Repeat – the child repeats the word.
+5.  Build – the child forms simple phrases.
+6.  Play – the child uses learned vocabulary in interactive games.
+
+Planned Learning Modules
+
+1.  Animals
+    -   Animal names
+    -   Sounds
+    -   Colors
+    -   Sizes
+    -   Actions
+2.  First Words
+    -   Family
+    -   Food
+    -   Everyday objects
+    -   Basic requests
+3.  Verbs
+    -   Eat
+    -   Sleep
+    -   Run
+    -   Jump
+    -   Drink
+4.  Sentence Builder
+    -   Two-word phrases
+    -   Three-word sentences
+    -   Question & answer exercises
+5.  Speech Practice (Future)
+    -   Voice recognition
+    -   Pronunciation feedback
+    -   AI-assisted speech practice
+
+Technical Vision
+
+The platform should remain modular and scalable: - React + TypeScript
+frontend - Spring Boot backend - Progress tracking - Authentication -
+Audio management - Analytics - Future AI services - Future microservice
+architecture
+
+Why This Direction?
+
+This vision differentiates Smart Elephant from a simple educational
+game. It becomes a real EdTech product that combines learning, speech
+development, and modern software engineering.
+
+Portfolio Value
+
+Smart Elephant demonstrates: - Full Stack development - Modern frontend
+architecture - Backend APIs - Scalable system design - Educational
+product thinking - Potential AI integration
+
+Long-Term Goal
+
+Build a high-quality Hebrew speech development platform that can later
+expand to additional languages, educational modules, and AI-powered
+learning features.

@@ -1,0 +1,88 @@
+Smart Elephant — Art Style Guide
+
+Vision
+
+Smart Elephant should feel like an interactive animated movie rather
+than a traditional educational application.
+
+The visual style must be warm, magical, emotionally engaging, and
+instantly recognizable. Every screen should look as if it belongs to the
+same animated universe.
+
+Art Direction
+
+The project follows a high-quality 3D animated illustration style
+inspired by modern family animation films.
+
+Core Characteristics
+
+-   Warm and friendly characters
+-   Large expressive eyes
+-   Soft, rounded shapes
+-   Rich facial expressions
+-   High-quality digital illustrations
+-   Cinematic lighting
+-   Cozy, storybook atmosphere
+-   Vibrant yet natural color palette
+-   Detailed environments without visual clutter
+
+Characters
+
+All characters should be: - Cute and lovable - Emotionally expressive -
+Consistent throughout the project - Instantly recognizable
+
+Every animal should have its own personality expressed through facial
+expressions and body language.
+
+Environments
+
+The world should include magical locations such as: - Forest - Ocean -
+Savannah - Desert - Mountains - Jungle - Arctic
+
+Each environment should have its own colors, lighting, and atmosphere
+while maintaining the same artistic style.
+
+Game Screens
+
+During gameplay, the educational content must always remain the main
+focus.
+
+The background should: - Support the atmosphere - Be slightly less
+detailed than cinematic scenes - Never distract the child from the
+learning task
+
+The primary focus should always be: 1. The animal 2. The question 3. The
+answer choices
+
+UI Integration
+
+Buttons, cards, dialogs, and popups should naturally blend into the
+artwork instead of feeling like separate interface elements.
+
+The UI should feel soft, playful, and premium.
+
+Animation Style
+
+Animations should be: - Smooth - Playful - Friendly - Rewarding
+
+Characters should feel alive through subtle idle animations, blinking,
+smiling, and gentle movement.
+
+Emotional Experience
+
+Children should feel that they are entering a magical world where
+friendly animals help them learn.
+
+Learning should feel like playing an animated adventure.
+
+Consistency
+
+The same visual style must be used across: - Mini-games - Learning
+videos - Welcome screen - Characters - Animals - Habitats - Menus -
+Popups - Rewards - Animations - Future educational content
+
+Design Goal
+
+The ultimate goal is for Smart Elephant to have its own unique visual
+identity—warm, memorable, cinematic, and instantly recognizable by both
+children and parents.

@@ -1,0 +1,16 @@
+.animal {
+    position: absolute;
+
+    left: 75%;
+    bottom: 500px;
+
+    transform: translateX(-50%);
+}
+
+.animal-image {
+    width: clamp(260px, 24vw, 420px);
+    height: auto;
+
+    user-select: none;
+    pointer-events: none;
+}

@@ -1,0 +1,16 @@
+.host {
+    position: absolute;
+
+    left: 25%;
+    bottom: 500px;
+
+    transform: translateX(-50%);
+}
+
+.host-image {
+    width: clamp(240px, 22vw, 360px);
+    height: auto;
+
+    user-select: none;
+    pointer-events: none;
+}

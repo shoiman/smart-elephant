@@ -1,0 +1,112 @@
+Smart Elephant – Project Blueprint 2.2 (Multilingual Foundation)
+
+Project Overview
+
+Smart Elephant is an AI-powered speech and language learning platform
+for preschool children (ages 2–5).
+
+The application is designed as a multilingual platform from day one.
+
+MVP Languages
+
+-   🇮🇱 Hebrew (he)
+-   🇷🇺 Russian (ru)
+-   🇺🇦 Ukrainian (uk)
+
+All three languages have equal priority and share the same features,
+lessons, and game mechanics.
+
+Mission
+
+Help preschool children develop speech and language skills through
+interactive games, animation, and AI-powered learning.
+
+Product Vision
+
+A single educational platform where every lesson, word, image, and audio
+recording can be presented in multiple languages without changing the
+application logic.
+
+Target Audience
+
+-   Hebrew-speaking families
+-   Russian-speaking families
+-   Ukrainian-speaking families
+-   Bilingual and multilingual families
+-   Parents of children aged 2–5
+-   Future: speech therapists and educators
+
+Localization Strategy
+
+The system is language-first.
+
+Every entity supports translations: - Lessons - Words - Categories -
+Animals - Audio - UI - Rewards - Notifications
+
+No language-specific logic should exist in the codebase.
+
+Core Learning Journey
+
+1.  Look
+2.  Listen
+3.  Identify
+4.  Repeat
+5.  Build
+6.  Play
+
+MVP Modules
+
+-   Animals
+-   First Words
+-   Verbs & Actions
+-   Sentence Builder
+-   Parent Dashboard
+
+Technical Architecture
+
+Frontend - React - TypeScript - Vite - React Router - i18n
+
+Backend - Spring Boot - REST API - JWT Authentication - PostgreSQL
+
+Development Strategy
+
+Frontend implementation should increasingly leverage AI-assisted
+development tools.
+
+Engineering effort should primarily focus on backend architecture,
+business logic, multilingual design, AI integration, infrastructure, and
+production scalability.
+
+Data Model
+
+Languages - id - code - name - direction (LTR / RTL) - isActive
+
+Word - id - category - image
+
+WordTranslation - wordId - languageCode - text - pronunciation - audio
+
+Lesson - id - difficulty
+
+LessonTranslation - lessonId - languageCode - title - description -
+audio
+
+Main Features
+
+-   Animated educational games
+-   Native audio for every supported language
+-   Progress tracking
+-   Gamification
+-   Parent dashboard
+-   Scalable multilingual architecture
+
+Future Languages
+
+The architecture allows adding new languages without changing business
+logic. Possible future languages: - English - Arabic - French -
+Spanish - German
+
+Long-Term Vision
+
+Build Smart Elephant into a global multilingual EdTech platform for
+speech and language development, beginning with Hebrew, Russian, and
+Ukrainian and expanding to additional languages over time.

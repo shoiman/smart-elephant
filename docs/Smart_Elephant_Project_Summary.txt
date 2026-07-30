@@ -1,0 +1,95 @@
+Smart Elephant Project Summary
+
+Smart Elephant is a long-term educational platform designed as a
+production-quality application while serving as a learning project for
+modern Full Stack development.
+
+Vision
+
+The project aims to create an immersive educational experience where
+children learn through interactive games, animated characters, and
+engaging storytelling. The application should feel like an animated
+adventure rather than a traditional learning app.
+
+Architecture
+
+The system follows a “Modular Monolith First” approach. It begins as a
+single frontend and backend while being organized into independent
+business domains that can later evolve into microservices with minimal
+refactoring.
+
+Planned technology stack: - Frontend: React, TypeScript, Vite, Tailwind
+CSS, shadcn/ui - Backend: Java, Spring Boot - Future technologies:
+Docker, Redis, Kafka, API Gateway
+
+Core Domains
+
+-   Learning
+-   Animals
+-   Habitats
+-   Games
+-   Rewards
+-   Progress
+-   Media
+-   Identity
+
+Design Principles
+
+The visual identity is based on warm, cinematic 3D animated
+illustrations with expressive animal characters, magical environments,
+and a consistent premium user experience. Educational content always
+remains the primary focus.
+
+Development Philosophy
+
+The project is developed as if it were a real commercial product. Every
+decision prioritizes maintainability, scalability, clean architecture,
+and production-quality code while gradually introducing more advanced
+architectural patterns.
+
+Learning Philosophy
+
+The project intentionally prioritizes engineering skills that provide
+the greatest long-term value.
+
+Modern AI tools significantly accelerate frontend implementation.
+
+Therefore, Smart Elephant places increasing emphasis on backend
+engineering, AI integration, cloud infrastructure, scalable
+architecture, and system design while maintaining sufficient frontend
+expertise for production development.
+
+Engineering Vision
+
+Smart Elephant is intentionally developed as both:
+
+- a production-quality educational platform;
+- a structured Full Stack Engineering roadmap.
+
+Every architectural decision should represent a real-world evolution of the product.
+
+The project is designed to demonstrate professional software engineering practices including backend development, cloud infrastructure, scalability, and system design.
+
+Long-Term Goal
+
+Smart Elephant should evolve from a modular monolith into a scalable
+microservice platform without major rewrites, while simultaneously
+helping the developer master modern Full Stack engineering,
+architectural thinking, and production-ready development practices.
+
+Portfolio Goal
+
+By the completion of the project the developer should have practical experience with:
+
+- React
+- TypeScript
+- Spring Boot
+- PostgreSQL
+- Docker
+- Redis
+- Kafka
+- AWS
+- Kubernetes
+- System Design
+
+through one coherent production application.

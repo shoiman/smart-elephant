@@ -1,0 +1,168 @@
+{
+  "backgrounds": {
+    "farm": "backgrounds/farm_bg.jpg",
+    "forest": "backgrounds/forest_bg.jpg",
+    "river_lake": "backgrounds/river_lake_bg.jpg",
+    "savanna": "backgrounds/savanna_bg.jpg",
+    "sea": "backgrounds/sea_bg.jpg",
+    "sky": "backgrounds/sky_bg.jpg"
+  },
+  "animals": {
+    "farm": [
+      {
+        "name": "cow",
+        "file": "animals/farm_1_cow.jpg"
+      },
+      {
+        "name": "pig",
+        "file": "animals/farm_2_pig.jpg"
+      },
+      {
+        "name": "sheep",
+        "file": "animals/farm_3_sheep.jpg"
+      },
+      {
+        "name": "chicken",
+        "file": "animals/farm_4_chicken.jpg"
+      },
+      {
+        "name": "foal",
+        "file": "animals/farm_5_foal.jpg"
+      },
+      {
+        "name": "goat",
+        "file": "animals/farm_6_goat.jpg"
+      }
+    ],
+    "forest": [
+      {
+        "name": "moose",
+        "file": "animals/forest_1_moose.jpg"
+      },
+      {
+        "name": "hedgehog",
+        "file": "animals/forest_2_hedgehog.jpg"
+      },
+      {
+        "name": "squirrel",
+        "file": "animals/forest_3_squirrel.jpg"
+      },
+      {
+        "name": "rabbit",
+        "file": "animals/forest_4_rabbit.jpg"
+      },
+      {
+        "name": "wolf",
+        "file": "animals/forest_5_wolf.jpg"
+      },
+      {
+        "name": "boar",
+        "file": "animals/forest_6_boar.jpg"
+      }
+    ],
+    "river_lake": [
+      {
+        "name": "crocodile",
+        "file": "animals/river_lake_1_crocodile.jpg"
+      },
+      {
+        "name": "frog",
+        "file": "animals/river_lake_2_frog.jpg"
+      },
+      {
+        "name": "duck",
+        "file": "animals/river_lake_3_duck.jpg"
+      },
+      {
+        "name": "swan",
+        "file": "animals/river_lake_4_swan.jpg"
+      },
+      {
+        "name": "heron",
+        "file": "animals/river_lake_5_heron.jpg"
+      },
+      {
+        "name": "catfish",
+        "file": "animals/river_lake_6_catfish.jpg"
+      }
+    ],
+    "savanna": [
+      {
+        "name": "lion",
+        "file": "animals/savanna_1_lion.jpg"
+      },
+      {
+        "name": "giraffe",
+        "file": "animals/savanna_2_giraffe.jpg"
+      },
+      {
+        "name": "elephant",
+        "file": "animals/savanna_3_elephant.jpg"
+      },
+      {
+        "name": "hippo",
+        "file": "animals/savanna_4_hippo.jpg"
+      },
+      {
+        "name": "zebra",
+        "file": "animals/savanna_5_zebra.jpg"
+      },
+      {
+        "name": "leopard",
+        "file": "animals/savanna_6_leopard.jpg"
+      }
+    ],
+    "sea": [
+      {
+        "name": "dolphin",
+        "file": "animals/sea_1_dolphin.jpg"
+      },
+      {
+        "name": "shark",
+        "file": "animals/sea_2_shark.jpg"
+      },
+      {
+        "name": "whale",
+        "file": "animals/sea_3_whale.jpg"
+      },
+      {
+        "name": "crab",
+        "file": "animals/sea_4_crab.jpg"
+      },
+      {
+        "name": "tuna",
+        "file": "animals/sea_5_tuna.jpg"
+      },
+      {
+        "name": "octopus",
+        "file": "animals/sea_6_octopus.jpg"
+      }
+    ],
+    "sky": [
+      {
+        "name": "owl",
+        "file": "animals/sky_1_owl.jpg"
+      },
+      {
+        "name": "parrot",
+        "file": "animals/sky_2_parrot.jpg"
+      },
+      {
+        "name": "raven",
+        "file": "animals/sky_3_raven.jpg"
+      },
+      {
+        "name": "bird",
+        "file": "animals/sky_4_bird.jpg"
+      },
+      {
+        "name": "butterfly",
+        "file": "animals/sky_5_butterfly.jpg"
+      },
+      {
+        "name": "bee",
+        "file": "animals/sky_6_bee.jpg"
+      }
+    ]
+  }
+}

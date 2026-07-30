@@ -1,0 +1,131 @@
+Smart Elephant – Engineering Roadmap
+
+Purpose
+
+Smart Elephant is both:
+
+1. A production-quality educational platform.
+2. An AI Full Stack Engineering roadmap.
+
+The roadmap intentionally prioritizes backend engineering,
+infrastructure, AI integration, and system design while using AI tools
+to accelerate repetitive frontend development.
+
+Core Principle
+
+Never introduce infrastructure "just to learn it".
+Every technology must solve a real product problem.
+
+==================================================
+Phase 1 — Frontend Foundation
+==================================================
+Product:
+- React application
+- Routing
+- Reusable UI components
+- Responsive layout
+- Multilingual UI
+
+Learning:
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Component Composition
+- Props
+- State Management
+- React Router
+- Accessibility
+
+==================================================
+Phase 2 — Backend Foundation
+==================================================
+Product:
+- REST API
+- Authentication
+- Parent Dashboard
+- Progress Tracking
+
+Learning:
+- Spring Boot
+- REST
+- JPA
+- Hibernate
+- Validation
+- JWT
+- Testing
+
+==================================================
+Phase 3 — Production Backend
+==================================================
+Product:
+- Fast loading of animals and lessons
+- Reliable configuration
+- Better observability
+
+Learning:
+- Docker
+- Docker Compose
+- Redis
+- Logging
+- Monitoring
+- Configuration
+- Caching
+
+==================================================
+Phase 4 — Event Driven Platform
+==================================================
+Product:
+- Progress events
+- Reward system
+- Analytics
+- Notifications
+
+Learning:
+- Kafka
+- Event Driven Architecture
+- Asynchronous Processing
+- Message Brokers
+
+==================================================
+Phase 5 — Cloud Deployment
+==================================================
+Product:
+- Cloud-hosted application
+- Image & audio storage
+- CI/CD
+
+Learning:
+- AWS EC2
+- AWS S3
+- AWS RDS
+- CloudFront
+- GitHub Actions
+
+==================================================
+Phase 6 — Scalable Architecture
+==================================================
+Product:
+- Scalable Smart Elephant platform
+
+Learning:
+- System Design
+- API Gateway
+- Microservices
+- Kubernetes
+- Horizontal Scaling
+- Performance Optimization
+
+Learning Time Allocation
+
+Approximately:
+
+20% Frontend Engineering
+
+80% Backend, AI Engineering, Cloud, Infrastructure and Architecture
+
+Interview Goal
+
+By completing this roadmap, the developer will gain practical experience
+with modern Full Stack technologies through one coherent production
+project instead of isolated tutorials.
