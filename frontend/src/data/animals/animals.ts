@@ -1,23 +1,43 @@
 import type { Animal } from "../../types/animal";
-import catfishImage from "../../assets/animal-library/animals/river_lake_6_catfish.jpg";
-import crocodileImage from "../../assets/animal-library/animals/river_lake_1_crocodile.jpg";
-import duckImage from "../../assets/animal-library/animals/river_lake_3_duck.jpg";
-//import elephantImage from "../../assets/animal-library/animals/savanna_3_elephant.jpg";
 import elephantImage from "../../assets/animals/elephant.png";
-import foalImage from "../../assets/animal-library/animals/farm_5_foal.jpg";
-import frogImage from "../../assets/animal-library/animals/river_lake_2_frog.jpg";
-import giraffeImage from "../../assets/animal-library/animals/savanna_2_giraffe.jpg";
-import goatImage from "../../assets/animal-library/animals/farm_6_goat.jpg";
-import heronImage from "../../assets/animal-library/animals/river_lake_5_heron.jpg";
-import hippoImage from "../../assets/animal-library/animals/savanna_4_hippo.jpg";
-import leopardImage from "../../assets/animal-library/animals/savanna_6_leopard.jpg";
-import lionImage from "../../assets/animal-library/animals/savanna_1_lion.jpg";
-import pigImage from "../../assets/animal-library/animals/farm_2_pig.jpg";
-import sheepImage from "../../assets/animal-library/animals/farm_3_sheep.jpg";
-import swanImage from "../../assets/animal-library/animals/river_lake_4_swan.jpg";
-import zebraImage from "../../assets/animal-library/animals/savanna_5_zebra.jpg";
-import chickenImage from "../../assets/animal-library/animals/farm_4_chicken.jpg";
-import cowImage from "../../assets/animal-library/animals/farm_1_cow.jpg";
+import lionImage from "../../assets/animals/lion.png";
+import giraffeImage from "../../assets/animals/giraffe.png";
+import hippoImage from "../../assets/animals/hippo.png";
+import zebraImage from "../../assets/animals/zebra.png";
+import leopardImage from "../../assets/animals/leopard.png";
+import cowImage from "../../assets/animals/cow.png";
+import pigImage from "../../assets/animals/pig.png";
+import sheepImage from "../../assets/animals/sheep.png";
+import chickenImage from "../../assets/animals/chicken.png";
+import foalImage from "../../assets/animals/foal.png";
+import goatImage from "../../assets/animals/goat.png";
+import crocodileImage from "../../assets/animals/crocodile.png";
+import frogImage from "../../assets/animals/frog.png";
+import duckImage from "../../assets/animals/duck.png";
+import swanImage from "../../assets/animals/swan.png";
+import heronImage from "../../assets/animals/heron.png";
+import catfishImage from "../../assets/animals/catfish.png";
+import beeImage from "../../assets/animals/bee.png";
+import birdImage from "../../assets/animals/bird.png";
+import boarImage from "../../assets/animals/boar.png";
+import butterflyImage from "../../assets/animals/butterfly.png";
+import crabImage from "../../assets/animals/crab.png";
+import dolphinImage from "../../assets/animals/dolphin.png";
+import hedgehogImage from "../../assets/animals/hedgehog.png";
+import mooseImage from "../../assets/animals/moose.png";
+import octopusImage from "../../assets/animals/octopus.png";
+import owlImage from "../../assets/animals/owl.png";
+import parrotImage from "../../assets/animals/parrot.png";
+import rabbitImage from "../../assets/animals/rabbit.png";
+import ravenImage from "../../assets/animals/raven.png";
+import sharkImage from "../../assets/animals/shark.png";
+import squirrelImage from "../../assets/animals/squirrel.png";
+import tunaImage from "../../assets/animals/tuna.png";
+import whaleImage from "../../assets/animals/whale.png";
+import wolfImage from "../../assets/animals/wolf.png";
+
+
+
 
 export const animals: Animal[] = [
   {
@@ -127,5 +147,113 @@ export const animals: Animal[] = [
     name: "Catfish",
     image: catfishImage,
     habitat: "riverLake",
+  },
+  {
+    id: "bee",
+    name: "Bee",
+    image: beeImage,
+    habitat: "farm",
+  },
+  {
+    id: "bird",
+    name: "Bird",
+    image: birdImage,
+    habitat: "savanna",
+  },
+  {
+    id: "boar",
+    name: "Boar",
+    image: boarImage,
+    habitat: "savanna",
+  },
+  {
+    id: "butterfly",
+    name: "Butterfly",
+    image: butterflyImage,
+    habitat: "savanna",
+  },
+  {
+    id: "crab",
+    name: "Crab",
+    image: crabImage,
+    habitat: "riverLake",
+  },
+  {
+    id: "dolphin",
+    name: "Dolphin",
+    image: dolphinImage,
+    habitat: "riverLake",
+  },
+  {
+    id: "hedgehog",
+    name: "Hedgehog",
+    image: hedgehogImage,
+    habitat: "farm",
+  },
+  {
+    id: "moose",
+    name: "Moose",
+    image: mooseImage,
+    habitat: "riverLake",
+  },
+  {
+    id: "octopus",
+    name: "Octopus",
+    image: octopusImage,
+    habitat: "riverLake",
+  },
+  {
+    id: "owl",
+    name: "Owl",
+    image: owlImage,
+    habitat: "savanna",
+  },
+  {
+    id: "parrot",
+    name: "Parrot",
+    image: parrotImage,
+    habitat: "savanna",
+  },
+  {
+    id: "rabbit",
+    name: "Rabbit",
+    image: rabbitImage,
+    habitat: "farm",
+  },
+  {
+    id: "raven",
+    name: "Raven",
+    image: ravenImage,
+    habitat: "savanna",
+  },
+  {
+    id: "shark",
+    name: "Shark",
+    image: sharkImage,
+    habitat: "riverLake",
+  },
+  {
+    id: "squirrel",
+    name: "Squirrel",
+    image: squirrelImage,
+    habitat: "farm",
+  },
+  {
+    id: "tuna",
+    name: "Tuna",
+    image: tunaImage,
+    habitat: "riverLake",
+  },
+  {
+    id: "whale",
+    name: "Whale",
+    image: whaleImage,
+    habitat: "riverLake",
+  },
+  {
+    id: "wolf",
+    name: "Wolf",
+    image: wolfImage,
+    habitat: "savanna",
   },
 ];
