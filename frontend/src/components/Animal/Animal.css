@@ -1,16 +1,25 @@
 .animal {
-    position: absolute;
-
-    left: 75%;
-    bottom: 250px;
-
-    transform: translateX(-50%);
+    flex: 0 1 auto;
+    max-width: calc(100vw - 2rem);
+    cursor: pointer;
+    transform: translateY(clamp(2rem, 3vw, 3.5rem));
 }
 
 .animal-image {
-    width: clamp(260px, 24vw, 420px);
+    display: block;
+    width: clamp(12rem, 27vw, 25rem);
+    max-width: 100%;
     height: auto;
-
     user-select: none;
     pointer-events: none;
+}
+
+@media (max-width: 640px) {
+    .animal {
+        transform: translateY(clamp(1.5rem, 7vw, 2.5rem));
+    }
+
+    .animal-image {
+        width: clamp(11rem, 50vw, 16rem);
+    }
 }

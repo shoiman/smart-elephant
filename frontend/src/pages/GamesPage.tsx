@@ -1,7 +1,8 @@
 
 import { useI18n } from "../shared/i18n";
-import {useEffect, useState } from "react";
+import { useState } from "react";
 import SpeechBubble from "../components/SpeechBubble/SpeechBubble";
+import Background from "../components/Background/Background";
 import Host from "../components/Host/Host";
 import Animal from "../components/Animal/Animal";
 import type { Animal as AnimalType } from "../types/animal";
@@ -27,43 +28,34 @@ export function GamesPage() {
 };
 
  const [showSpeechBubble, setShowSpeechBubble] = useState(false);
- const [currentAnimal, setCurrentAnimal] = useState<AnimalType | null>(null);
+ const [currentAnimal] = useState<AnimalType>(() => {
+  const randomIndex = Math.floor(Math.random() * animals.length);
+  return animals[randomIndex];
+ });
 
  const handleAnimalClick = () => {
   setShowSpeechBubble(true);
   playAudio(questionAudio[language]);
 };
 
-const selectRandomAnimal = () => {
-  const randomIndex = Math.floor(Math.random() * animals.length);
-  const randomAnimal = animals[randomIndex];
-  setCurrentAnimal(randomAnimal);
-};
-
-useEffect(() => {
-  selectRandomAnimal();
-}, []);
-
   return (
-     <main className="games-page">
+    <section className="games-page" aria-label={t("app.name")}>
+      <Background />
+      <div className="games-page__scene">
+        <div className="host-container">
+          {showSpeechBubble && (
+            <SpeechBubble text={t("question.whoIsIt")} />
+          )}
 
-      <div className="host-container">
-        {showSpeechBubble && (
-          <SpeechBubble text={t("question.whoIsIt")} />
-        )}
-
-        <Host image={boyImage} />
+          <Host image={boyImage} />
+        </div>
+        <Animal
+          image={currentAnimal.image}
+          onClick={handleAnimalClick}
+        />
       </div>
-        {currentAnimal !== null && (
-          <Animal
-            image={currentAnimal.image}
-            onClick={handleAnimalClick}
-          />
-      )}
-    </main>
+    </section>
   );
 }
 
 export default GamesPage;
-
-

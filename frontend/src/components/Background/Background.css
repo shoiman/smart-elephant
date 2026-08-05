@@ -1,0 +1,19 @@
+.game-background {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+.game-background picture,
+.game-background__art {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.game-background__art {
+  object-fit: cover;
+  object-position: center;
+}

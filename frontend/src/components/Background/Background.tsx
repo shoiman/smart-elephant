@@ -1,26 +1,36 @@
+import meadowDesktop from "../../assets/backgrounds/meadow-desktop.png";
+import meadowMobile from "../../assets/backgrounds/meadow-mobile.png";
+import "./Background.css";
+
+export type BackgroundEnvironment = "meadow";
+
 interface BackgroundProps {
-  title?: string;
-  description?: string;
+  readonly environment?: BackgroundEnvironment;
 }
 
-export function Background({
-  title = "Savanna",
-  description = "A bright and friendly scene for playful lessons.",
-}: BackgroundProps) {
+interface BackgroundArtwork {
+  readonly desktop: string;
+  readonly mobile: string;
+}
+
+const environmentArtwork: Readonly<Record<BackgroundEnvironment, BackgroundArtwork>> = {
+  meadow: {
+    desktop: meadowDesktop,
+    mobile: meadowMobile,
+  },
+};
+
+/** Decorative artwork layer, kept independent from game content and state. */
+export function Background({ environment = "meadow" }: BackgroundProps) {
+  const artwork = environmentArtwork[environment];
+
   return (
-    <section
-      aria-label="game background"
-      style={{
-        padding: "1.25rem",
-        borderRadius: "1rem",
-        background: "linear-gradient(135deg, #fef3c7 0%, #bbf7d0 100%)",
-        boxShadow: "0 10px 25px rgba(0, 0, 0, 0.08)",
-        textAlign: "center",
-      }}
-    >
-      <h2 style={{ margin: "0 0 0.5rem", fontSize: "1.2rem" }}>{title}</h2>
-      <p style={{ margin: 0, color: "#4b5563" }}>{description}</p>
-    </section>
+    <div aria-hidden="true" className="game-background">
+      <picture>
+        <source media="(max-width: 640px)" srcSet={artwork.mobile} />
+        <img alt="" className="game-background__art" src={artwork.desktop} />
+      </picture>
+    </div>
   );
 }
 
