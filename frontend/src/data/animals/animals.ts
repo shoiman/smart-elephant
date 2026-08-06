@@ -24,17 +24,30 @@ import butterflyImage from "../../assets/animals/butterfly.png";
 import crabImage from "../../assets/animals/crab.png";
 import dolphinImage from "../../assets/animals/dolphin.png";
 import hedgehogImage from "../../assets/animals/hedgehog.png";
+import kangarooImage from "../../assets/animals/kangaroo.png";
+import koalaImage from "../../assets/animals/koala.png";
 import mooseImage from "../../assets/animals/moose.png";
 import octopusImage from "../../assets/animals/octopus.png";
+import ostrichImage from "../../assets/animals/ostrich.png";
 import owlImage from "../../assets/animals/owl.png";
 import parrotImage from "../../assets/animals/parrot.png";
 import rabbitImage from "../../assets/animals/rabbit.png";
 import ravenImage from "../../assets/animals/raven.png";
+import rhinoImage from "../../assets/animals/rhino.png";
 import sharkImage from "../../assets/animals/shark.png";
 import squirrelImage from "../../assets/animals/squirrel.png";
+import tigerImage from "../../assets/animals/tiger.png";
 import tunaImage from "../../assets/animals/tuna.png";
 import whaleImage from "../../assets/animals/whale.png";
 import wolfImage from "../../assets/animals/wolf.png";
+import alpacaImage from "../../assets/animals/alpaca.png";
+import antImage from "../../assets/animals/ant.png";
+import dragonflyImage from "../../assets/animals/dragonfly.png";
+import flyImage from "../../assets/animals/fly.png";
+import grasshopperImage from "../../assets/animals/grasshopper.png";
+import ladybugImage from "../../assets/animals/ladybug.png";
+//import waspImage from "../../assets/animals/wasp.png";
+
 
 
 
@@ -256,4 +269,76 @@ export const animals: Animal[] = [
     image: wolfImage,
     habitat: "savanna",
   },
+  {
+    id: "kangaroo",
+    name: "Kangaroo",
+    image: kangarooImage,
+    habitat: "savanna",
+  },
+  {
+    id: "koala",
+    name: "Koala",
+    image: koalaImage,
+    habitat: "savanna",
+  },
+  {
+    id: "ostrich",
+    name: "Ostrich",
+    image: ostrichImage,
+    habitat: "savanna",
+  },
+  {
+    id: "rhino",
+    name: "Rhino",
+    image: rhinoImage,
+    habitat: "savanna",
+  },
+  {
+    id: "tiger",
+    name: "Tiger",
+    image: tigerImage,
+    habitat: "savanna",
+  },
+  {
+    id: "alpaca",
+    name: "Alpaca",
+    image: alpacaImage,
+    habitat: "farm",
+  },
+  {
+    id: "ant",
+    name: "Ant",
+    image: antImage,
+    habitat: "savanna",
+  },
+  {
+    id: "dragonfly",
+    name: "Dragonfly",
+    image: dragonflyImage,
+    habitat: "savanna",
+  },
+  {
+    id: "fly",
+    name: "Fly",
+    image: flyImage,
+    habitat: "savanna",
+  },
+  {
+    id: "grasshopper",
+    name: "Grasshopper",
+    image: grasshopperImage,
+    habitat: "savanna",
+  },
+  {
+    id: "ladybug",
+    name: "Ladybug",
+    image: ladybugImage,
+    habitat: "savanna",
+  },
+  // {
+  //   id: "wasp",
+  //   name: "Wasp",
+  //   image: waspImage,
+  //   habitat: "savanna",
+  // },
 ];

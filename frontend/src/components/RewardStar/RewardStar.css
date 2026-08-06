@@ -1,0 +1,57 @@
+.reward-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 10000;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.reward-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  transform-origin: center;
+  animation: reward-bounce 420ms cubic-bezier(.2,.9,.2,1) both;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.reward-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 6px rgba(255,215,0,0.12);
+}
+
+.reward-button:hover {
+  transform: scale(1.06);
+}
+
+.reward-star {
+  display: inline-block;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  animation: reward-pulse 1400ms ease-in-out 420ms infinite;
+}
+
+@keyframes reward-bounce {
+  0% { transform: translateY(-40px) scale(0.6); opacity: 0 }
+  60% { transform: translateY(8px) scale(1.06); opacity: 1 }
+  100% { transform: translateY(0) scale(1); opacity: 1 }
+}
+
+@keyframes reward-pulse {
+  0% { transform: scale(1) }
+  50% { transform: scale(1.06) }
+  100% { transform: scale(1) }
+}
