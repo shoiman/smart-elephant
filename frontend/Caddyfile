@@ -1,0 +1,16 @@
+# SITE_ADDRESS = ":80" locally, or "game.example.com" on the server (auto HTTPS)
+{$SITE_ADDRESS::80} {
+	encode gzip
+
+	# API requests go to the Spring Boot container
+	handle /api/* {
+		reverse_proxy backend:8080
+	}
+
+	# Everything else is the React app (SPA fallback for React Router)
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+}

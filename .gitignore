@@ -43,3 +43,8 @@ target/
 # Vite
 # =========================
 frontend/dist/
+!.env.example
+
+Claude outputs/
+PHASE_5_*.md
+gamePrompts.ts
