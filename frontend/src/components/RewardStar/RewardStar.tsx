@@ -1,4 +1,3 @@
-import React from 'react'
 import './RewardStar.css'
 
 type RewardStarProps = {
