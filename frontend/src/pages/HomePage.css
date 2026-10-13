@@ -8,15 +8,17 @@
   margin-inline: auto;
 }
 
-/* Hero scene: host + greeting over a softened meadow */
+/* Hero scene: host (start column) and greeting (end column) never overlap */
 .home__scene {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
   grid-template-rows: auto 1fr;
+  column-gap: var(--space-2);
   width: 100%;
   min-height: clamp(340px, 62vh, 470px);
   margin-top: var(--space-2);
+  padding: var(--space-6) var(--space-4) 44px;
   overflow: hidden;
   border-radius: var(--radius-xl);
   isolation: isolate;
@@ -44,29 +46,24 @@
   grid-column: 2;
   grid-row: 1;
   align-self: start;
-  margin: var(--space-8) var(--space-4) 0 0;
-  font-size: clamp(1.0625rem, 0.95rem + 0.8vw, 1.375rem);
+  justify-self: center;
+  width: 100%;
+  max-width: 200px;
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 24px;
+  font-size: clamp(0.9375rem, 0.85rem + 0.4vw, 1.0625rem);
   font-weight: 700;
-  /* Always above the host so the greeting is never covered */
-  position: relative;
-  z-index: 2;
-  max-width: 260px;
-  justify-self: end;
   animation: bubble-in 420ms var(--ease-out) both 120ms;
 }
 
-[dir="rtl"] .home__bubble {
-  margin: var(--space-8) 0 0 var(--space-4);
-}
-
 .home__host {
-  grid-column: 1 / span 2;
+  grid-column: 1;
   grid-row: 1 / span 2;
-  z-index: 1;
   align-self: end;
-  width: min(60%, 300px);
-  margin-bottom: 44px;
-  margin-inline-start: 4%;
+  justify-self: center;
+  width: 100%;
+  max-width: 300px;
   filter: drop-shadow(0 14px 18px rgba(42, 65, 48, 0.16));
 }
 

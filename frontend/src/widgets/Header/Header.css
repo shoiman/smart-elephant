@@ -93,3 +93,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Very narrow phones: keep the brand clear of the language button */
+@media (max-width: 360px) {
+  .app-header__name {
+    font-size: 1.125rem;
+  }
+
+  .app-header__tagline {
+    display: none;
+  }
+}
