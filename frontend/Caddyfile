@@ -4,7 +4,12 @@
 
 	# API requests go to the Spring Boot container
 	handle /api/* {
-		reverse_proxy backend:8080
+		reverse_proxy backend:8080 {
+			# The app and the API share one domain, so these requests are same-origin.
+			# Drop Origin so Spring's CORS filter (localhost-only, for the Vite dev server)
+			# does not reject them with 403.
+			header_up -Origin
+		}
 	}
 
 	# Everything else is the React app (SPA fallback for React Router)

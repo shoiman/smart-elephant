@@ -15,7 +15,8 @@ export class QuestionService {
    */
   static async getNextQuestion(childId: number): Promise<Question> {
     const endpoint = `${ENDPOINTS.questions.next}?childId=${childId}`;
-    return httpClient.get<Question>(endpoint);
+    // Never serve a cached question: every call must return a new one
+    return httpClient.get<Question>(endpoint, { cache: false });
   }
 
   /**
