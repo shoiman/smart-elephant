@@ -1,16 +1,31 @@
 .host {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    transform: none;
-    max-width: 100%;
+  position: relative;
+  flex: none;
 }
 
-.host-image {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    user-select: none;
-    pointer-events: none;
+.host__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Round avatar: crop to the elephant's head */
+.host--avatar {
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  border: 3px solid var(--color-surface);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, #ffffff, var(--color-sage-light));
+  box-shadow: var(--shadow-md);
+}
+
+.host--avatar .host__image {
+  width: 180%;
+  max-width: none;
+  margin-top: -2%;
+  /* Physical offset: the crop targets the head in the artwork, independent of text direction */
+  margin-left: -46%;
 }

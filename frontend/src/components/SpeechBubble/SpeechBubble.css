@@ -1,34 +1,41 @@
 .speech-bubble {
-  align-self: center;
-  color: #7654d9;
-  display: grid;
-  filter: drop-shadow(0 6px 10px rgb(91 91 136 / 12%));
-  font-size: clamp(1rem, 2.4vw, 1.75rem);
-  font-weight: 700;
-  line-height: 1.2;
-  min-width: clamp(12rem, 24vw, 21rem);
   position: relative;
-}
-
-.speech-bubble__shape {
-  grid-area: 1 / 1;
-  height: auto;
-  width: 100%;
-}
-
-.speech-bubble__content {
-  align-items: center;
-  display: flex;
-  gap: clamp(0.55rem, 1.3vw, 1rem);
-  grid-area: 1 / 1;
-  justify-content: center;
-  padding: 0 14% 12% 17%;
+  padding: var(--space-4) var(--space-5);
+  border-radius: 34px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  color: var(--color-ink);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  line-height: 1.25;
   text-align: center;
 }
 
-.speech-bubble__speaker {
-  color: #9b73ff;
-  flex: 0 0 auto;
-  height: clamp(1.65rem, 3vw, 2.5rem);
-  width: clamp(1.65rem, 3vw, 2.5rem);
+.speech-bubble--cream {
+  background: #fbf3e2;
+  box-shadow: 0 6px 18px rgba(120, 96, 52, 0.08);
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 22px;
+  background: inherit;
+}
+
+.speech-bubble--tail-bottom-start::after {
+  bottom: -14px;
+  inset-inline-start: 18%;
+  clip-path: polygon(0 0, 100% 0, 10% 100%);
+}
+
+[dir="rtl"] .speech-bubble--tail-bottom-start::after {
+  clip-path: polygon(0 0, 100% 0, 90% 100%);
+}
+
+.speech-bubble--tail-bottom::after {
+  bottom: -16px;
+  left: calc(50% - 13px);
+  clip-path: polygon(0 0, 100% 0, 45% 100%);
 }

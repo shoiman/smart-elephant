@@ -1,0 +1,77 @@
+/*
+ * Smart Elephant design tokens — "Premium Scandinavian".
+ * Single source of truth for colors, type, radii, shadows and spacing.
+ */
+:root {
+  /* Color palette */
+  --color-bg: #f8f7ef;
+  --color-surface: #ffffff;
+  --color-sage-light: #eaf0e3;
+  --color-sage-soft: #dcead7;
+  --color-green: #43866b;
+  --color-green-hover: #3a765e;
+  --color-green-pressed: #326651;
+  --color-ink: #173e3c;
+  --color-ink-muted: #82958a;
+  --color-apricot-light: #f8e7c9;
+  --color-gold: #f6b94a;
+  --color-border: #e9e9de;
+  --color-rose: #f4d4cc;
+
+  /* Semantic roles */
+  --color-text: var(--color-ink);
+  --color-text-muted: var(--color-ink-muted);
+  --color-primary: var(--color-green);
+  --color-on-primary: #ffffff;
+  --color-success: var(--color-green);
+  --color-success-bg: var(--color-sage-soft);
+  --color-error: #b5654f;
+  --color-error-bg: #fbe9e3;
+  --color-focus: #2f6f57;
+
+  /* Typography — Nunito has no Hebrew glyphs, Rubik covers he/ru/uk */
+  --font-heading: "Nunito", "Rubik", system-ui, sans-serif;
+  --font-body: "Rubik", "Nunito", system-ui, sans-serif;
+
+  --text-display: clamp(2rem, 1.4rem + 2.6vw, 3rem);      /* 32 → 48 px */
+  --text-title: clamp(1.625rem, 1.3rem + 1.4vw, 2.25rem); /* 26 → 36 px */
+  --text-card-title: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); /* 18 → 24 px */
+  --text-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);   /* 16 → 18 px */
+  --text-caption: 0.875rem;                              /* 14 px */
+  --text-small: 0.8125rem;                               /* 13 px */
+
+  /* Radii */
+  --radius-xl: 32px;   /* hero panels */
+  --radius-lg: 26px;   /* large cards, game panels */
+  --radius-md: 20px;   /* small cards, buttons */
+  --radius-sm: 14px;   /* small controls */
+  --radius-pill: 999px;
+
+  /* Shadows — soft, warm, low opacity */
+  --shadow-sm: 0 2px 8px rgba(42, 65, 48, 0.06);
+  --shadow-md: 0 8px 24px rgba(42, 65, 48, 0.07);
+  --shadow-lg: 0 16px 40px rgba(42, 65, 48, 0.1);
+  --shadow-primary: 0 8px 20px rgba(67, 134, 107, 0.28);
+
+  /* Spacing — 4 px grid */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Layout */
+  --content-max: 1120px;
+  --game-max: 560px;
+  --gutter: clamp(16px, 4vw, 32px);
+  --tap-min: 48px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-base: 240ms;
+}

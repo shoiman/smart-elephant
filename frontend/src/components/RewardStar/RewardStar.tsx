@@ -1,22 +1,24 @@
-import './RewardStar.css'
+import { StarIcon } from "../../shared/icons/Icons";
+import "./RewardStar.css";
 
-type RewardStarProps = {
-  onClick: () => void
-  size?: number
-  ariaLabel?: string
+interface RewardStarProps {
+  readonly size?: "md" | "lg";
+  readonly className?: string;
 }
 
-export default function RewardStar({ onClick, size = 160, ariaLabel = 'Reward' }: RewardStarProps) {
+/** Decorative golden reward star with a few small sparkles around it. */
+export default function RewardStar({ size = "lg", className = "" }: RewardStarProps) {
   return (
-    <div className="reward-backdrop" role="dialog" aria-modal="true">
-      <button
-        type="button"
-        className="reward-button"
-        onClick={onClick}
-        aria-label={ariaLabel}
-      >
-        <span className="reward-star" style={{ fontSize: `${size}px` }} aria-hidden="true">⭐</span>
-      </button>
+    <div aria-hidden="true" className={`reward-star reward-star--${size} ${className}`}>
+      <span className="reward-star__glow" />
+      <StarIcon className="reward-star__main" />
+      <StarIcon className="reward-star__spark reward-star__spark--1" />
+      <StarIcon className="reward-star__spark reward-star__spark--2" />
+      <StarIcon className="reward-star__spark reward-star__spark--3" />
+      <StarIcon className="reward-star__spark reward-star__spark--4" />
+      <span className="reward-star__dot reward-star__dot--1" />
+      <span className="reward-star__dot reward-star__dot--2" />
+      <span className="reward-star__dot reward-star__dot--3" />
     </div>
-  )
+  );
 }

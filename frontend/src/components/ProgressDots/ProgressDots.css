@@ -1,0 +1,16 @@
+.progress-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.progress-dots__step {
+  width: clamp(18px, 6vw, 28px);
+  height: 9px;
+  border-radius: var(--radius-pill);
+  background: #e4e9dc;
+  transition: background-color var(--duration-base) ease;
+}
+
+.progress-dots__step--done {
+  background: var(--color-primary);
+}

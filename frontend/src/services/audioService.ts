@@ -17,3 +17,17 @@ export function playAudio(src: string) {
     console.error("Audio playback failed:", error);
   });
 }
+
+const speechLocales: Readonly<Record<string, string>> = { he: "he-IL", ru: "ru-RU", uk: "uk-UA" };
+
+/** Reads text aloud with the browser's built-in speech synthesis (no-op if unsupported). */
+export function speakText(text: string, language: string): boolean {
+  if (!("speechSynthesis" in window) || !text) return false;
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = speechLocales[language] ?? language;
+  utterance.rate = 0.9;
+  window.speechSynthesis.speak(utterance);
+  return true;
+}

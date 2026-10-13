@@ -1,293 +1,375 @@
 /**
- * GamesPage - Main Game Flow
- * 
- * Real backend integration with API:
- * 1. POST /games/start → get gameSessionId
- * 2. GET /questions/next → display real LLM-generated questions
- * 3. POST /questions/answer → validate with LLM
- * 4. POST /games/{id}/end → complete game and update progress
+ * GamesPage - main game flow ("Who is it?").
+ *
+ * Backend flow (unchanged API calls):
+ * 1. POST /games/start → gameSessionId
+ * 2. GET /questions/next → question about an animal
+ * 3. POST /games/answer → backend validates the answer
+ * 4. POST /games/{id}/end → final score, progress update
+ *
+ * The child answers by voice (Web Speech API); a text field is the fallback
+ * when the browser has no speech recognition.
  */
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 
-import { useI18n } from "../shared/i18n";
-import { useState, useEffect } from "react";
-import SpeechBubble from "../components/SpeechBubble/SpeechBubble";
-import Background from "../components/Background/Background";
 import Host from "../components/Host/Host";
-import Animal from "../components/Animal/Animal";
 import RewardStar from "../components/RewardStar/RewardStar";
-import type { Animal as AnimalType } from "../types/animal";
-import { animals } from "../data/animals/animals";
-import boyImage from "../assets/characters/boy_shows.png";
-import { playAudio } from "../services/audioService";
-import {
-  useStartGame,
-  useNextQuestion,
-  useSubmitAnswer,
-  useEndGame,
-} from "../services/useApi";
-
+import SpeechBubble from "../components/SpeechBubble/SpeechBubble";
+import { animalNameKey, findAnimalByName } from "../data/animals/lookup";
+import { useSpeechRecognition, type RecognitionError } from "../hooks/useSpeechRecognition";
+import type { GameEndResponse, Question } from "../services/api-types";
+import { playAudio, speakText } from "../services/audioService";
+import GameService from "../services/gameService";
+import QuestionService from "../services/questionService";
+import { ArrowForwardIcon, MicIcon, RefreshIcon, SendIcon, SpeakerIcon } from "../shared/icons/Icons";
+import { formatMessage, useI18n } from "../shared/i18n";
+import { usePageHeader } from "../shared/layout/PageHeaderContext";
 import "./GamesPage.css";
 
 // Mock child ID - in real app, this would come from user auth/selection
 const MOCK_CHILD_ID = 1;
 const QUESTIONS_PER_GAME = 5;
+// After this many wrong attempts the host says the answer together with the child
+const MAX_ATTEMPTS = 3;
 
-interface GameState {
-  gameSessionId: number | null;
-  currentQuestion: any | null;
-  questionsAnswered: number;
-  correctAnswers: number;
-  isGameActive: boolean;
-  isWaitingForNextQuestion: boolean;
-  showReward: boolean;
-  answerStartTime: number | null;
-}
+type Phase =
+  | "starting"
+  | "loading"
+  | "question"
+  | "checking"
+  | "correct"
+  | "incorrect"
+  | "together"
+  | "finishing"
+  | "finished"
+  | "error";
 
 export function GamesPage() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
+  const speech = useSpeechRecognition(language);
 
-  // Game flow state
-  const [gameState, setGameState] = useState<GameState>({
-    gameSessionId: null,
-    currentQuestion: null,
-    questionsAnswered: 0,
-    correctAnswers: 0,
-    isGameActive: false,
-    isWaitingForNextQuestion: false,
-    showReward: false,
-    answerStartTime: null,
+  const [phase, setPhase] = useState<Phase>("starting");
+  const [sessionId, setSessionId] = useState<number | null>(null);
+  const [question, setQuestion] = useState<Question | null>(null);
+  const [answeredCount, setAnsweredCount] = useState(0);
+  const [attempts, setAttempts] = useState(0);
+  const [heardAnswer, setHeardAnswer] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [typedAnswer, setTypedAnswer] = useState("");
+  const [result, setResult] = useState<GameEndResponse | null>(null);
+  const [retryAction, setRetryAction] = useState<(() => void) | null>(null);
+  const answerStartRef = useRef(0);
+  const hasStartedRef = useRef(false);
+
+  usePageHeader({
+    progress:
+      phase === "finished" ? undefined : { current: Math.min(answeredCount + 1, QUESTIONS_PER_GAME), total: QUESTIONS_PER_GAME },
   });
 
-  // API hooks
-  const startGameHook = useStartGame(MOCK_CHILD_ID, QUESTIONS_PER_GAME);
-  const questionHook = useNextQuestion(gameState.gameSessionId ? MOCK_CHILD_ID : null);
-  const { submitAnswer, loading: isSubmittingAnswer } = useSubmitAnswer();
-  const endGameHook = useEndGame(gameState.gameSessionId);
+  const animal = findAnimalByName(question?.animalName);
+  const nameKey = animalNameKey(question?.animalName);
+  const localizedName = nameKey ? t(nameKey) ?? question?.animalName ?? "" : "";
 
-  // 1. Show a random animal while waiting to start
-  const [displayAnimal, setDisplayAnimal] = useState<AnimalType | null>(null);
-
-  useEffect(() => {
-    // In real app, fetch animals from API
-    // For now, use local data as fallback
-    if (animals && animals.length > 0) {
-      const randomIndex = Math.floor(Math.random() * animals.length);
-      setDisplayAnimal(animals[randomIndex]);
-    }
+  const fail = useCallback((retry: () => void) => {
+    setRetryAction(() => retry);
+    setPhase("error");
   }, []);
 
-  // 2. Start game when user clicks animal
-  const handleGameStart = async () => {
-    if (gameState.isGameActive) return;
+  const askQuestion = useCallback(
+    (nextQuestion: Question) => {
+      if (nextQuestion.audioUrl) playAudio(nextQuestion.audioUrl);
+      else speakText(nextQuestion.questionText, language);
+    },
+    [language],
+  );
 
+  const loadQuestion = useCallback(async () => {
+    setPhase("loading");
     try {
-      const result = await startGameHook.retry();
-      if (result) {
-        setGameState((prev) => ({
-          ...prev,
-          gameSessionId: result.gameSessionId,
-          isGameActive: true,
-          isWaitingForNextQuestion: true,
-        }));
-      }
-    } catch (error) {
-      console.error("Failed to start game:", error);
-      alert(`Error starting game: ${error}`);
-    }
-  };
-
-  // 3. When game starts, fetch first question
-  useEffect(() => {
-    if (gameState.isGameActive && gameState.isWaitingForNextQuestion) {
-      loadNextQuestion();
-    }
-  }, [gameState.isGameActive, gameState.isWaitingForNextQuestion]);
-
-  const loadNextQuestion = async () => {
-    try {
-      const question = await questionHook.retry();
-      if (question) {
-        setGameState((prev) => ({
-          ...prev,
-          currentQuestion: question,
-          isWaitingForNextQuestion: false,
-          answerStartTime: Date.now(),
-        }));
-
-        // Play question audio if available
-        if (question.audioUrl) {
-          playAudio(question.audioUrl);
-        }
-
-        // Display speech bubble
-        // This would trigger visual feedback in a real implementation
-      }
+      const nextQuestion = await QuestionService.getNextQuestion(MOCK_CHILD_ID);
+      setQuestion(nextQuestion);
+      setAttempts(0);
+      setHeardAnswer("");
+      setFeedback("");
+      setTypedAnswer("");
+      answerStartRef.current = Date.now();
+      setPhase("question");
+      askQuestion(nextQuestion);
     } catch (error) {
       console.error("Failed to load question:", error);
+      fail(() => void loadQuestion());
     }
-  };
+  }, [askQuestion, fail]);
 
-  // 4. Handle animal click = submit answer
-  const handleAnimalClick = async () => {
-    if (!gameState.isGameActive || !gameState.currentQuestion || isSubmittingAnswer) {
-      return;
-    }
-
-    // In a real implementation, this would:
-    // - Capture the child's spoken answer (speech recognition)
-    // - Or show an input field for the answer
-    // For now, we'll show a simple prompt (not ideal for 2-6 year olds)
-    
-    const answer = window.prompt(`Question: ${gameState.currentQuestion.questionText}\n\nAnswer:`);
-    if (!answer) return;
-
+  const startGame = useCallback(async () => {
+    setPhase("starting");
+    setAnsweredCount(0);
+    setResult(null);
     try {
-      const responseTimeMs = gameState.answerStartTime
-        ? Date.now() - gameState.answerStartTime
-        : 0;
+      const started = await GameService.startGame({ childId: MOCK_CHILD_ID, numQuestions: QUESTIONS_PER_GAME });
+      setSessionId(started.gameSessionId);
+      await loadQuestion();
+    } catch (error) {
+      console.error("Failed to start game:", error);
+      fail(() => void startGame());
+    }
+  }, [fail, loadQuestion]);
 
-      const result = await submitAnswer({
-        gameSessionId: gameState.gameSessionId!,
-        questionId: gameState.currentQuestion.questionId,
-        animalId: gameState.currentQuestion.animalId,
+  // Start automatically when the page opens (guarded against StrictMode double mount)
+  useEffect(() => {
+    if (hasStartedRef.current) return;
+    hasStartedRef.current = true;
+    void startGame();
+  }, [startGame]);
+
+  function registerWrongAttempt(message: string) {
+    const nextAttempts = attempts + 1;
+    setAttempts(nextAttempts);
+    setFeedback(message);
+    setPhase(nextAttempts >= MAX_ATTEMPTS ? "together" : "incorrect");
+  }
+
+  async function submitAnswer(answer: string) {
+    if (!question || sessionId === null) return;
+    setHeardAnswer(answer);
+    setPhase("checking");
+    try {
+      const response = await QuestionService.submitAnswer({
+        gameSessionId: sessionId,
+        questionId: question.questionId,
+        animalId: question.animalId,
         answer,
-        responseTimeMs,
-        questionText: gameState.currentQuestion.questionText,
-        difficulty: gameState.currentQuestion.difficulty,
+        responseTimeMs: Date.now() - answerStartRef.current,
+        questionText: question.questionText,
+        difficulty: question.difficulty,
       });
-
-      // Update game stats
-      setGameState((prev) => ({
-        ...prev,
-        questionsAnswered: prev.questionsAnswered + 1,
-        correctAnswers: prev.correctAnswers + (result.isCorrect ? 1 : 0),
-        showReward: result.isCorrect,
-      }));
-
-      // Show feedback
-      if (result.explanation) {
-        alert(`${result.isCorrect ? "✓ Correct!" : "✗ Not quite..."}\n\n${result.explanation}`);
-      }
-
-      // Check if game is complete
-      if (gameState.questionsAnswered + 1 >= QUESTIONS_PER_GAME) {
-        // Game is complete, show reward and wait for end
-        setTimeout(() => {
-          handleGameEnd();
-        }, 2000);
+      if (response.isCorrect) {
+        setPhase("correct");
       } else {
-        // Load next question
-        setTimeout(() => {
-          setGameState((prev) => ({
-            ...prev,
-            showReward: false,
-            isWaitingForNextQuestion: true,
-          }));
-        }, 2000);
+        registerWrongAttempt(t("game.incorrect"));
       }
     } catch (error) {
       console.error("Failed to submit answer:", error);
-      alert(`Error submitting answer: ${error}`);
+      fail(() => void submitAnswer(answer));
     }
-  };
+  }
 
-  // 5. End game when all questions answered
-  const handleGameEnd = async () => {
-    if (!gameState.gameSessionId) return;
+  function handleMicClick() {
+    if (speech.isListening) {
+      speech.stop();
+      return;
+    }
+    speech.listen({
+      onResult: (transcript) => void submitAnswer(transcript),
+      onError: (error: RecognitionError) => {
+        if (error === "not-allowed") setFeedback(t("game.micDenied"));
+        else if (error === "no-speech") registerWrongAttempt(t("game.notHeard")); // silence = failed attempt
+        else setFeedback(t("game.error"));
+      },
+    });
+  }
 
+  function handleTypedSubmit(event: FormEvent) {
+    event.preventDefault();
+    const answer = typedAnswer.trim();
+    if (answer) void submitAnswer(answer);
+  }
+
+  function tryAgain() {
+    setFeedback("");
+    setHeardAnswer("");
+    setTypedAnswer("");
+    setPhase("question");
+    if (question) askQuestion(question);
+  }
+
+  async function goNext() {
+    speech.stop();
+    const nextCount = answeredCount + 1;
+    setAnsweredCount(nextCount);
+    if (nextCount < QUESTIONS_PER_GAME) {
+      await loadQuestion();
+      return;
+    }
+    if (sessionId === null) return;
+    setPhase("finishing");
     try {
-      const result = await endGameHook.retry();
-      if (result) {
-        console.log("Game ended:", result);
-        // Reset game state
-        setGameState({
-          gameSessionId: null,
-          currentQuestion: null,
-          questionsAnswered: 0,
-          correctAnswers: 0,
-          isGameActive: false,
-          isWaitingForNextQuestion: false,
-          showReward: false,
-          answerStartTime: null,
-        });
-
-        // Show final score
-        alert(`Game Complete!\n\nScore: ${result.finalScore}%\n\nCorrect: ${result.correctAnswers}/${result.totalQuestions}`);
-      }
+      setResult(await GameService.endGame(sessionId));
+      setPhase("finished");
     } catch (error) {
       console.error("Failed to end game:", error);
+      fail(() => void goNext());
     }
-  };
+  }
 
-  // Render current animal
-  const currentAnimal: AnimalType | null = gameState.currentQuestion
-    ? {
-        id: gameState.currentQuestion.animalId,
-        name: gameState.currentQuestion.animalName,
-        image: displayAnimal?.image || "", // In real app, fetch from API
-        habitat: displayAnimal?.habitat || "farm",
-      }
-    : displayAnimal;
+  function replayQuestion() {
+    if (question) askQuestion(question);
+  }
+
+  // ---------- Render ----------
+
+  if (phase === "finished") {
+    return (
+      <section aria-live="polite" className="game game--reward">
+        <h1 className="reward__title">{t("reward.title")}</h1>
+        <p className="reward__subtitle">{t("reward.subtitle")}</p>
+        <div className="reward__art">
+          <RewardStar className="reward__star" />
+          <Host className="reward__host" pose="happy" />
+        </div>
+        {result && (
+          <p className="reward__score">
+            {formatMessage(t("reward.score"), { correct: result.correctAnswers, total: result.totalQuestions })}
+          </p>
+        )}
+        <button className="btn btn--primary btn--xl btn--block reward__continue" onClick={() => void startGame()} type="button">
+          {t("reward.continue")}
+          <ArrowForwardIcon className="btn__icon" />
+        </button>
+      </section>
+    );
+  }
+
+  if (phase === "error") {
+    return (
+      <section className="game game--status" role="alert">
+        <Host className="game__status-host" />
+        <p className="game__status-text">{t("game.error")}</p>
+        <button className="btn btn--primary btn--lg" onClick={() => retryAction?.()} type="button">
+          <RefreshIcon className="btn__icon" />
+          {t("game.retry")}
+        </button>
+      </section>
+    );
+  }
+
+  if (!question || phase === "starting" || phase === "loading" || phase === "finishing") {
+    return (
+      <section aria-busy="true" className="game game--status">
+        <Host className="game__status-host game__status-host--bob" />
+        <p className="game__status-text">{t("game.loading")}</p>
+      </section>
+    );
+  }
+
+  const isResult = phase === "correct" || phase === "incorrect" || phase === "together";
 
   return (
-    <section className="games-page" aria-label={t("app.name")}>
-      <Background />
-      <div className="games-page__scene">
-        <div className="host-container">
-          {!gameState.isGameActive && !displayAnimal && (
-            <SpeechBubble text="Loading game..." />
-          )}
-
-          {!gameState.isGameActive && displayAnimal && (
-            <SpeechBubble text={t("question.whoIsIt")} />
-          )}
-
-          {gameState.isGameActive && gameState.currentQuestion && !gameState.showReward && (
-            <SpeechBubble text={gameState.currentQuestion.questionText} />
-          )}
-
-          {gameState.isGameActive && gameState.showReward && (
-            <SpeechBubble text={t("reward.excellent")} />
-          )}
-
-          {isSubmittingAnswer && (
-            <SpeechBubble text="Checking your answer..." />
-          )}
-
-          <Host image={boyImage} />
-        </div>
-
-        {currentAnimal && (
-          <Animal
-            image={currentAnimal.image}
-            onClick={
-              gameState.isGameActive && !gameState.isWaitingForNextQuestion && !isSubmittingAnswer
-                ? handleAnimalClick
-                : !gameState.isGameActive
-                ? handleGameStart
-                : undefined
-            }
-          />
+    <section aria-label={question.questionText} className={`game game--${phase}`}>
+      <div className={`game__stage${isResult ? " game__stage--result" : ""}`}>
+        {phase === "correct" && (
+          <>
+            <SpeechBubble className="game__bubble game__bubble--success" tail="bottom">
+              {t("game.correctTitle")}
+              {localizedName && <span className="game__bubble-line">{formatMessage(t("game.thisIs"), { name: localizedName })}</span>}
+            </SpeechBubble>
+            <RewardStar className="game__stars" size="md" />
+          </>
         )}
+        {phase === "incorrect" && (
+          <SpeechBubble className="game__bubble game__bubble--soft" tail="bottom">
+            {feedback}
+          </SpeechBubble>
+        )}
+        {phase === "together" && (
+          <SpeechBubble className="game__bubble game__bubble--soft" tail="bottom">
+            {t("game.together")}
+            {localizedName && <span className="game__bubble-line game__bubble-line--answer">{localizedName}</span>}
+          </SpeechBubble>
+        )}
+
+        {animal ? (
+          <img alt={localizedName || question.animalName} className="game__animal" draggable={false} src={animal.image} />
+        ) : (
+          <p className="game__no-image">{t("game.unknownAnimal")}</p>
+        )}
+
+        {isResult && <Host className="game__peek" pose={phase === "correct" ? "happy" : "greeting"} />}
+
+        <button aria-label={t("game.listen")} className="game__speaker" onClick={replayQuestion} type="button">
+          <SpeakerIcon className="game__speaker-icon" />
+        </button>
       </div>
 
-      {gameState.showReward && (
-        <RewardStar onClick={() => {}} /> // Reward shown automatically
+      {isResult ? (
+        <div className="game__actions">
+          {phase !== "together" && (
+            <button className={`btn btn--lg ${phase === "correct" ? "btn--secondary" : "btn--primary"}`} onClick={tryAgain} type="button">
+              <RefreshIcon className="btn__icon" />
+              {t("game.again")}
+            </button>
+          )}
+          <button
+            className={`btn btn--lg ${phase === "incorrect" ? "btn--secondary" : "btn--primary"}`}
+            onClick={() => void goNext()}
+            type="button"
+          >
+            {t("game.next")}
+            <ArrowForwardIcon className="btn__icon" />
+          </button>
+        </div>
+      ) : (
+        <>
+          <div className="host-bar">
+            <Host className="host-bar__avatar" variant="avatar" />
+            <p className="host-bar__text" dir="auto">
+              {question.questionText}
+            </p>
+          </div>
+
+          <div className="voice">
+            {speech.isSupported ? (
+              <>
+                <div className={`voice__control${speech.isListening ? " voice__control--listening" : ""}`}>
+                  <span aria-hidden="true" className="voice__wave">
+                    <i /><i /><i /><i />
+                  </span>
+                  <button
+                    aria-label={speech.isListening ? t("game.listening") : t("game.micStart")}
+                    aria-pressed={speech.isListening}
+                    className="voice__mic"
+                    disabled={phase === "checking"}
+                    onClick={handleMicClick}
+                    type="button"
+                  >
+                    <MicIcon className="voice__mic-icon" />
+                  </button>
+                  <span aria-hidden="true" className="voice__wave">
+                    <i /><i /><i /><i />
+                  </span>
+                </div>
+                <p aria-live="polite" className="voice__status">
+                  {phase === "checking"
+                    ? `${t("game.checking")}${heardAnswer ? ` ${t("game.heard")} «${heardAnswer}»` : ""}`
+                    : speech.isListening
+                      ? t("game.listening")
+                      : feedback || t("game.micStart")}
+                </p>
+              </>
+            ) : (
+              <form className="voice__form" onSubmit={handleTypedSubmit}>
+                <p className="voice__status">{t("game.noSpeech")}</p>
+                <div className="voice__row">
+                  <input
+                    aria-label={t("game.typePlaceholder")}
+                    className="voice__input"
+                    dir="auto"
+                    disabled={phase === "checking"}
+                    onChange={(event) => setTypedAnswer(event.target.value)}
+                    placeholder={t("game.typePlaceholder")}
+                    value={typedAnswer}
+                  />
+                  <button aria-label={t("game.send")} className="voice__send" disabled={phase === "checking" || !typedAnswer.trim()} type="submit">
+                    <SendIcon className="voice__send-icon" />
+                  </button>
+                </div>
+                {phase === "checking" && <p aria-live="polite" className="voice__status">{t("game.checking")}</p>}
+              </form>
+            )}
+          </div>
+        </>
       )}
 
-      {/* Game Progress Indicator */}
-      {gameState.isGameActive && (
-        <div style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          color: "#333",
-          fontSize: "18px",
-          fontWeight: "bold",
-        }}>
-          Question {gameState.questionsAnswered + 1}/{QUESTIONS_PER_GAME}
-        </div>
-      )}
     </section>
   );
 }

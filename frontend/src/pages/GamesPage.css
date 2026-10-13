@@ -1,44 +1,415 @@
-.games-page {
-    display: grid;
-    flex: 1;
-    isolation: isolate;
-    min-height: 0;
-    position: relative;
-    width: 100%;
-    place-items: center;
-    overflow: clip;
+.game {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  /* Center the whole game block vertically in the free space below the header */
+  justify-content: center;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
+  padding-top: var(--space-2);
 }
 
-.games-page__scene {
-    align-self: end;
-    display: flex;
-    direction: ltr;
-    align-items: end;
-    justify-content: center;
-    gap: clamp(0.75rem, 4vw, 4rem);
-    width: min(100%, 60rem);
-    max-width: calc(100vw - 2rem);
-    margin-bottom: clamp(0.5rem, 5vh, 3.5rem);
+/* ---------- Animal stage ---------- */
+
+.game__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1 / 0.86;
+  padding: var(--space-6);
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(ellipse 70% 14% at 50% 88%, rgba(150, 170, 120, 0.22), transparent 70%),
+    linear-gradient(180deg, #f6f3e6 0%, #f1efe0 60%, #ebeedd 100%);
+  box-shadow: inset 0 0 0 1px rgba(233, 233, 222, 0.8);
 }
 
-.host-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: clamp(0.5rem, 1.5vw, 1rem);
-    width: clamp(9rem, 18vw, 17rem);
-    z-index: 1;
+/* Absolutely positioned inside the padded stage so the whole animal
+   (ears, hooves, tail) always fits and stays centered */
+.game__animal {
+  position: absolute;
+  inset: var(--space-6);
+  display: block;
+  width: calc(100% - 2 * var(--space-6));
+  height: calc(100% - 2 * var(--space-6));
+  object-fit: contain;
+  object-position: center;
+  user-select: none;
+  animation: animal-in 360ms var(--ease-out) both;
 }
 
-@media (max-width: 640px) {
-    .games-page__scene {
-        align-items: end;
-        gap: clamp(0.25rem, 2vw, 0.75rem);
-        max-width: calc(100vw - 1rem);
-        margin-bottom: clamp(0.25rem, 3vh, 1.25rem);
-    }
+.game__stage--result {
+  aspect-ratio: 1 / 1.05;
+  padding: 104px var(--space-6) var(--space-6);
+  background:
+    radial-gradient(ellipse 70% 12% at 50% 90%, rgba(150, 170, 120, 0.22), transparent 70%),
+    linear-gradient(180deg, #faf6ea 0%, #f3f1e2 100%);
+}
 
-    .host-container {
-        width: clamp(7.5rem, 34vw, 10.5rem);
-    }
+.game__no-image {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.game__speaker {
+  position: absolute;
+  bottom: var(--space-4);
+  inset-inline-end: var(--space-4);
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.game__speaker-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* ---------- Result states ---------- */
+
+.game__bubble {
+  position: absolute;
+  top: var(--space-4);
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  max-width: 86%;
+  padding: var(--space-3) var(--space-8);
+  transform: translateX(-50%);
+  font-size: clamp(1.375rem, 1.1rem + 1.2vw, 1.75rem);
+  animation: bubble-drop 360ms var(--ease-out) both;
+}
+
+.game__bubble--success {
+  color: var(--color-primary);
+}
+
+.game__bubble--soft {
+  color: var(--color-ink);
+  font-size: clamp(1.125rem, 1rem + 0.8vw, 1.5rem);
+}
+
+.game__bubble-line--answer {
+  color: var(--color-primary);
+  font-size: 1.3em;
+}
+
+.game__stars {
+  position: absolute;
+  inset: 12% 0 auto;
+  z-index: 0;
+}
+
+.game__stars .reward-star__main,
+.game__stars .reward-star__glow {
+  display: none;
+}
+
+/* Leave room for the speech bubble above the animal */
+.game__stage--result .game__animal {
+  z-index: 1;
+  top: 112px;
+  height: calc(100% - 112px - var(--space-6));
+}
+
+/* Fully inside the stage — never cropped */
+.game__peek {
+  position: absolute;
+  bottom: var(--space-3);
+  inset-inline-start: var(--space-3);
+  z-index: 2;
+  width: 30%;
+  animation: peek-in 480ms var(--ease-out) both 200ms;
+}
+
+[dir="rtl"] .game__peek .host__image {
+  transform: scaleX(-1);
+}
+
+.game__actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+/* ---------- Host bar ---------- */
+
+.host-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 76px;
+  padding: var(--space-2) var(--space-6) var(--space-2) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+[dir="rtl"] .host-bar {
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-6);
+}
+
+.host-bar__avatar {
+  margin-block: -14px;
+}
+
+.host-bar__text {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 1.05rem + 1vw, 1.625rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+/* ---------- Voice control ---------- */
+
+.voice {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+}
+
+.voice__control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.voice__mic {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  box-shadow: 0 10px 24px rgba(67, 134, 107, 0.32), 0 0 0 8px rgba(67, 134, 107, 0.1);
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out), background-color var(--duration-fast) ease;
+}
+
+.voice__mic:hover:not(:disabled) {
+  background: var(--color-green-hover);
+}
+
+.voice__mic:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.voice__mic:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.voice__control--listening .voice__mic {
+  animation: mic-pulse 1.4s ease-in-out infinite;
+}
+
+.voice__mic-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.voice__wave {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+}
+
+.voice__wave i {
+  width: 6px;
+  height: 14px;
+  border-radius: var(--radius-pill);
+  background: #cfdcc9;
+}
+
+.voice__wave i:nth-child(2) { height: 26px; }
+.voice__wave i:nth-child(3) { height: 36px; }
+.voice__wave i:nth-child(4) { height: 20px; }
+
+.voice__control--listening .voice__wave i {
+  background: var(--color-primary);
+  animation: wave 900ms ease-in-out infinite;
+}
+
+.voice__control--listening .voice__wave i:nth-child(2) { animation-delay: 120ms; }
+.voice__control--listening .voice__wave i:nth-child(3) { animation-delay: 240ms; }
+.voice__control--listening .voice__wave i:nth-child(4) { animation-delay: 360ms; }
+
+.voice__status {
+  min-height: 1.5em;
+  color: var(--color-text-muted);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  text-align: center;
+}
+
+.voice__form {
+  display: grid;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.voice__row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.voice__input {
+  flex: 1;
+  min-width: 0;
+  min-height: 56px;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 1.125rem;
+}
+
+.voice__send {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  cursor: pointer;
+}
+
+.voice__send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.voice__send-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* ---------- Loading / error ---------- */
+
+.game--status {
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.game__status-host {
+  width: min(60%, 240px);
+}
+
+.game__status-host--bob {
+  animation: bob 1.6s ease-in-out infinite;
+}
+
+.game__status-text {
+  font-family: var(--font-heading);
+  font-size: var(--text-card-title);
+  font-weight: 800;
+}
+
+/* ---------- Reward ---------- */
+
+.game--reward {
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.reward__title {
+  margin-top: var(--space-4);
+  font-size: var(--text-display);
+  font-weight: 900;
+}
+
+.reward__subtitle {
+  font-family: var(--font-heading);
+  font-size: var(--text-card-title);
+  font-weight: 700;
+}
+
+.reward__art {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+.reward__star {
+  width: 80%;
+  margin-bottom: -12%;
+}
+
+.reward__host {
+  position: relative;
+  width: 56%;
+}
+
+.reward__score {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.reward__continue {
+  margin: var(--space-4) 0 var(--space-6);
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes animal-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes bubble-drop {
+  from { opacity: 0; transform: translate(-50%, -8px) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes peek-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes mic-pulse {
+  0%, 100% { box-shadow: 0 10px 24px rgba(67, 134, 107, 0.32), 0 0 0 8px rgba(67, 134, 107, 0.12); }
+  50% { box-shadow: 0 10px 24px rgba(67, 134, 107, 0.32), 0 0 0 18px rgba(67, 134, 107, 0.06); }
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.45); }
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
