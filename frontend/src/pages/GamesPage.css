@@ -413,3 +413,65 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
 }
+
+/* ---------- Desktop / landscape ----------
+   Animal card on one side; question + microphone (or result buttons) on the other,
+   so the whole game fits in the window without scrolling. */
+@media (min-width: 900px) and (orientation: landscape) {
+  .game:not(.game--status):not(.game--reward) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+    grid-template-rows: 1fr auto auto 1fr;
+    align-content: center;
+    column-gap: clamp(32px, 4vw, 64px);
+    row-gap: var(--space-6);
+    max-width: 1080px;
+  }
+
+  .game__stage,
+  .game__stage--result {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    align-self: center;
+    aspect-ratio: auto;
+    /* Header (~72px) + page padding */
+    height: min(540px, calc(100svh - 120px));
+    min-height: 340px;
+  }
+
+  .host-bar {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .voice {
+    grid-column: 2;
+    grid-row: 3;
+    padding-bottom: 0;
+  }
+
+  .game__actions {
+    grid-column: 2;
+    grid-row: 2 / span 2;
+    align-self: center;
+    grid-template-columns: 1fr;
+  }
+
+  /* Reward screen: scale the artwork to the window height */
+  .reward__star {
+    width: min(80%, 36svh);
+  }
+
+  .reward__host {
+    width: min(56%, 26svh);
+  }
+
+  .reward__title {
+    margin-top: 0;
+  }
+
+  .reward__continue {
+    max-width: 420px;
+    margin-bottom: var(--space-2);
+  }
+}
