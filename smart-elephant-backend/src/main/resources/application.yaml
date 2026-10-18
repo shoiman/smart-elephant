@@ -58,5 +58,12 @@ app:
     model: claude-3-5-sonnet-20241022
     max-tokens: 500
 
+  tts:
+    # Azure AI Speech; empty key = TTS disabled (browser voice is used instead)
+    azure:
+      key: ${AZURE_SPEECH_KEY:}
+      region: ${AZURE_SPEECH_REGION:}
+    cache-dir: ${TTS_CACHE_DIR:./audio-cache}
+
   rag:
     embedding-dimension: 1536

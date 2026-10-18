@@ -47,6 +47,12 @@ export interface Question {
   animalId: number;
   animalName: string;
   questionText: string;
+  /** HABITAT | COLOR | SOUND | DIET | SIZE | UNIQUE */
+  topic?: string;
+  /** Correct answer in the question's language (null if unknown) */
+  answer?: string | null;
+  /** mp3 with the answer read aloud (null when backend TTS is off) */
+  answerAudioUrl?: string | null;
   difficulty: QuestionDifficulty;
   audioUrl?: string;
   hints?: string[];
@@ -61,6 +67,10 @@ export interface AnswerRequest {
   responseTimeMs?: number;
   questionText?: string;
   difficulty?: QuestionDifficulty | string;
+  /** Echoed back from Question.topic so the backend knows what was asked */
+  topic?: string;
+  /** Language the child answered in */
+  language?: string;
 }
 
 export interface AnswerResponse {

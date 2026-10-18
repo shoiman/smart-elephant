@@ -1,5 +1,7 @@
 package com.smartelephant.service;
 
+import com.smartelephant.i18n.GameLanguage;
+import com.smartelephant.i18n.QuestionTemplates.Topic;
 import com.smartelephant.model.dto.AnswerRequest;
 import com.smartelephant.model.dto.AnswerResponse;
 import com.smartelephant.model.dto.GameSessionResponse;
@@ -76,10 +78,15 @@ public class GameService {
                 .orElseThrow(() -> new RuntimeException("Animal not found: " + request.getAnimalId()));
 
         // Validate answer using LLM
+        // Language the child answered in; falls back to the child's profile language
+        String languageCode = request.getLanguage() != null && !request.getLanguage().isBlank()
+                ? request.getLanguage()
+                : session.getChild().getLanguage();
         Map<String, Object> validation = llmService.validateAnswer(
                 request.getAnswer(),
-                request.getQuestionId(),
-                animal
+                animal,
+                parseTopic(request.getTopic()),
+                GameLanguage.fromCode(languageCode)
         );
 
         Boolean isCorrect = (Boolean) validation.get("isCorrect");
@@ -191,5 +198,17 @@ public class GameService {
 
         progressRepository.save(progress);
         log.debug("Progress updated: {}", progress);
+    }
+
+    /** Topic echoed back by the client; null when missing or unknown (older clients). */
+    private static Topic parseTopic(String topic) {
+        if (topic == null || topic.isBlank()) {
+            return null;
+        }
+        try {
+            return Topic.valueOf(topic.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 }

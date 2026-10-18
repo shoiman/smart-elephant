@@ -1,5 +1,8 @@
 package com.smartelephant.service;
 
+import com.smartelephant.i18n.GameLanguage;
+import com.smartelephant.i18n.QuestionTemplates;
+import com.smartelephant.i18n.QuestionTemplates.LocalizedQuestion;
 import com.smartelephant.model.dto.QuestionResponse;
 import com.smartelephant.model.entity.Animal;
 import com.smartelephant.model.entity.Child;
@@ -27,16 +30,23 @@ public class QuestionService {
     private final LLMService llmService;
     private final AnimalRepository animalRepository;
     private final GameSessionRepository gameSessionRepository;
+    private final QuestionTemplates questionTemplates;
+    private final TtsService ttsService;
 
     /**
      * Generate the next question for a child
      * Considers:
      * 1. Child's age
-     * 2. Child's language
+     * 2. Language selected in the UI (falls back to the child's profile language)
      * 3. Last 20 games for difficulty adaptation
+     *
+     * @param requestedLanguage language code from the client ("he", "ru", "uk"), may be null
      */
-    public QuestionResponse generateNextQuestion(Child child) {
-        log.info("Generating next question for child: {} (age: {})", child.getName(), child.getAge());
+    public QuestionResponse generateNextQuestion(Child child, String requestedLanguage) {
+        GameLanguage language = GameLanguage.fromCode(
+                requestedLanguage != null && !requestedLanguage.isBlank() ? requestedLanguage : child.getLanguage());
+        log.info("Generating next question for child: {} (age: {}, language: {})",
+                child.getName(), child.getAge(), language.getCode());
 
         // Get last 20 games to determine difficulty
         List<GameSession> last20Games = gameSessionRepository.findLast20ByChildId(child.getId());
@@ -52,11 +62,11 @@ public class QuestionService {
         Animal animal = animalOpt.get();
 
         // Generate question using LLM
-        String questionText = llmService.generateQuestion(
+        LocalizedQuestion question = llmService.generateQuestion(
                 animal,
                 difficulty,
                 child.getAge(),
-                child.getLanguage()
+                language
         );
 
         // Build response
@@ -64,9 +74,13 @@ public class QuestionService {
                 .questionId("q-" + UUID.randomUUID().toString())
                 .animalId(animal.getId())
                 .animalName(animal.getName())
-                .questionText(questionText)
+                .questionText(question.text())
+                .topic(question.topic().name())
+                .answer(question.answer())
+                .audioUrl(ttsService.audioUrl(question.text(), language))
+                .answerAudioUrl(ttsService.audioUrl(question.answer(), language))
                 .difficulty(difficulty.getValue())
-                .hints(generateHints(animal, difficulty))
+                .hints(questionTemplates.hints(difficulty, language))
                 .createdAt(LocalDateTime.now())
                 .build();
     }
@@ -108,31 +122,4 @@ public class QuestionService {
         }
     }
 
-    /**
-     * Generate hints based on difficulty
-     */
-    private List<String> generateHints(Animal animal, QuestionDifficulty difficulty) {
-        // Mock hints for Phase 1
-        switch (difficulty) {
-            case EASY:
-                return List.of(
-                        "Think about where this animal lives",
-                        "Where do you see this animal?"
-                );
-            case MEDIUM:
-                return List.of(
-                        "Think about what this animal eats",
-                        "What is its favorite food?",
-                        "Is it a meat eater or plant eater?"
-                );
-            case HARD:
-                return List.of(
-                        "Think deeply about why this feature is useful",
-                        "How does this help the animal survive?",
-                        "What is the purpose?"
-                );
-            default:
-                return List.of("Try to think carefully");
-        }
-    }
 }

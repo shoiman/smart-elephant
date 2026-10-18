@@ -11,10 +11,12 @@ export class QuestionService {
   /**
    * Get next question for a child
    *
-   * GET /questions/next?childId={childId}
+   * GET /questions/next?childId={childId}&language={language}
    */
-  static async getNextQuestion(childId: number): Promise<Question> {
-    const endpoint = `${ENDPOINTS.questions.next}?childId=${childId}`;
+  static async getNextQuestion(childId: number, language?: string): Promise<Question> {
+    const params = new URLSearchParams({ childId: String(childId) });
+    if (language) params.set("language", language);
+    const endpoint = `${ENDPOINTS.questions.next}?${params.toString()}`;
     // Never serve a cached question: every call must return a new one
     return httpClient.get<Question>(endpoint, { cache: false });
   }

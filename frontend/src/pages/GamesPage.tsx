@@ -69,6 +69,9 @@ export function GamesPage() {
   const animal = findAnimalByName(question?.animalName);
   const nameKey = animalNameKey(question?.animalName);
   const localizedName = nameKey ? t(nameKey) ?? question?.animalName ?? "" : "";
+  // The answer to the question that was asked; older backends only know the animal name
+  const correctAnswer = question?.answer || (localizedName ? formatMessage(t("game.thisIs"), { name: localizedName }) : "");
+  const togetherAnswer = question?.answer || localizedName;
 
   const fail = useCallback((retry: () => void) => {
     setRetryAction(() => retry);
@@ -77,8 +80,10 @@ export function GamesPage() {
 
   const askQuestion = useCallback(
     (nextQuestion: Question) => {
-      if (nextQuestion.audioUrl) playAudio(nextQuestion.audioUrl);
-      else speakText(nextQuestion.questionText, language);
+      const speak = () => speakText(nextQuestion.questionText, language);
+      // Prefer the backend audio file; the browser voice is a fallback (Chrome has no Hebrew voice)
+      if (nextQuestion.audioUrl) playAudio(nextQuestion.audioUrl, speak);
+      else speak();
     },
     [language],
   );
@@ -86,7 +91,7 @@ export function GamesPage() {
   const loadQuestion = useCallback(async () => {
     setPhase("loading");
     try {
-      const nextQuestion = await QuestionService.getNextQuestion(MOCK_CHILD_ID);
+      const nextQuestion = await QuestionService.getNextQuestion(MOCK_CHILD_ID, language);
       setQuestion(nextQuestion);
       setAttempts(0);
       setHeardAnswer("");
@@ -99,7 +104,7 @@ export function GamesPage() {
       console.error("Failed to load question:", error);
       fail(() => void loadQuestion());
     }
-  }, [askQuestion, fail]);
+  }, [askQuestion, fail, language]);
 
   const startGame = useCallback(async () => {
     setPhase("starting");
@@ -114,6 +119,22 @@ export function GamesPage() {
       fail(() => void startGame());
     }
   }, [fail, loadQuestion]);
+
+  // Say the answer aloud: praise after a correct answer, or say it together with the child
+  useEffect(() => {
+    const answerAudio = question?.answerAudioUrl;
+    if (phase === "correct" && correctAnswer) {
+      const speak = () => speakText(`${t("game.correctTitle")} ${correctAnswer}`, language);
+      if (answerAudio) playAudio(answerAudio, speak);
+      else speak();
+    } else if (phase === "together" && togetherAnswer) {
+      const speak = () => speakText(togetherAnswer, language);
+      if (answerAudio) playAudio(answerAudio, speak);
+      else speak();
+    }
+    // Only react to phase changes, not to re-renders
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase]);
 
   // Start automatically when the page opens (guarded against StrictMode double mount)
   useEffect(() => {
@@ -142,6 +163,8 @@ export function GamesPage() {
         responseTimeMs: Date.now() - answerStartRef.current,
         questionText: question.questionText,
         difficulty: question.difficulty,
+        topic: question.topic,
+        language,
       });
       if (response.isCorrect) {
         setPhase("correct");
@@ -156,7 +179,8 @@ export function GamesPage() {
 
   function handleMicClick() {
     if (speech.isListening) {
-      speech.stop();
+      // Second tap: the child has finished, submit what was heard so far
+      speech.finish();
       return;
     }
     speech.listen({
@@ -261,7 +285,7 @@ export function GamesPage() {
           <>
             <SpeechBubble className="game__bubble game__bubble--success" tail="bottom">
               {t("game.correctTitle")}
-              {localizedName && <span className="game__bubble-line">{formatMessage(t("game.thisIs"), { name: localizedName })}</span>}
+              {correctAnswer && <span className="game__bubble-line">{correctAnswer}</span>}
             </SpeechBubble>
             <RewardStar className="game__stars" size="md" />
           </>
@@ -274,7 +298,7 @@ export function GamesPage() {
         {phase === "together" && (
           <SpeechBubble className="game__bubble game__bubble--soft" tail="bottom">
             {t("game.together")}
-            {localizedName && <span className="game__bubble-line game__bubble-line--answer">{localizedName}</span>}
+            {togetherAnswer && <span className="game__bubble-line game__bubble-line--answer">{togetherAnswer}</span>}
           </SpeechBubble>
         )}
 

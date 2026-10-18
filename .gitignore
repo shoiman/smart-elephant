@@ -49,3 +49,5 @@ Claude outputs/
 PHASE_5_*.md
 gamePrompts.ts
 remote_server_connection_and_access.txt
+# Local TTS cache (synthesized mp3)
+audio-cache/

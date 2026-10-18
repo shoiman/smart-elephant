@@ -24,11 +24,14 @@ public class QuestionController {
 
     /**
      * Get next question for a child
-     * GET /api/questions/next?childId={childId}
+     * GET /api/questions/next?childId={childId}&language={he|ru|uk}
+     * language is optional; without it the child's profile language is used
      */
     @GetMapping("/next")
-    public ResponseEntity<QuestionResponse> getNextQuestion(@RequestParam Long childId) {
-        log.info("GET /questions/next?childId={}", childId);
+    public ResponseEntity<QuestionResponse> getNextQuestion(
+            @RequestParam Long childId,
+            @RequestParam(required = false) String language) {
+        log.info("GET /questions/next?childId={}&language={}", childId, language);
 
         try {
             // Get child
@@ -36,7 +39,7 @@ public class QuestionController {
                     .orElseThrow(() -> new RuntimeException("Child not found: " + childId));
 
             // Generate next question
-            QuestionResponse response = questionService.generateNextQuestion(child);
+            QuestionResponse response = questionService.generateNextQuestion(child, language);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Error generating next question", e);

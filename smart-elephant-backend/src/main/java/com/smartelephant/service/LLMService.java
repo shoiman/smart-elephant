@@ -1,12 +1,20 @@
 package com.smartelephant.service;
 
+import com.smartelephant.i18n.AnswerChecker;
+import com.smartelephant.i18n.GameLanguage;
+import com.smartelephant.i18n.QuestionTemplates;
+import com.smartelephant.i18n.QuestionTemplates.LocalizedQuestion;
+import com.smartelephant.i18n.QuestionTemplates.Topic;
 import com.smartelephant.model.entity.Animal;
 import com.smartelephant.model.enums.QuestionDifficulty;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Service for interacting with Claude API
@@ -14,7 +22,11 @@ import java.util.Map;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class LLMService {
+
+    private final QuestionTemplates questionTemplates;
+    private final AnswerChecker answerChecker;
 
     @Value("${app.claude.api-key}")
     private String claudeApiKey;
@@ -26,13 +38,14 @@ public class LLMService {
     private Integer maxTokens;
 
     /**
-     * Generate a question about an animal based on difficulty level
+     * Generate a question about an animal based on difficulty level.
+     * Returns the question text together with its topic and correct answer.
      */
-    public String generateQuestion(
+    public LocalizedQuestion generateQuestion(
             Animal animal,
             QuestionDifficulty difficulty,
             Integer childAge,
-            String language) {
+            GameLanguage language) {
 
         log.info("Generating question for animal: {}, difficulty: {}, age: {}, language: {}",
                 animal.getName(), difficulty, childAge, language);
@@ -40,19 +53,31 @@ public class LLMService {
         // Build prompt based on difficulty
         String prompt = buildQuestionPrompt(animal, difficulty, childAge, language);
 
-        // For now, return a mock question
+        // For now, return a mock question from localized templates
         // In Phase 2, we'll integrate actual Claude API
-        return generateMockQuestion(animal, difficulty);
+        return questionTemplates.question(animal.getName(), difficulty, language, ThreadLocalRandom.current());
     }
 
     /**
      * Validate if an answer is correct
      */
-    public Map<String, Object> validateAnswer(String answer, String questionText, Animal animal) {
-        log.info("Validating answer: {}", answer);
+    public Map<String, Object> validateAnswer(String answer, Animal animal, Topic topic, GameLanguage language) {
+        log.info("Validating answer: '{}' (animal: {}, topic: {}, language: {})",
+                answer, animal.getName(), topic, language.getCode());
 
-        // For Phase 1, simple mock validation
-        // In Phase 2, we'll use Claude to validate
+        // Step 1: free keyword check against the known answer concepts
+        Optional<Boolean> keywordResult = answerChecker.check(animal.getName(), topic, language, answer);
+        if (keywordResult.isPresent()) {
+            boolean isCorrect = keywordResult.get();
+            Map<String, Object> result = new HashMap<>();
+            result.put("isCorrect", isCorrect);
+            result.put("explanation", isCorrect ? "Great job! That's correct!" : "Not quite right, but keep trying!");
+            result.put("score", isCorrect ? 100 : 0);
+            return result;
+        }
+
+        // No rules for this animal/topic yet: lenient mock validation
+        // In Phase 2, unmatched answers will go to Claude
         return generateMockValidation(answer, animal);
     }
 
@@ -63,12 +88,13 @@ public class LLMService {
             Animal animal,
             QuestionDifficulty difficulty,
             Integer childAge,
-            String language) {
+            GameLanguage language) {
 
         StringBuilder prompt = new StringBuilder();
         prompt.append("Generate a question for a child about the animal: ").append(animal.getName()).append("\n");
         prompt.append("Child age: ").append(childAge).append("\n");
-        prompt.append("Language: ").append(language).append("\n");
+        prompt.append("Language (ISO 639-1): ").append(language.getCode()).append("\n");
+        prompt.append("Write the question only in this language.\n");
         prompt.append("Difficulty level: ").append(difficulty.getValue()).append("\n");
         prompt.append("Requirements:\n");
 
@@ -92,69 +118,6 @@ public class LLMService {
 
         prompt.append("Return only the question text, no explanation.\n");
         return prompt.toString();
-    }
-
-    /**
-     * Mock question generation for Phase 1
-     */
-    private String generateMockQuestion(Animal animal, QuestionDifficulty difficulty) {
-        Map<String, String[]> questions = new HashMap<>();
-
-        // EASY questions
-        questions.put("EASY_habitat", new String[]{
-                "Where does {} live?",
-                "What is the home of {}?",
-                "Where can we find {}?"
-        });
-
-        questions.put("EASY_color", new String[]{
-                "What color is {}?",
-                "Can you tell the color of {}?",
-                "What is the color of {}?"
-        });
-
-        questions.put("EASY_sound", new String[]{
-                "What sound does {} make?",
-                "How does {} sound?",
-                "What noise does {} make?"
-        });
-
-        // MEDIUM questions
-        questions.put("MEDIUM_diet", new String[]{
-                "What does {} eat?",
-                "What is the diet of {}?",
-                "Is {} a meat eater or plant eater?"
-        });
-
-        questions.put("MEDIUM_size", new String[]{
-                "Is {} big or small?",
-                "How large is {}?",
-                "Compare the size of {} to a cat"
-        });
-
-        // HARD questions
-        questions.put("HARD_why", new String[]{
-                "Why does {} have {} as its feature?",
-                "What is the purpose of {} in {}?",
-                "Why is {} important for {}?"
-        });
-
-        questions.put("HARD_compare", new String[]{
-                "How is {} different from {}?",
-                "Compare {} and {} in terms of habitat",
-                "What makes {} unique compared to other animals?"
-        });
-
-        // Select a random question template for this difficulty
-        String key = difficulty.getValue() + "_" +
-                (difficulty == QuestionDifficulty.EASY ? "habitat" :
-                 difficulty == QuestionDifficulty.MEDIUM ? "diet" : "why");
-
-        String[] questionTemplates = questions.getOrDefault(key,
-                new String[]{"Where does {} live?"});
-
-        String template = questionTemplates[(int) (Math.random() * questionTemplates.length)];
-        return template.replace("{}", animal.getName());
     }
 
     /**

@@ -27,11 +27,18 @@ services:
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       CLAUDE_API_KEY: ${CLAUDE_API_KEY:-}
+      # Azure AI Speech for question/answer audio (empty = browser voice)
+      AZURE_SPEECH_KEY: ${AZURE_SPEECH_KEY:-}
+      AZURE_SPEECH_REGION: ${AZURE_SPEECH_REGION:-}
+      TTS_CACHE_DIR: /app/audio-cache
       # quieter logs than in application.yaml (DEBUG/TRACE is for local dev)
       LOGGING_LEVEL_COM_SMARTELEPHANT: INFO
       LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: INFO
       LOGGING_LEVEL_ORG_HIBERNATE_SQL: INFO
       LOGGING_LEVEL_ORG_HIBERNATE_TYPE_DESCRIPTOR_SQL_BASICBINDER: INFO
+    volumes:
+      # synthesized mp3 files survive rebuilds, so each phrase is paid for once
+      - tts_cache:/app/audio-cache
 
   web:
     build:
@@ -52,5 +59,6 @@ services:
 
 volumes:
   postgres_data:
+  tts_cache:
   caddy_data:
   caddy_config:
