@@ -32,20 +32,6 @@ export interface TranslationMessages {
   readonly "progress.nextDifficulty": string;
   readonly "progress.projectedLevel": string;
   readonly "progress.lastGameAt": string;
-  readonly "animal.elephant.name": string;
-  readonly "animal.elephant.habitat": string;
-  readonly "animal.lion.name": string;
-  readonly "animal.lion.habitat": string;
-  readonly "animal.penguin.name": string;
-  readonly "animal.penguin.habitat": string;
-  readonly "animal.giraffe.name": string;
-  readonly "animal.giraffe.habitat": string;
-  readonly "animal.hippopotamus.name": string;
-  readonly "animal.hippopotamus.habitat": string;
-  readonly "animal.zebra.name": string;
-  readonly "animal.zebra.habitat": string;
-  readonly "animal.leopard.name": string;
-  readonly "animal.leopard.habitat": string;
   readonly "question.whoIsIt": string;
   readonly "reward.excellent": string;
   readonly "home.greeting": string;
@@ -113,20 +99,6 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "progress.nextDifficulty": "רמת קושי הבאה",
     "progress.projectedLevel": "רמה צפויה",
     "progress.lastGameAt": "המשחק האחרון",
-    "animal.elephant.name": "פיל",
-    "animal.elephant.habitat": "סוואנה",
-    "animal.lion.name": "אריה",
-    "animal.lion.habitat": "סוואנה",
-    "animal.penguin.name": "פינגווין",
-    "animal.penguin.habitat": "אנטארקטיקה",
-    "animal.giraffe.name": "ג׳ירפה",
-    "animal.giraffe.habitat": "סוואנה",
-    "animal.hippopotamus.name": "היפופוטם",
-    "animal.hippopotamus.habitat": "סוואנה",
-    "animal.zebra.name": "זברה",
-    "animal.zebra.habitat": "סוואנה",
-    "animal.leopard.name": "נמר",
-    "animal.leopard.habitat": "סוואנה",
     "question.whoIsIt": "מי זה?",
     "reward.excellent": "כל הכבוד!",
     "home.greeting": "שלום! בואו נשחק ונכיר חיות!",
@@ -190,20 +162,6 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "progress.nextDifficulty": "Следующий уровень сложности",
     "progress.projectedLevel": "Прогнозируемый уровень",
     "progress.lastGameAt": "Последняя игра",
-    "animal.elephant.name": "Слон",
-    "animal.elephant.habitat": "Саванна",
-    "animal.lion.name": "Лев",
-    "animal.lion.habitat": "Саванна",
-    "animal.penguin.name": "Пингвин",
-    "animal.penguin.habitat": "Антарктика",
-    "animal.giraffe.name": "Жираф",
-    "animal.giraffe.habitat": "Саванна",
-    "animal.hippopotamus.name": "Бегемот",
-    "animal.hippopotamus.habitat": "Саванна",
-    "animal.zebra.name": "Зебра",
-    "animal.zebra.habitat": "Саванна",
-    "animal.leopard.name": "Леопард",
-    "animal.leopard.habitat": "Саванна",
     "question.whoIsIt": "Кто это?",
     "reward.excellent": "Молодец!",
     "home.greeting": "Привет! Давай играть и узнавать животных!",
@@ -267,20 +225,6 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "progress.nextDifficulty": "Наступний рівень складності",
     "progress.projectedLevel": "Прогнозований рівень",
     "progress.lastGameAt": "Остання гра",
-    "animal.elephant.name": "Слон",
-    "animal.elephant.habitat": "Савана",
-    "animal.lion.name": "Лев",
-    "animal.lion.habitat": "Савана",
-    "animal.penguin.name": "Пінгвін",
-    "animal.penguin.habitat": "Антарктика",
-    "animal.giraffe.name": "Жираф",
-    "animal.giraffe.habitat": "Савана",
-    "animal.hippopotamus.name": "Бегемот",
-    "animal.hippopotamus.habitat": "Савана",
-    "animal.zebra.name": "Зебра",
-    "animal.zebra.habitat": "Савана",
-    "animal.leopard.name": "Леопард",
-    "animal.leopard.habitat": "Савана",
     "question.whoIsIt": "Хто це?",
     "reward.excellent": "Молодець!",
     "home.greeting": "Привіт! Давай гратися та знайомитися з тваринами!",

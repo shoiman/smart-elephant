@@ -15,7 +15,7 @@ import { useCallback, useEffect, useRef, useState, type FormEvent } from "react"
 import Host from "../components/Host/Host";
 import RewardStar from "../components/RewardStar/RewardStar";
 import SpeechBubble from "../components/SpeechBubble/SpeechBubble";
-import { animalNameKey, findAnimalByName } from "../data/animals/lookup";
+import { findAnimalByName } from "../data/animals/lookup";
 import { useSpeechRecognition, type RecognitionError } from "../hooks/useSpeechRecognition";
 import type { GameEndResponse, Question } from "../services/api-types";
 import { playAudio, speakText } from "../services/audioService";
@@ -67,8 +67,7 @@ export function GamesPage() {
   });
 
   const animal = findAnimalByName(question?.animalName);
-  const nameKey = animalNameKey(question?.animalName);
-  const localizedName = nameKey ? t(nameKey) ?? question?.animalName ?? "" : "";
+  const localizedName = animal?.names[language] ?? question?.animalName ?? "";
   // The answer to the question that was asked; older backends only know the animal name
   const correctAnswer = question?.answer || (localizedName ? formatMessage(t("game.thisIs"), { name: localizedName }) : "");
   const togetherAnswer = question?.answer || localizedName;
