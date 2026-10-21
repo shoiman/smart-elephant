@@ -5,8 +5,13 @@ interface RecognitionAlternative {
   readonly transcript: string;
 }
 
+interface RecognitionResult extends ArrayLike<RecognitionAlternative> {
+  /** True when the browser decided this phrase is complete */
+  readonly isFinal: boolean;
+}
+
 interface RecognitionResultEvent {
-  readonly results: ArrayLike<ArrayLike<RecognitionAlternative>>;
+  readonly results: ArrayLike<RecognitionResult>;
 }
 
 interface RecognitionErrorEvent {
@@ -35,12 +40,18 @@ const locales: Readonly<Record<string, string>> = { he: "he-IL", ru: "ru-RU", uk
  * Timing for young children (2-6): they pause to find words, so we decide when the answer
  * is over instead of the browser (Chrome stops after ~1 s of silence in one-shot mode).
  */
-/** Silence after the last heard word that ends the answer */
-const PAUSE_AFTER_SPEECH_MS = 2500;
+/** Silence after the last heard word that ends the answer (phrase still in progress) */
+const PAUSE_AFTER_SPEECH_MS = 2000;
+/**
+ * Short pause once the browser has marked the phrase as complete. Chrome itself sets isFinal
+ * only after ~1.2 s of silence, so the child already had a pause; this just catches a word
+ * that started right at that moment.
+ */
+const PAUSE_AFTER_FINAL_MS = 300;
 /** How long to wait for the child to start speaking */
-const WAIT_FOR_SPEECH_MS = 8000;
+const WAIT_FOR_SPEECH_MS = 6000;
 /** Hard limit for one answer */
-const MAX_LISTEN_MS = 15000;
+const MAX_LISTEN_MS = 8000;
 
 function getRecognitionConstructor(): RecognitionConstructor | undefined {
   const scope = window as unknown as {
@@ -137,11 +148,16 @@ export function useSpeechRecognition(language: string) {
 
       recognition.onresult = (event) => {
         const heard = joinTranscript(event.results);
-        if (!heard) return;
+        const last = event.results[event.results.length - 1];
+        const isFinal = last?.isFinal === true;
+        // Ignore empty results and repeats of the same unfinished text (Chrome re-sends interim
+        // results on background noise), otherwise noise keeps the pause timer from ever firing.
+        // The final result often repeats the last interim text, but it shortens the pause.
+        if (!heard || (heard === transcript && !isFinal)) return;
         transcript = heard;
         // Every new word restarts the "child has finished" pause timer
         if (pauseTimer !== undefined) window.clearTimeout(pauseTimer);
-        pauseTimer = schedule(finishWithTranscript, PAUSE_AFTER_SPEECH_MS);
+        pauseTimer = schedule(finishWithTranscript, isFinal ? PAUSE_AFTER_FINAL_MS : PAUSE_AFTER_SPEECH_MS);
       };
       recognition.onerror = (event) => {
         if (event.error === "aborted") return;

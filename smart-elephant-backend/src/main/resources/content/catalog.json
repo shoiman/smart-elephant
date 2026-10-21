@@ -1,0 +1,11 @@
+{
+  "concepts": "concepts.json",
+  "animals": [
+    "animals/classic.json",
+    "animals/farm.json",
+    "animals/water.json",
+    "animals/forest_birds.json",
+    "animals/savanna_australia.json",
+    "animals/insects.json"
+  ]
+}

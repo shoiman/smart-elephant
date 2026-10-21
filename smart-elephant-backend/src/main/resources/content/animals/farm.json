@@ -1,0 +1,415 @@
+{
+  "animals": [
+    {
+      "id": "cow",
+      "nameEn": "Cow",
+      "category": "farm",
+      "names": {
+        "he": {"name": "פרה", "gender": "f"},
+        "ru": {"name": "корова", "gender": "f"},
+        "uk": {"name": "корова", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הפרה גרה בחווה",
+          "color": "הפרה שחורה ולבנה",
+          "sound": "הפרה גועה: מו-מו!",
+          "diet": "הפרה אוכלת עשב",
+          "size": "הפרה גדולה",
+          "unique": "הפרה נותנת חלב"
+        },
+        "ru": {
+          "habitat": "Корова живёт на ферме",
+          "color": "Корова чёрно-белая",
+          "sound": "Корова мычит: му-у!",
+          "diet": "Корова ест траву",
+          "size": "Корова большая",
+          "unique": "Корова даёт молоко"
+        },
+        "uk": {
+          "habitat": "Корова живе на фермі",
+          "color": "Корова чорно-біла",
+          "sound": "Корова мукає: му-у!",
+          "diet": "Корова їсть траву",
+          "size": "Корова велика",
+          "unique": "Корова дає молоко"
+        },
+        "en": {
+          "habitat": "The cow lives on a farm",
+          "color": "The cow is black and white",
+          "sound": "The cow moos: moo!",
+          "diet": "The cow eats grass",
+          "size": "The cow is big",
+          "unique": "The cow gives milk"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FARM"], "reject": []},
+        "color": {"accept": ["BLACK_WHITE", "SPOTS"], "reject": []},
+        "sound": {"accept": ["MOO"], "reject": []},
+        "diet": {"accept": ["GRASS"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["MILK"], "reject": []}
+      }
+    },
+    {
+      "id": "pig",
+      "nameEn": "Pig",
+      "category": "farm",
+      "names": {
+        "he": {"name": "חזיר", "gender": "m"},
+        "ru": {"name": "свинья", "gender": "f"},
+        "uk": {"name": "свиня", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "החזיר גר בחווה",
+          "color": "החזיר ורוד",
+          "sound": "החזיר נוחר: אונק-אונק!",
+          "diet": "החזיר אוכל ירקות ופירות",
+          "size": "החזיר גדול",
+          "unique": "לחזיר יש חוטם"
+        },
+        "ru": {
+          "habitat": "Свинья живёт на ферме",
+          "color": "Свинья розовая",
+          "sound": "Свинья хрюкает: хрю-хрю!",
+          "diet": "Свинья ест овощи и фрукты",
+          "size": "Свинья большая",
+          "unique": "У свиньи есть пятачок"
+        },
+        "uk": {
+          "habitat": "Свиня живе на фермі",
+          "color": "Свиня рожева",
+          "sound": "Свиня хрюкає: хрю-хрю!",
+          "diet": "Свиня їсть овочі та фрукти",
+          "size": "Свиня велика",
+          "unique": "У свині є п'ятачок"
+        },
+        "en": {
+          "habitat": "The pig lives on a farm",
+          "color": "The pig is pink",
+          "sound": "The pig oinks: oink-oink!",
+          "diet": "The pig eats vegetables and fruit",
+          "size": "The pig is big",
+          "unique": "The pig has a snout"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FARM"], "reject": []},
+        "color": {"accept": ["PINK"], "reject": []},
+        "sound": {"accept": ["OINK"], "reject": []},
+        "diet": {"accept": ["VEGETABLES", "FRUIT", "GRASS"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["SNOUT"], "reject": []}
+      }
+    },
+    {
+      "id": "sheep",
+      "nameEn": "Sheep",
+      "category": "farm",
+      "names": {
+        "he": {"name": "כבשה", "gender": "f"},
+        "ru": {"name": "овца", "gender": "f"},
+        "uk": {"name": "вівця", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הכבשה גרה בחווה",
+          "color": "הכבשה לבנה",
+          "sound": "הכבשה פועה: מה-מה!",
+          "diet": "הכבשה אוכלת עשב",
+          "size": "הכבשה גדולה",
+          "unique": "לכבשה יש צמר"
+        },
+        "ru": {
+          "habitat": "Овца живёт на ферме",
+          "color": "Овца белая",
+          "sound": "Овца блеет: бе-е!",
+          "diet": "Овца ест траву",
+          "size": "Овца большая",
+          "unique": "У овцы есть шерсть"
+        },
+        "uk": {
+          "habitat": "Вівця живе на фермі",
+          "color": "Вівця біла",
+          "sound": "Вівця мекає: бе-е!",
+          "diet": "Вівця їсть траву",
+          "size": "Вівця велика",
+          "unique": "У вівці є вовна"
+        },
+        "en": {
+          "habitat": "The sheep lives on a farm",
+          "color": "The sheep is white",
+          "sound": "The sheep baas: baa-baa!",
+          "diet": "The sheep eats grass",
+          "size": "The sheep is big",
+          "unique": "The sheep has wool"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FARM"], "reject": []},
+        "color": {"accept": ["WHITE", "YELLOW"], "reject": []},
+        "sound": {"accept": ["BAA"], "reject": []},
+        "diet": {"accept": ["GRASS"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["WOOL"], "reject": []}
+      }
+    },
+    {
+      "id": "chicken",
+      "nameEn": "Chicken",
+      "category": "farm",
+      "names": {
+        "he": {"name": "תרנגולת", "gender": "f"},
+        "ru": {"name": "курица", "gender": "f"},
+        "uk": {"name": "курка", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "התרנגולת גרה בלול",
+          "color": "התרנגולת כתומה",
+          "sound": "התרנגולת מקרקרת: קו-קו!",
+          "diet": "התרנגולת אוכלת גרעינים",
+          "size": "התרנגולת קטנה",
+          "unique": "התרנגולת מטילה ביצים"
+        },
+        "ru": {
+          "habitat": "Курица живёт в курятнике",
+          "color": "Курица рыжая",
+          "sound": "Курица кудахчет: ко-ко!",
+          "diet": "Курица клюёт зёрнышки",
+          "size": "Курица маленькая",
+          "unique": "Курица несёт яйца"
+        },
+        "uk": {
+          "habitat": "Курка живе в курнику",
+          "color": "Курка руда",
+          "sound": "Курка кудкудаче: ко-ко!",
+          "diet": "Курка клює зернятка",
+          "size": "Курка маленька",
+          "unique": "Курка несе яйця"
+        },
+        "en": {
+          "habitat": "The chicken lives in a coop",
+          "color": "The chicken is orange",
+          "sound": "The chicken clucks: cluck-cluck!",
+          "diet": "The chicken eats grain",
+          "size": "The chicken is small",
+          "unique": "The chicken lays eggs"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FARM"], "reject": []},
+        "color": {"accept": ["YELLOW", "BROWN"], "reject": []},
+        "sound": {"accept": ["CLUCK"], "reject": []},
+        "diet": {"accept": ["SEEDS"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["EGGS"], "reject": []}
+      }
+    },
+    {
+      "id": "horse",
+      "nameEn": "Horse",
+      "category": "farm",
+      "names": {
+        "he": {"name": "סוס", "gender": "m"},
+        "ru": {"name": "лошадь", "gender": "f"},
+        "uk": {"name": "кінь", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הסוס גר בחווה",
+          "color": "הסוס חום",
+          "sound": "הסוס צוהל: הי-הי!",
+          "diet": "הסוס אוכל עשב",
+          "size": "הסוס גדול",
+          "unique": "לסוס יש רעמה ארוכה"
+        },
+        "ru": {
+          "habitat": "Лошадь живёт на ферме",
+          "color": "Лошадь коричневая",
+          "sound": "Лошадь ржёт: и-го-го!",
+          "diet": "Лошадь ест траву",
+          "size": "Лошадь большая",
+          "unique": "У лошади длинная грива"
+        },
+        "uk": {
+          "habitat": "Кінь живе на фермі",
+          "color": "Кінь коричневий",
+          "sound": "Кінь ірже: і-го-го!",
+          "diet": "Кінь їсть траву",
+          "size": "Кінь великий",
+          "unique": "У коня довга грива"
+        },
+        "en": {
+          "habitat": "The horse lives on a farm",
+          "color": "The horse is brown",
+          "sound": "The horse neighs: neigh-neigh!",
+          "diet": "The horse eats grass",
+          "size": "The horse is big",
+          "unique": "The horse has a long mane"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FARM"], "reject": []},
+        "color": {"accept": ["BROWN", "YELLOW"], "reject": []},
+        "sound": {"accept": ["NEIGH"], "reject": []},
+        "diet": {"accept": ["GRASS"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["MANE"], "reject": []}
+      }
+    },
+    {
+      "id": "goat",
+      "nameEn": "Goat",
+      "category": "farm",
+      "names": {
+        "he": {"name": "עז", "gender": "f"},
+        "ru": {"name": "коза", "gender": "f"},
+        "uk": {"name": "коза", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "העז גרה בחווה",
+          "color": "העז לבנה",
+          "sound": "העז פועה: מה-מה!",
+          "diet": "העז אוכלת עשב",
+          "size": "העז גדולה",
+          "unique": "לעז יש קרניים"
+        },
+        "ru": {
+          "habitat": "Коза живёт на ферме",
+          "color": "Коза белая",
+          "sound": "Коза блеет: ме-е!",
+          "diet": "Коза ест траву",
+          "size": "Коза большая",
+          "unique": "У козы есть рога"
+        },
+        "uk": {
+          "habitat": "Коза живе на фермі",
+          "color": "Коза біла",
+          "sound": "Коза мекає: ме-е!",
+          "diet": "Коза їсть траву",
+          "size": "Коза велика",
+          "unique": "У кози є роги"
+        },
+        "en": {
+          "habitat": "The goat lives on a farm",
+          "color": "The goat is white",
+          "sound": "The goat bleats: baa-baa!",
+          "diet": "The goat eats grass",
+          "size": "The goat is big",
+          "unique": "The goat has horns"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FARM"], "reject": []},
+        "color": {"accept": ["WHITE", "YELLOW"], "reject": []},
+        "sound": {"accept": ["BAA"], "reject": []},
+        "diet": {"accept": ["GRASS"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["HORNS"], "reject": []}
+      }
+    },
+    {
+      "id": "alpaca",
+      "nameEn": "Alpaca",
+      "category": "farm",
+      "names": {
+        "he": {"name": "אלפקה", "gender": "f"},
+        "ru": {"name": "альпака", "gender": "f"},
+        "uk": {"name": "альпака", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "האלפקה גרה בחווה",
+          "color": "האלפקה לבנה",
+          "sound": "האלפקה מזמזמת: מ-מ-מ!",
+          "diet": "האלפקה אוכלת עשב",
+          "size": "האלפקה גדולה",
+          "unique": "לאלפקה יש צמר רך"
+        },
+        "ru": {
+          "habitat": "Альпака живёт на ферме",
+          "color": "Альпака белая",
+          "sound": "Альпака тихо гудит: м-м-м!",
+          "diet": "Альпака ест траву",
+          "size": "Альпака большая",
+          "unique": "У альпаки мягкая шерсть"
+        },
+        "uk": {
+          "habitat": "Альпака живе на фермі",
+          "color": "Альпака біла",
+          "sound": "Альпака тихо гуде: м-м-м!",
+          "diet": "Альпака їсть траву",
+          "size": "Альпака велика",
+          "unique": "В альпаки м'яка вовна"
+        },
+        "en": {
+          "habitat": "The alpaca lives on a farm",
+          "color": "The alpaca is white",
+          "sound": "The alpaca hums: mmm!",
+          "diet": "The alpaca eats grass",
+          "size": "The alpaca is big",
+          "unique": "The alpaca has soft wool"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FARM"], "reject": []},
+        "color": {"accept": ["WHITE", "YELLOW"], "reject": []},
+        "sound": {"accept": ["HUM"], "reject": []},
+        "diet": {"accept": ["GRASS"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["WOOL"], "reject": []}
+      }
+    },
+    {
+      "id": "rabbit",
+      "nameEn": "Rabbit",
+      "category": "farm",
+      "names": {
+        "he": {"name": "ארנב", "gender": "m"},
+        "ru": {"name": "кролик", "gender": "m"},
+        "uk": {"name": "кролик", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הארנב גר בחווה",
+          "color": "הארנב אפור",
+          "diet": "הארנב אוכל גזר ועשב",
+          "size": "הארנב קטן",
+          "unique": "לארנב יש אוזניים ארוכות"
+        },
+        "ru": {
+          "habitat": "Кролик живёт на ферме",
+          "color": "Кролик серый",
+          "diet": "Кролик ест морковку и траву",
+          "size": "Кролик маленький",
+          "unique": "У кролика длинные уши"
+        },
+        "uk": {
+          "habitat": "Кролик живе на фермі",
+          "color": "Кролик сірий",
+          "diet": "Кролик їсть моркву і траву",
+          "size": "Кролик маленький",
+          "unique": "У кролика довгі вуха"
+        },
+        "en": {
+          "habitat": "The rabbit lives on a farm",
+          "color": "The rabbit is gray",
+          "diet": "The rabbit eats carrots and grass",
+          "size": "The rabbit is small",
+          "unique": "The rabbit has long ears"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FARM"], "reject": []},
+        "color": {"accept": ["GRAY", "WHITE"], "reject": []},
+        "diet": {"accept": ["VEGETABLES", "GRASS", "LEAVES"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["LONG_EARS"], "reject": []}
+      }
+    }
+  ]
+}

@@ -1,0 +1,368 @@
+{
+  "animals": [
+    {
+      "id": "elephant",
+      "nameEn": "Elephant",
+      "category": "savanna",
+      "names": {
+        "he": {"name": "פיל", "gender": "m"},
+        "ru": {"name": "слон", "gender": "m"},
+        "uk": {"name": "слон", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הפיל גר בסוואנה",
+          "color": "הפיל אפור",
+          "sound": "הפיל מחצצר: טו-טו-טו!",
+          "diet": "הפיל אוכל עשב ועלים",
+          "size": "הפיל גדול",
+          "unique": "לפיל יש חדק ארוך"
+        },
+        "ru": {
+          "habitat": "Слон живёт в саванне",
+          "color": "Слон серый",
+          "sound": "Слон трубит: ту-ту-у!",
+          "diet": "Слон ест траву и листья",
+          "size": "Слон большой",
+          "unique": "У слона длинный хобот"
+        },
+        "uk": {
+          "habitat": "Слон живе в савані",
+          "color": "Слон сірий",
+          "sound": "Слон сурмить: ту-ту-у!",
+          "diet": "Слон їсть траву і листя",
+          "size": "Слон великий",
+          "unique": "У слона довгий хобот"
+        },
+        "en": {
+          "habitat": "The elephant lives in the savanna",
+          "color": "The elephant is gray",
+          "sound": "The elephant trumpets: toot-toot!",
+          "diet": "The elephant eats grass and leaves",
+          "size": "The elephant is big",
+          "unique": "The elephant has a long trunk"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SAVANNA"], "reject": []},
+        "color": {"accept": ["GRAY"], "reject": []},
+        "sound": {"accept": ["TRUMPET"], "reject": []},
+        "diet": {"accept": ["GRASS", "LEAVES", "FRUIT"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["TRUNK", "BIG"], "reject": []}
+      }
+    },
+    {
+      "id": "lion",
+      "nameEn": "Lion",
+      "category": "savanna",
+      "names": {
+        "he": {"name": "אריה", "gender": "m"},
+        "ru": {"name": "лев", "gender": "m"},
+        "uk": {"name": "лев", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "האריה גר בסוואנה",
+          "color": "האריה צהוב",
+          "sound": "האריה שואג: ררר!",
+          "diet": "האריה אוכל בשר",
+          "size": "האריה גדול",
+          "unique": "לאריה יש רעמה גדולה"
+        },
+        "ru": {
+          "habitat": "Лев живёт в саванне",
+          "color": "Лев жёлтый",
+          "sound": "Лев рычит: р-р-р!",
+          "diet": "Лев ест мясо",
+          "size": "Лев большой",
+          "unique": "У льва пышная грива"
+        },
+        "uk": {
+          "habitat": "Лев живе в савані",
+          "color": "Лев жовтий",
+          "sound": "Лев гарчить: р-р-р!",
+          "diet": "Лев їсть м'ясо",
+          "size": "Лев великий",
+          "unique": "У лева пишна грива"
+        },
+        "en": {
+          "habitat": "The lion lives in the savanna",
+          "color": "The lion is yellow",
+          "sound": "The lion roars: grrr!",
+          "diet": "The lion eats meat",
+          "size": "The lion is big",
+          "unique": "The lion has a big mane"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SAVANNA"], "reject": []},
+        "color": {"accept": ["YELLOW", "BROWN"], "reject": []},
+        "sound": {"accept": ["ROAR"], "reject": []},
+        "diet": {"accept": ["MEAT"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["MANE"], "reject": []}
+      }
+    },
+    {
+      "id": "penguin",
+      "nameEn": "Penguin",
+      "category": "cold",
+      "names": {
+        "he": {"name": "פינגווין", "gender": "m"},
+        "ru": {"name": "пингвин", "gender": "m"},
+        "uk": {"name": "пінгвін", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הפינגווין גר במקום קר, עם קרח ושלג",
+          "color": "הפינגווין שחור ולבן",
+          "sound": "הפינגווין מצייץ: פי-פי!",
+          "diet": "הפינגווין אוכל דגים",
+          "size": "הפינגווין קטן",
+          "unique": "הפינגווין לא עף, אבל שוחה מצוין"
+        },
+        "ru": {
+          "habitat": "Пингвин живёт там, где лёд и снег",
+          "color": "Пингвин чёрно-белый",
+          "sound": "Пингвин пищит: пи-пи!",
+          "diet": "Пингвин ест рыбу",
+          "size": "Пингвин маленький",
+          "unique": "Пингвин не летает, но отлично плавает"
+        },
+        "uk": {
+          "habitat": "Пінгвін живе там, де лід і сніг",
+          "color": "Пінгвін чорно-білий",
+          "sound": "Пінгвін пищить: пі-пі!",
+          "diet": "Пінгвін їсть рибу",
+          "size": "Пінгвін маленький",
+          "unique": "Пінгвін не літає, але чудово плаває"
+        },
+        "en": {
+          "habitat": "The penguin lives where there is ice and snow",
+          "color": "The penguin is black and white",
+          "sound": "The penguin squeaks: pee-pee!",
+          "diet": "The penguin eats fish",
+          "size": "The penguin is small",
+          "unique": "The penguin can't fly, but swims very well"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["COLD"], "reject": []},
+        "color": {"accept": ["BLACK_WHITE", "GRAY"], "reject": []},
+        "sound": {"accept": ["SQUEAK"], "reject": []},
+        "diet": {"accept": ["FISH"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["SWIM", "COLD"], "reject": []}
+      }
+    },
+    {
+      "id": "giraffe",
+      "nameEn": "Giraffe",
+      "category": "savanna",
+      "names": {
+        "he": {"name": "ג׳ירפה", "gender": "f"},
+        "ru": {"name": "жираф", "gender": "m"},
+        "uk": {"name": "жираф", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הג׳ירפה גרה בסוואנה",
+          "color": "הג׳ירפה צהובה עם כתמים חומים",
+          "sound": "הג׳ירפה מזמזמת בשקט: מממ",
+          "diet": "הג׳ירפה אוכלת עלים מהעצים",
+          "size": "הג׳ירפה גדולה וגבוהה מאוד",
+          "unique": "לג׳ירפה יש צוואר ארוך מאוד"
+        },
+        "ru": {
+          "habitat": "Жираф живёт в саванне",
+          "color": "Жираф жёлтый с коричневыми пятнами",
+          "sound": "Жираф тихонько мычит: м-м-м",
+          "diet": "Жираф ест листья с деревьев",
+          "size": "Жираф очень большой и высокий",
+          "unique": "У жирафа очень длинная шея"
+        },
+        "uk": {
+          "habitat": "Жираф живе в савані",
+          "color": "Жираф жовтий з коричневими плямами",
+          "sound": "Жираф тихенько мукає: м-м-м",
+          "diet": "Жираф їсть листя з дерев",
+          "size": "Жираф дуже великий і високий",
+          "unique": "У жирафа дуже довга шия"
+        },
+        "en": {
+          "habitat": "The giraffe lives in the savanna",
+          "color": "The giraffe is yellow with brown spots",
+          "sound": "The giraffe hums quietly: mmm",
+          "diet": "The giraffe eats leaves from trees",
+          "size": "The giraffe is very big and tall",
+          "unique": "The giraffe has a very long neck"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SAVANNA"], "reject": []},
+        "color": {"accept": ["YELLOW", "SPOTS", "BROWN"], "reject": []},
+        "sound": {"accept": ["HUM"], "reject": []},
+        "diet": {"accept": ["LEAVES"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["NECK", "SPOTS"], "reject": []}
+      }
+    },
+    {
+      "id": "hippo",
+      "nameEn": "Hippopotamus",
+      "category": "river_lake",
+      "names": {
+        "he": {"name": "היפופוטם", "gender": "m"},
+        "ru": {"name": "бегемот", "gender": "m"},
+        "uk": {"name": "бегемот", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "ההיפופוטם גר באפריקה, בנהר",
+          "color": "ההיפופוטם אפור",
+          "sound": "ההיפופוטם נוחר: הו-הו!",
+          "diet": "ההיפופוטם אוכל עשב",
+          "size": "ההיפופוטם גדול",
+          "unique": "ההיפופוטם אוהב לשבת במים"
+        },
+        "ru": {
+          "habitat": "Бегемот живёт в Африке, в реке",
+          "color": "Бегемот серый",
+          "sound": "Бегемот ревёт: о-о-о!",
+          "diet": "Бегемот ест траву",
+          "size": "Бегемот большой",
+          "unique": "Бегемот любит сидеть в воде"
+        },
+        "uk": {
+          "habitat": "Бегемот живе в Африці, у річці",
+          "color": "Бегемот сірий",
+          "sound": "Бегемот реве: о-о-о!",
+          "diet": "Бегемот їсть траву",
+          "size": "Бегемот великий",
+          "unique": "Бегемот любить сидіти у воді"
+        },
+        "en": {
+          "habitat": "The hippo lives in Africa, in the river",
+          "color": "The hippo is gray",
+          "sound": "The hippo grunts: ho-ho!",
+          "diet": "The hippo eats grass",
+          "size": "The hippo is big",
+          "unique": "The hippo likes to sit in the water"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["RIVER", "SAVANNA"], "reject": []},
+        "color": {"accept": ["GRAY"], "reject": []},
+        "sound": {"accept": ["HIPPO_SOUND"], "reject": []},
+        "diet": {"accept": ["GRASS"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["RIVER", "MOUTH", "BIG"], "reject": []}
+      }
+    },
+    {
+      "id": "zebra",
+      "nameEn": "Zebra",
+      "category": "savanna",
+      "names": {
+        "he": {"name": "זברה", "gender": "f"},
+        "ru": {"name": "зебра", "gender": "f"},
+        "uk": {"name": "зебра", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הזברה גרה בסוואנה",
+          "color": "הזברה מפוספסת בשחור ולבן",
+          "sound": "הזברה צועקת: אִי-אָה!",
+          "diet": "הזברה אוכלת עשב",
+          "size": "הזברה גדולה",
+          "unique": "לזברה יש פסים על כל הגוף"
+        },
+        "ru": {
+          "habitat": "Зебра живёт в саванне",
+          "color": "Зебра в чёрно-белую полоску",
+          "sound": "Зебра кричит: иа-иа!",
+          "diet": "Зебра ест траву",
+          "size": "Зебра большая",
+          "unique": "Зебра вся в полосках"
+        },
+        "uk": {
+          "habitat": "Зебра живе в савані",
+          "color": "Зебра в чорно-білу смужку",
+          "sound": "Зебра кричить: іа-іа!",
+          "diet": "Зебра їсть траву",
+          "size": "Зебра велика",
+          "unique": "Зебра вся в смужках"
+        },
+        "en": {
+          "habitat": "The zebra lives in the savanna",
+          "color": "The zebra has black and white stripes",
+          "sound": "The zebra calls: hee-haw!",
+          "diet": "The zebra eats grass",
+          "size": "The zebra is big",
+          "unique": "The zebra has stripes all over"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SAVANNA"], "reject": []},
+        "color": {"accept": ["BLACK_WHITE", "STRIPES"], "reject": []},
+        "sound": {"accept": ["ZEBRA_SOUND"], "reject": []},
+        "diet": {"accept": ["GRASS"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["STRIPES", "BLACK_WHITE"], "reject": []}
+      }
+    },
+    {
+      "id": "leopard",
+      "nameEn": "Leopard",
+      "category": "savanna",
+      "names": {
+        "he": {"name": "נמר", "gender": "m"},
+        "ru": {"name": "леопард", "gender": "m"},
+        "uk": {"name": "леопард", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הנמר גר בסוואנה",
+          "color": "הנמר צהוב עם כתמים שחורים",
+          "sound": "הנמר נוהם: ררר!",
+          "diet": "הנמר אוכל בשר",
+          "size": "הנמר גדול",
+          "unique": "הנמר מטפס על עצים"
+        },
+        "ru": {
+          "habitat": "Леопард живёт в саванне",
+          "color": "Леопард жёлтый с чёрными пятнами",
+          "sound": "Леопард рычит: р-р-р!",
+          "diet": "Леопард ест мясо",
+          "size": "Леопард большой",
+          "unique": "Леопард лазит по деревьям"
+        },
+        "uk": {
+          "habitat": "Леопард живе в савані",
+          "color": "Леопард жовтий з чорними плямами",
+          "sound": "Леопард гарчить: р-р-р!",
+          "diet": "Леопард їсть м'ясо",
+          "size": "Леопард великий",
+          "unique": "Леопард лазить по деревах"
+        },
+        "en": {
+          "habitat": "The leopard lives in the savanna",
+          "color": "The leopard is yellow with black spots",
+          "sound": "The leopard growls: grrr!",
+          "diet": "The leopard eats meat",
+          "size": "The leopard is big",
+          "unique": "The leopard climbs trees"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SAVANNA"], "reject": []},
+        "color": {"accept": ["YELLOW", "SPOTS"], "reject": []},
+        "sound": {"accept": ["ROAR"], "reject": []},
+        "diet": {"accept": ["MEAT"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["CLIMB", "SPOTS"], "reject": []}
+      }
+    }
+  ]
+}

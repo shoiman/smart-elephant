@@ -1,23 +1,32 @@
 package com.smartelephant.i18n;
 
+import com.smartelephant.i18n.AnimalCatalog.AnimalContent;
+import com.smartelephant.i18n.AnimalCatalog.Gender;
+import com.smartelephant.i18n.AnimalCatalog.LocalizedName;
 import com.smartelephant.model.enums.QuestionDifficulty;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.random.RandomGenerator;
 
 /**
- * Localized question templates and animal names for the mock question generator.
+ * Localized question templates for the mock question generator.
  *
  * Used until the real Claude API is connected (Phase 2), so a child always hears
  * questions in the language selected in the UI instead of English.
+ * Animal names, answers and available topics come from {@link AnimalCatalog}.
  *
  * Placeholders:
- *   {name} - animal name as is (lowercase in ru/uk/en, Hebrew has no case)
- *   {Name} - animal name with the first letter capitalized (start of a sentence)
+ *   {name}  - animal name as is (lowercase in ru/uk/en, Hebrew has no case)
+ *   {Name}  - animal name with the first letter capitalized (start of a sentence)
+ *   {the}   - Hebrew definite form: "הפיל", "חזיר הבר"
+ *   {inThe} - Hebrew "in/about the ...": "בפיל", "באייל הקורא"
  */
 @Component
 public class QuestionTemplates {
@@ -27,23 +36,23 @@ public class QuestionTemplates {
         HABITAT, COLOR, SOUND, DIET, SIZE, UNIQUE
     }
 
-    /** Grammatical gender of an animal name; some questions need agreement (e.g. "большой/большая"). */
-    enum Gender {
-        MASCULINE, FEMININE
-    }
-
-    /** A question phrased for both genders; identical text when the phrase is gender-neutral. */
-    record Template(String masculine, String feminine) {
+    /** A question phrased for each grammatical gender; identical text when the phrase is gender-neutral. */
+    record Template(String masculine, String feminine, String neuter) {
         static Template of(String text) {
-            return new Template(text, text);
+            return new Template(text, text, text);
+        }
+
+        static Template of(String masculine, String feminine) {
+            return new Template(masculine, feminine, masculine);
         }
 
         String forGender(Gender gender) {
-            return gender == Gender.FEMININE ? feminine : masculine;
+            return switch (gender) {
+                case FEMININE -> feminine;
+                case NEUTER -> neuter;
+                default -> masculine;
+            };
         }
-    }
-
-    record LocalizedName(String name, Gender gender) {
     }
 
     /**
@@ -62,36 +71,25 @@ public class QuestionTemplates {
     private static final Map<GameLanguage, Map<Topic, List<Template>>> TEMPLATES = new EnumMap<>(GameLanguage.class);
     private static final Map<GameLanguage, Map<QuestionDifficulty, List<String>>> HINTS = new EnumMap<>(GameLanguage.class);
 
-    /** Keyed by the English animal name from the database, lowercase. */
-    private static final Map<String, Map<GameLanguage, LocalizedName>> ANIMAL_NAMES = Map.of(
-            "elephant", names("פיל", Gender.MASCULINE, "слон", Gender.MASCULINE, "слон", Gender.MASCULINE),
-            "lion", names("אריה", Gender.MASCULINE, "лев", Gender.MASCULINE, "лев", Gender.MASCULINE),
-            "penguin", names("פינגווין", Gender.MASCULINE, "пингвин", Gender.MASCULINE, "пінгвін", Gender.MASCULINE),
-            "giraffe", names("ג׳ירפה", Gender.FEMININE, "жираф", Gender.MASCULINE, "жираф", Gender.MASCULINE),
-            "hippopotamus", names("היפופוטם", Gender.MASCULINE, "бегемот", Gender.MASCULINE, "бегемот", Gender.MASCULINE),
-            "zebra", names("זברה", Gender.FEMININE, "зебра", Gender.FEMININE, "зебра", Gender.FEMININE),
-            "leopard", names("נמר", Gender.MASCULINE, "леопард", Gender.MASCULINE, "леопард", Gender.MASCULINE)
-    );
-
     static {
         TEMPLATES.put(GameLanguage.HE, Map.of(
                 Topic.HABITAT, List.of(
-                        new Template("איפה גר ה{name}?", "איפה גרה ה{name}?"),
-                        Template.of("איפה הבית של ה{name}?")),
+                        Template.of("איפה גר {the}?", "איפה גרה {the}?"),
+                        Template.of("איפה הבית של {the}?")),
                 Topic.COLOR, List.of(
-                        Template.of("מה הצבע של ה{name}?"),
-                        Template.of("באיזה צבע ה{name}?")),
+                        Template.of("מה הצבע של {the}?"),
+                        Template.of("באיזה צבע {the}?")),
                 Topic.SOUND, List.of(
-                        Template.of("איזה קול עושה ה{name}?"),
-                        Template.of("איך מדבר ה{name}?")),
+                        Template.of("איזה קול עושה {the}?"),
+                        Template.of("איך מדבר {the}?", "איך מדברת {the}?")),
                 Topic.DIET, List.of(
-                        new Template("מה אוכל ה{name}?", "מה אוכלת ה{name}?"),
-                        Template.of("מה האוכל של ה{name}?")),
+                        Template.of("מה אוכל {the}?", "מה אוכלת {the}?"),
+                        Template.of("מה האוכל של {the}?")),
                 Topic.SIZE, List.of(
-                        new Template("ה{name} גדול או קטן?", "ה{name} גדולה או קטנה?")),
+                        Template.of("{the} גדול או קטן?", "{the} גדולה או קטנה?")),
                 Topic.UNIQUE, List.of(
-                        Template.of("מה מיוחד ב{name}?"),
-                        Template.of("במה ה{name} שונה מחיות אחרות?"))
+                        Template.of("מה מיוחד {inThe}?"),
+                        Template.of("במה {the} שונה מחיות אחרות?"))
         ));
 
         TEMPLATES.put(GameLanguage.RU, Map.of(
@@ -108,7 +106,8 @@ public class QuestionTemplates {
                         Template.of("Что ест {name}?"),
                         Template.of("Что любит есть {name}?")),
                 Topic.SIZE, List.of(
-                        new Template("{Name} большой или маленький?", "{Name} большая или маленькая?")),
+                        new Template("{Name} большой или маленький?", "{Name} большая или маленькая?",
+                                "{Name} большое или маленькое?")),
                 Topic.UNIQUE, List.of(
                         Template.of("Чем {name} отличается от других животных?"))
         ));
@@ -128,7 +127,8 @@ public class QuestionTemplates {
                         Template.of("Що їсть {name}?"),
                         Template.of("Що любить їсти {name}?")),
                 Topic.SIZE, List.of(
-                        new Template("{Name} великий чи маленький?", "{Name} велика чи маленька?")),
+                        new Template("{Name} великий чи маленький?", "{Name} велика чи маленька?",
+                                "{Name} велике чи маленьке?")),
                 Topic.UNIQUE, List.of(
                         Template.of("Чим {name} відрізняється від інших тварин?"))
         ));
@@ -175,61 +175,59 @@ public class QuestionTemplates {
         ));
     }
 
+    private final AnimalCatalog catalog;
+
+    public QuestionTemplates(AnimalCatalog catalog) {
+        this.catalog = catalog;
+    }
+
     /**
      * Builds a question about the animal in the requested language.
+     * Only topics the animal has are used (a fish is never asked about its sound); when the
+     * difficulty level has no such topic, any topic of the animal is used.
      *
      * @param englishAnimalName animal name as stored in the database (e.g. "Zebra")
      */
     public LocalizedQuestion question(String englishAnimalName, QuestionDifficulty difficulty,
-                           GameLanguage language, RandomGenerator random) {
-        List<Topic> topics = TOPICS_BY_DIFFICULTY.getOrDefault(difficulty, List.of(Topic.HABITAT));
-        Topic topic = topics.get(random.nextInt(topics.size()));
+                                      GameLanguage language, RandomGenerator random) {
+        Set<Topic> available = catalog.find(englishAnimalName)
+                .map(AnimalContent::topics)
+                .orElse(EnumSet.allOf(Topic.class));
+        List<Topic> candidates = TOPICS_BY_DIFFICULTY.getOrDefault(difficulty, List.of(Topic.HABITAT)).stream()
+                .filter(available::contains)
+                .toList();
+        if (candidates.isEmpty()) {
+            candidates = List.copyOf(available);
+        }
+        Topic topic = candidates.get(random.nextInt(candidates.size()));
         return question(englishAnimalName, topic, language, random);
     }
 
     /** Builds a question on a specific topic; package-private for tests. */
     LocalizedQuestion question(String englishAnimalName, Topic topic, GameLanguage language, RandomGenerator random) {
-        LocalizedName localized = localizedName(englishAnimalName, language);
-        // An animal without a translation keeps its English name, so use English phrasing for it
+        Optional<AnimalContent> animal = catalog.find(englishAnimalName);
+        LocalizedName localized = animal.flatMap(content -> content.name(language)).orElse(null);
+        // An animal without content keeps its English name, so use English phrasing for it
         GameLanguage templateLanguage = localized == null ? GameLanguage.EN : language;
         if (localized == null) {
-            localized = new LocalizedName(englishAnimalName.toLowerCase(Locale.ROOT), Gender.MASCULINE);
+            localized = new LocalizedName(englishAnimalName.toLowerCase(Locale.ROOT), Gender.MASCULINE, null);
         }
 
         List<Template> templates = TEMPLATES.get(templateLanguage).get(topic);
         Template template = templates.get(random.nextInt(templates.size()));
+        String definite = localized.definite() != null ? localized.definite() : "ה" + localized.name();
+        String inThe = "ב" + (definite.startsWith("ה") ? definite.substring(1) : definite);
         String text = template.forGender(localized.gender())
                 .replace("{Name}", capitalize(localized.name()))
-                .replace("{name}", localized.name());
-        String answer = AnimalAnswers.answer(englishAnimalName, topic, templateLanguage).orElse(null);
+                .replace("{name}", localized.name())
+                .replace("{the}", definite)
+                .replace("{inThe}", inThe);
+        String answer = animal.flatMap(content -> content.answer(topic, templateLanguage)).orElse(null);
         return new LocalizedQuestion(topic, text, answer);
     }
 
     public List<String> hints(QuestionDifficulty difficulty, GameLanguage language) {
         return HINTS.get(language).getOrDefault(difficulty, List.of());
-    }
-
-    /** Returns null when the animal has no translation for this language. */
-    private static LocalizedName localizedName(String englishAnimalName, GameLanguage language) {
-        if (englishAnimalName == null) {
-            return null;
-        }
-        String key = englishAnimalName.trim().toLowerCase(Locale.ROOT);
-        if (language == GameLanguage.EN) {
-            return new LocalizedName(key, Gender.MASCULINE);
-        }
-        Map<GameLanguage, LocalizedName> byLanguage = ANIMAL_NAMES.get(key);
-        return byLanguage == null ? null : byLanguage.get(language);
-    }
-
-    private static Map<GameLanguage, LocalizedName> names(String he, Gender heGender,
-                                                         String ru, Gender ruGender,
-                                                         String uk, Gender ukGender) {
-        Map<GameLanguage, LocalizedName> map = new EnumMap<>(GameLanguage.class);
-        map.put(GameLanguage.HE, new LocalizedName(he, heGender));
-        map.put(GameLanguage.RU, new LocalizedName(ru, ruGender));
-        map.put(GameLanguage.UK, new LocalizedName(uk, ukGender));
-        return map;
     }
 
     private static String capitalize(String text) {

@@ -10,7 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class QuestionTemplatesTest {
 
-    private final QuestionTemplates templates = new QuestionTemplates();
+    private static final AnimalCatalog CATALOG = new AnimalCatalog();
+    private final QuestionTemplates templates = new QuestionTemplates(CATALOG);
 
     @Test
     void languageCodesResolveWithEnglishFallback() {
@@ -29,11 +30,27 @@ class QuestionTemplatesTest {
     }
 
     @Test
+    void hebrewMultiWordNamesUseTheirDefiniteForm() {
+        assertThat(templates.question("Boar", Topic.SIZE, GameLanguage.HE, new Random(1)).text())
+                .isEqualTo("חזיר הבר גדול או קטן?");
+        assertThat(templates.question("Ladybug", Topic.SIZE, GameLanguage.HE, new Random(1)).text())
+                .isEqualTo("פרת משה רבנו גדולה או קטנה?");
+        assertThat(templates.question("Moose", Topic.UNIQUE, GameLanguage.HE, new Random(1)).text())
+                .isIn("מה מיוחד באייל הקורא?", "במה האייל הקורא שונה מחיות אחרות?");
+    }
+
+    @Test
     void russianQuestionCapitalizesNameAtSentenceStart() {
         assertThat(templates.question("Elephant", Topic.SIZE, GameLanguage.RU, new Random(1)).text())
                 .isEqualTo("Слон большой или маленький?");
         assertThat(templates.question("Zebra", Topic.SIZE, GameLanguage.RU, new Random(1)).text())
                 .isEqualTo("Зебра большая или маленькая?");
+    }
+
+    @Test
+    void neuterNamesAgreeInUkrainian() {
+        assertThat(templates.question("Ladybug", Topic.SIZE, GameLanguage.UK, new Random(1)).text())
+                .isEqualTo("Сонечко велике чи маленьке?");
     }
 
     @Test
@@ -60,8 +77,8 @@ class QuestionTemplatesTest {
     @Test
     void unknownAnimalFallsBackToEnglishPhrasing() {
         QuestionTemplates.LocalizedQuestion question =
-                templates.question("Kangaroo", Topic.HABITAT, GameLanguage.RU, new Random(1));
-        assertThat(question.text()).contains("kangaroo").doesNotContain("{");
+                templates.question("Unicorn", Topic.HABITAT, GameLanguage.RU, new Random(1));
+        assertThat(question.text()).contains("unicorn").doesNotContain("{");
         assertThat(question.answer()).isNull();
     }
 

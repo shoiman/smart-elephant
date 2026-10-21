@@ -1,0 +1,462 @@
+{
+  "animals": [
+    {
+      "id": "hedgehog",
+      "nameEn": "Hedgehog",
+      "category": "forest",
+      "names": {
+        "he": {"name": "קיפוד", "gender": "m"},
+        "ru": {"name": "ёж", "gender": "m"},
+        "uk": {"name": "їжак", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הקיפוד חי ביער",
+          "color": "הקיפוד חום",
+          "sound": "הקיפוד נושף: פף-פף!",
+          "diet": "הקיפוד אוכל חרקים",
+          "size": "הקיפוד קטן",
+          "unique": "לקיפוד יש קוצים"
+        },
+        "ru": {
+          "habitat": "Ёж живёт в лесу",
+          "color": "Ёж коричневый",
+          "sound": "Ёж фыркает: фыр-фыр!",
+          "diet": "Ёж ест насекомых",
+          "size": "Ёж маленький",
+          "unique": "У ежа острые иголки"
+        },
+        "uk": {
+          "habitat": "Їжак живе в лісі",
+          "color": "Їжак коричневий",
+          "sound": "Їжак фиркає: фир-фир!",
+          "diet": "Їжак їсть комах",
+          "size": "Їжак маленький",
+          "unique": "У їжака гострі голки"
+        },
+        "en": {
+          "habitat": "The hedgehog lives in the forest",
+          "color": "The hedgehog is brown",
+          "sound": "The hedgehog sniffs: sniff-sniff!",
+          "diet": "The hedgehog eats insects",
+          "size": "The hedgehog is small",
+          "unique": "The hedgehog has sharp spines"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FOREST"], "reject": []},
+        "color": {"accept": ["BROWN", "GRAY"], "reject": []},
+        "sound": {"accept": ["SNIFF", "HUM"], "reject": []},
+        "diet": {"accept": ["INSECTS", "FRUIT", "NUTS"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["SPIKES"], "reject": []}
+      }
+    },
+    {
+      "id": "moose",
+      "nameEn": "Moose",
+      "category": "forest",
+      "names": {
+        "he": {"name": "אייל קורא", "gender": "m", "definite": "האייל הקורא"},
+        "ru": {"name": "лось", "gender": "m"},
+        "uk": {"name": "лось", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "האייל הקורא חי ביער",
+          "color": "האייל הקורא חום",
+          "diet": "האייל הקורא אוכל עלים",
+          "size": "האייל הקורא גדול",
+          "unique": "לאייל הקורא קרניים רחבות"
+        },
+        "ru": {
+          "habitat": "Лось живёт в лесу",
+          "color": "Лось коричневый",
+          "diet": "Лось ест листья",
+          "size": "Лось большой",
+          "unique": "У лося широкие рога"
+        },
+        "uk": {
+          "habitat": "Лось живе в лісі",
+          "color": "Лось коричневий",
+          "diet": "Лось їсть листя",
+          "size": "Лось великий",
+          "unique": "У лося широкі роги"
+        },
+        "en": {
+          "habitat": "The moose lives in the forest",
+          "color": "The moose is brown",
+          "diet": "The moose eats leaves",
+          "size": "The moose is big",
+          "unique": "The moose has broad antlers"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FOREST"], "reject": []},
+        "color": {"accept": ["BROWN"], "reject": []},
+        "diet": {"accept": ["LEAVES", "GRASS"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["ANTLERS"], "reject": []}
+      }
+    },
+    {
+      "id": "owl",
+      "nameEn": "Owl",
+      "category": "forest",
+      "names": {
+        "he": {"name": "ינשוף", "gender": "m"},
+        "ru": {"name": "сова", "gender": "f"},
+        "uk": {"name": "сова", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הינשוף חי ביער",
+          "color": "הינשוף חום",
+          "sound": "הינשוף קורא: הו-הו!",
+          "diet": "הינשוף אוכל עכברים",
+          "size": "הינשוף קטן",
+          "unique": "לינשוף יש עיניים גדולות"
+        },
+        "ru": {
+          "habitat": "Сова живёт в лесу",
+          "color": "Сова коричневая",
+          "sound": "Сова ухает: у-ху!",
+          "diet": "Сова ест мышей",
+          "size": "Сова маленькая",
+          "unique": "У совы большие глаза"
+        },
+        "uk": {
+          "habitat": "Сова живе в лісі",
+          "color": "Сова коричнева",
+          "sound": "Сова ухкає: у-ху!",
+          "diet": "Сова їсть мишей",
+          "size": "Сова маленька",
+          "unique": "У сови великі очі"
+        },
+        "en": {
+          "habitat": "The owl lives in the forest",
+          "color": "The owl is brown",
+          "sound": "The owl hoots: hoo-hoo!",
+          "diet": "The owl eats mice",
+          "size": "The owl is small",
+          "unique": "The owl has big eyes"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FOREST"], "reject": []},
+        "color": {"accept": ["BROWN"], "reject": []},
+        "sound": {"accept": ["HOOT"], "reject": []},
+        "diet": {"accept": ["MICE"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["BIG_EYES"], "reject": []}
+      }
+    },
+    {
+      "id": "raven",
+      "nameEn": "Raven",
+      "category": "forest",
+      "names": {
+        "he": {"name": "עורב", "gender": "m"},
+        "ru": {"name": "ворона", "gender": "f"},
+        "uk": {"name": "ворона", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "העורב חי ביער ובעיר",
+          "color": "העורב שחור",
+          "sound": "העורב קורא: קרע-קרע!",
+          "diet": "העורב אוכל גרעינים ותולעים",
+          "unique": "לעורב יש מקור חזק"
+        },
+        "ru": {
+          "habitat": "Ворона живёт в лесу и в городе",
+          "color": "Ворона чёрная",
+          "sound": "Ворона каркает: кар-кар!",
+          "diet": "Ворона ест зёрнышки и червяков",
+          "unique": "У вороны крепкий клюв"
+        },
+        "uk": {
+          "habitat": "Ворона живе в лісі та в місті",
+          "color": "Ворона чорна",
+          "sound": "Ворона каркає: кар-кар!",
+          "diet": "Ворона їсть зернятка і черв'ячків",
+          "unique": "У ворони міцний дзьоб"
+        },
+        "en": {
+          "habitat": "The crow lives in the forest and in the city",
+          "color": "The crow is black",
+          "sound": "The crow caws: caw-caw!",
+          "diet": "The crow eats grain and worms",
+          "unique": "The crow has a strong beak"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FOREST", "CITY", "LEAVES"], "reject": []},
+        "color": {"accept": ["BLACK"], "reject": []},
+        "sound": {"accept": ["CAW"], "reject": []},
+        "diet": {"accept": ["SEEDS", "INSECTS", "FRUIT", "MEAT"], "reject": []},
+        "unique": {"accept": ["BILL", "WINGS"], "reject": []}
+      }
+    },
+    {
+      "id": "squirrel",
+      "nameEn": "Squirrel",
+      "category": "forest",
+      "names": {
+        "he": {"name": "סנאי", "gender": "m"},
+        "ru": {"name": "белка", "gender": "f"},
+        "uk": {"name": "білка", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הסנאי חי ביער",
+          "color": "הסנאי כתום",
+          "sound": "הסנאי מצייץ בשקט",
+          "diet": "הסנאי אוכל אגוזים",
+          "size": "הסנאי קטן",
+          "unique": "לסנאי יש זנב גדול"
+        },
+        "ru": {
+          "habitat": "Белка живёт в лесу",
+          "color": "Белка рыжая",
+          "sound": "Белка тихо пищит: пи-пи!",
+          "diet": "Белка ест орехи",
+          "size": "Белка маленькая",
+          "unique": "У белки большой пушистый хвост"
+        },
+        "uk": {
+          "habitat": "Білка живе в лісі",
+          "color": "Білка руда",
+          "sound": "Білка тихо пищить: пі-пі!",
+          "diet": "Білка їсть горіхи",
+          "size": "Білка маленька",
+          "unique": "У білки великий пухнастий хвіст"
+        },
+        "en": {
+          "habitat": "The squirrel lives in the forest",
+          "color": "The squirrel is orange",
+          "sound": "The squirrel squeaks: squeak-squeak!",
+          "diet": "The squirrel eats nuts",
+          "size": "The squirrel is small",
+          "unique": "The squirrel has a fluffy tail"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FOREST"], "reject": []},
+        "color": {"accept": ["YELLOW", "BROWN"], "reject": []},
+        "sound": {"accept": ["SQUEAK"], "reject": []},
+        "diet": {"accept": ["NUTS"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["TAIL", "WOOL"], "reject": []}
+      }
+    },
+    {
+      "id": "wolf",
+      "nameEn": "Wolf",
+      "category": "forest",
+      "names": {
+        "he": {"name": "זאב", "gender": "m"},
+        "ru": {"name": "волк", "gender": "m"},
+        "uk": {"name": "вовк", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הזאב חי ביער",
+          "color": "הזאב אפור",
+          "sound": "הזאב מיילל: אווו!",
+          "diet": "הזאב אוכל בשר",
+          "size": "הזאב גדול",
+          "unique": "לזאב יש שיניים חדות"
+        },
+        "ru": {
+          "habitat": "Волк живёт в лесу",
+          "color": "Волк серый",
+          "sound": "Волк воет: у-у-у!",
+          "diet": "Волк ест мясо",
+          "size": "Волк большой",
+          "unique": "У волка острые зубы"
+        },
+        "uk": {
+          "habitat": "Вовк живе в лісі",
+          "color": "Вовк сірий",
+          "sound": "Вовк виє: у-у-у!",
+          "diet": "Вовк їсть м'ясо",
+          "size": "Вовк великий",
+          "unique": "У вовка гострі зуби"
+        },
+        "en": {
+          "habitat": "The wolf lives in the forest",
+          "color": "The wolf is gray",
+          "sound": "The wolf howls: awooo!",
+          "diet": "The wolf eats meat",
+          "size": "The wolf is big",
+          "unique": "The wolf has sharp teeth"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FOREST"], "reject": []},
+        "color": {"accept": ["GRAY"], "reject": []},
+        "sound": {"accept": ["HOWL"], "reject": []},
+        "diet": {"accept": ["MEAT"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["SHARP_TEETH", "HOWL", "TAIL"], "reject": []}
+      }
+    },
+    {
+      "id": "boar",
+      "nameEn": "Boar",
+      "category": "forest",
+      "names": {
+        "he": {"name": "חזיר בר", "gender": "m", "definite": "חזיר הבר"},
+        "ru": {"name": "кабан", "gender": "m"},
+        "uk": {"name": "кабан", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "חזיר הבר חי ביער",
+          "color": "חזיר הבר חום",
+          "sound": "חזיר הבר נוחר: חרר!",
+          "diet": "חזיר הבר אוכל עשב ובלוטים",
+          "size": "חזיר הבר גדול",
+          "unique": "לחזיר הבר יש ניבים"
+        },
+        "ru": {
+          "habitat": "Кабан живёт в лесу",
+          "color": "Кабан коричневый",
+          "sound": "Кабан хрюкает: хрю-хрю!",
+          "diet": "Кабан ест траву и жёлуди",
+          "size": "Кабан большой",
+          "unique": "У кабана есть клыки"
+        },
+        "uk": {
+          "habitat": "Кабан живе в лісі",
+          "color": "Кабан коричневий",
+          "sound": "Кабан хрюкає: хрю-хрю!",
+          "diet": "Кабан їсть траву і жолуді",
+          "size": "Кабан великий",
+          "unique": "У кабана є ікла"
+        },
+        "en": {
+          "habitat": "The boar lives in the forest",
+          "color": "The boar is brown",
+          "sound": "The boar grunts: oink-oink!",
+          "diet": "The boar eats grass and acorns",
+          "size": "The boar is big",
+          "unique": "The boar has sharp tusks"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FOREST"], "reject": []},
+        "color": {"accept": ["BROWN"], "reject": []},
+        "sound": {"accept": ["OINK"], "reject": []},
+        "diet": {"accept": ["GRASS", "NUTS", "PLANTS", "VEGETABLES"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["TUSKS", "SNOUT", "SHARP_TEETH"], "reject": []}
+      }
+    },
+    {
+      "id": "bird",
+      "nameEn": "Bird",
+      "category": "forest",
+      "names": {
+        "he": {"name": "ציפור", "gender": "f"},
+        "ru": {"name": "птичка", "gender": "f"},
+        "uk": {"name": "пташка", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הציפור גרה בקן",
+          "color": "הציפור צהובה",
+          "sound": "הציפור מצייצת: ציף-ציף!",
+          "diet": "הציפור אוכלת גרעינים",
+          "size": "הציפור קטנה",
+          "unique": "לציפור יש כנפיים"
+        },
+        "ru": {
+          "habitat": "Птичка живёт в гнезде",
+          "color": "Птичка жёлтая",
+          "sound": "Птичка поёт: чик-чирик!",
+          "diet": "Птичка ест зёрнышки",
+          "size": "Птица маленькая",
+          "unique": "У птицы есть крылья"
+        },
+        "uk": {
+          "habitat": "Пташка живе в гнізді",
+          "color": "Пташка жовта",
+          "sound": "Пташка співає: цвірінь!",
+          "diet": "Пташка їсть зернятка",
+          "size": "Птах маленький",
+          "unique": "У птаха є крила"
+        },
+        "en": {
+          "habitat": "The bird lives in a nest",
+          "color": "The bird is yellow",
+          "sound": "The bird chirps: tweet-tweet!",
+          "diet": "The bird eats grain",
+          "size": "The bird is small",
+          "unique": "The bird has wings"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["NEST", "FOREST", "LEAVES"], "reject": []},
+        "color": {"accept": ["YELLOW"], "reject": []},
+        "sound": {"accept": ["CHIRP"], "reject": []},
+        "diet": {"accept": ["SEEDS", "INSECTS", "FRUIT"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["WINGS"], "reject": []}
+      }
+    },
+    {
+      "id": "parrot",
+      "nameEn": "Parrot",
+      "category": "jungle",
+      "names": {
+        "he": {"name": "תוכי", "gender": "m"},
+        "ru": {"name": "попугай", "gender": "m"},
+        "uk": {"name": "папуга", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "התוכי חי ביער טרופי",
+          "color": "התוכי אדום",
+          "sound": "התוכי צועק: שלום!",
+          "diet": "התוכי אוכל פירות",
+          "size": "התוכי קטן",
+          "unique": "התוכי יודע לדבר"
+        },
+        "ru": {
+          "habitat": "Попугай живёт в джунглях",
+          "color": "Попугай красный",
+          "sound": "Попугай кричит: привет!",
+          "diet": "Попугай ест фрукты",
+          "size": "Попугай маленький",
+          "unique": "Попугай умеет говорить"
+        },
+        "uk": {
+          "habitat": "Папуга живе в джунглях",
+          "color": "Папуга червоний",
+          "sound": "Папуга кричить: привіт!",
+          "diet": "Папуга їсть фрукти",
+          "size": "Папуга маленький",
+          "unique": "Папуга вміє говорити"
+        },
+        "en": {
+          "habitat": "The parrot lives in the jungle",
+          "color": "The parrot is red",
+          "sound": "The parrot squawks: hello!",
+          "diet": "The parrot eats fruit",
+          "size": "The parrot is small",
+          "unique": "The parrot can talk"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["JUNGLE", "FOREST", "LEAVES"], "reject": []},
+        "color": {"accept": ["RED", "COLORFUL"], "reject": []},
+        "sound": {"accept": ["SQUAWK", "MIMIC"], "reject": []},
+        "diet": {"accept": ["FRUIT"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["MIMIC", "COLORFUL"], "reject": []}
+      }
+    }
+  ]
+}

@@ -1,0 +1,348 @@
+{
+  "animals": [
+    {
+      "id": "bee",
+      "nameEn": "Bee",
+      "category": "garden",
+      "names": {
+        "he": {"name": "דבורה", "gender": "f"},
+        "ru": {"name": "пчела", "gender": "f"},
+        "uk": {"name": "бджола", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הדבורה חיה ליד פרחים",
+          "color": "הדבורה צהובה ושחורה",
+          "sound": "הדבורה מזמזמת: ז-ז-ז!",
+          "diet": "הדבורה אוספת צוף מפרחים",
+          "size": "הדבורה קטנה",
+          "unique": "הדבורה מכינה דבש"
+        },
+        "ru": {
+          "habitat": "Пчела живёт возле цветов",
+          "color": "Пчела жёлтая и чёрная",
+          "sound": "Пчела жужжит: ж-ж-ж!",
+          "diet": "Пчела собирает нектар с цветов",
+          "size": "Пчела маленькая",
+          "unique": "Пчела делает мёд"
+        },
+        "uk": {
+          "habitat": "Бджола живе біля квітів",
+          "color": "Бджола жовта й чорна",
+          "sound": "Бджола дзижчить: дз-з-з!",
+          "diet": "Бджола збирає нектар із квітів",
+          "size": "Бджола маленька",
+          "unique": "Бджола робить мед"
+        },
+        "en": {
+          "habitat": "The bee lives near flowers",
+          "color": "The bee is yellow and black",
+          "sound": "The bee buzzes: bzzz!",
+          "diet": "The bee gathers nectar from flowers",
+          "size": "The bee is small",
+          "unique": "The bee makes honey"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FLOWERS", "HIVE", "GARDEN"], "reject": []},
+        "color": {"accept": ["YELLOW", "BLACK"], "reject": []},
+        "sound": {"accept": ["BUZZ"], "reject": []},
+        "diet": {"accept": ["NECTAR", "FLOWERS", "HONEY"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["HONEY"], "reject": []}
+      }
+    },
+    {
+      "id": "butterfly",
+      "nameEn": "Butterfly",
+      "category": "garden",
+      "names": {
+        "he": {"name": "פרפר", "gender": "m"},
+        "ru": {"name": "бабочка", "gender": "f"},
+        "uk": {"name": "метелик", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הפרפר עף בין הפרחים",
+          "color": "הפרפר צבעוני מאוד",
+          "diet": "הפרפר שותה צוף מפרחים",
+          "size": "הפרפר קטן",
+          "unique": "לפרפר יש כנפיים צבעוניות"
+        },
+        "ru": {
+          "habitat": "Бабочка летает среди цветов",
+          "color": "Бабочка очень разноцветная",
+          "diet": "Бабочка пьёт нектар цветов",
+          "size": "Бабочка маленькая",
+          "unique": "У бабочки красивые крылья"
+        },
+        "uk": {
+          "habitat": "Метелик літає серед квітів",
+          "color": "Метелик дуже різнокольоровий",
+          "diet": "Метелик п’є квітковий нектар",
+          "size": "Метелик маленький",
+          "unique": "У метелика гарні крила"
+        },
+        "en": {
+          "habitat": "The butterfly flies among flowers",
+          "color": "The butterfly is very colorful",
+          "diet": "The butterfly drinks flower nectar",
+          "size": "The butterfly is small",
+          "unique": "The butterfly has colorful wings"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FLOWERS"], "reject": []},
+        "color": {"accept": ["COLORFUL"], "reject": []},
+        "diet": {"accept": ["NECTAR", "FLOWERS"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["WINGS"], "reject": []}
+      }
+    },
+    {
+      "id": "ant",
+      "nameEn": "Ant",
+      "category": "garden",
+      "names": {
+        "he": {"name": "נמלה", "gender": "f"},
+        "ru": {"name": "муравей", "gender": "m"},
+        "uk": {"name": "мураха", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הנמלה חיה בקן באדמה",
+          "color": "הנמלה חומה",
+          "diet": "הנמלה אוכלת זרעים ופירורים",
+          "size": "הנמלה קטנה",
+          "unique": "הנמלה חזקה מאוד"
+        },
+        "ru": {
+          "habitat": "Муравей живёт в муравейнике",
+          "color": "Муравей коричневый",
+          "diet": "Муравей ест семена и крошки",
+          "size": "Муравей маленький",
+          "unique": "Муравей очень сильный"
+        },
+        "uk": {
+          "habitat": "Мураха живе в мурашнику",
+          "color": "Мураха коричнева",
+          "diet": "Мураха їсть насіння й крихти",
+          "size": "Мураха маленька",
+          "unique": "Мураха дуже сильна"
+        },
+        "en": {
+          "habitat": "The ant lives in an anthill",
+          "color": "The ant is brown",
+          "diet": "The ant eats seeds and crumbs",
+          "size": "The ant is small",
+          "unique": "The ant is very strong"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["ANTHILL"], "reject": []},
+        "color": {"accept": ["BROWN", "RED", "YELLOW"], "reject": []},
+        "diet": {"accept": ["SEEDS"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["STRONG"], "reject": []}
+      }
+    },
+    {
+      "id": "dragonfly",
+      "nameEn": "Dragonfly",
+      "category": "garden",
+      "names": {
+        "he": {"name": "שפירית", "gender": "f"},
+        "ru": {"name": "стрекоза", "gender": "f"},
+        "uk": {"name": "бабка", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "השפירית עפה ליד מים",
+          "color": "השפירית כחולה וירוקה",
+          "diet": "השפירית אוכלת חרקים קטנים",
+          "size": "השפירית קטנה",
+          "unique": "לשפירית יש כנפיים ארוכות"
+        },
+        "ru": {
+          "habitat": "Стрекоза летает возле воды",
+          "color": "Стрекоза синяя и зелёная",
+          "diet": "Стрекоза ест мелких насекомых",
+          "size": "Стрекоза маленькая",
+          "unique": "У стрекозы длинные крылья"
+        },
+        "uk": {
+          "habitat": "Бабка літає біля води",
+          "color": "Бабка синя й зелена",
+          "diet": "Бабка їсть дрібних комах",
+          "size": "Бабка маленька",
+          "unique": "У бабки довгі крила"
+        },
+        "en": {
+          "habitat": "The dragonfly flies near water",
+          "color": "The dragonfly is blue and green",
+          "diet": "The dragonfly eats small insects",
+          "size": "The dragonfly is small",
+          "unique": "The dragonfly has long wings"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["RIVER"], "reject": []},
+        "color": {"accept": ["BLUE", "GREEN"], "reject": []},
+        "diet": {"accept": ["INSECTS"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["WINGS"], "reject": []}
+      }
+    },
+    {
+      "id": "fly",
+      "nameEn": "Fly",
+      "category": "garden",
+      "names": {
+        "he": {"name": "זבוב", "gender": "m"},
+        "ru": {"name": "муха", "gender": "f"},
+        "uk": {"name": "муха", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הזבוב עף ליד הבית",
+          "color": "הזבוב אפור או שחור",
+          "sound": "הזבוב מזמזם: ז-ז-ז!",
+          "diet": "הזבוב אוכל שאריות מזון",
+          "size": "הזבוב קטן",
+          "unique": "לזבוב יש עיניים גדולות"
+        },
+        "ru": {
+          "habitat": "Муха летает возле дома",
+          "color": "Муха серая или чёрная",
+          "sound": "Муха жужжит: ж-ж-ж!",
+          "diet": "Муха ест остатки еды",
+          "size": "Муха маленькая",
+          "unique": "У мухи большие глаза"
+        },
+        "uk": {
+          "habitat": "Муха літає біля будинку",
+          "color": "Муха сіра або чорна",
+          "sound": "Муха дзижчить: дз-з-з!",
+          "diet": "Муха їсть залишки їжі",
+          "size": "Муха маленька",
+          "unique": "У мухи великі очі"
+        },
+        "en": {
+          "habitat": "The fly buzzes around the house",
+          "color": "The fly is gray or black",
+          "sound": "The fly buzzes: bzzz!",
+          "diet": "The fly eats leftover food",
+          "size": "The fly is small",
+          "unique": "The fly has big eyes"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["HOUSE"], "reject": []},
+        "color": {"accept": ["GRAY", "BLACK"], "reject": []},
+        "sound": {"accept": ["BUZZ"], "reject": []},
+        "diet": {"accept": ["LEFTOVERS"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["BIG_EYES", "WINGS"], "reject": []}
+      }
+    },
+    {
+      "id": "grasshopper",
+      "nameEn": "Grasshopper",
+      "category": "garden",
+      "names": {
+        "he": {"name": "חגב", "gender": "m"},
+        "ru": {"name": "кузнечик", "gender": "m"},
+        "uk": {"name": "коник", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "החגב חי בין העשבים",
+          "color": "החגב ירוק",
+          "sound": "החגב מצרצר: טר-טר!",
+          "diet": "החגב אוכל עלים ועשב",
+          "size": "החגב קטן",
+          "unique": "החגב קופץ בעזרת רגליו"
+        },
+        "ru": {
+          "habitat": "Кузнечик живёт среди травы",
+          "color": "Кузнечик зелёный",
+          "sound": "Кузнечик стрекочет: тр-р-р!",
+          "diet": "Кузнечик ест листья и траву",
+          "size": "Кузнечик маленький",
+          "unique": "Кузнечик высоко прыгает"
+        },
+        "uk": {
+          "habitat": "Коник живе серед трави",
+          "color": "Коник зелений",
+          "sound": "Коник сюркоче: тр-р-р!",
+          "diet": "Коник їсть листя й траву",
+          "size": "Коник маленький",
+          "unique": "Коник високо стрибає"
+        },
+        "en": {
+          "habitat": "The grasshopper lives in grass",
+          "color": "The grasshopper is green",
+          "sound": "The grasshopper chirps: chirr-chirr!",
+          "diet": "The grasshopper eats leaves and grass",
+          "size": "The grasshopper is small",
+          "unique": "The grasshopper jumps with strong legs"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["GRASS", "GARDEN"], "reject": []},
+        "color": {"accept": ["GREEN"], "reject": []},
+        "sound": {"accept": ["CHIRR"], "reject": []},
+        "diet": {"accept": ["LEAVES", "GRASS"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["JUMP"], "reject": []}
+      }
+    },
+    {
+      "id": "ladybug",
+      "nameEn": "Ladybug",
+      "category": "garden",
+      "names": {
+        "he": {"name": "פרת משה רבנו", "gender": "f", "definite": "פרת משה רבנו"},
+        "ru": {"name": "божья коровка", "gender": "f"},
+        "uk": {"name": "сонечко", "gender": "n"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "פרת משה רבנו חיה בגינה",
+          "color": "פרת משה רבנו אדומה עם נקודות",
+          "diet": "פרת משה רבנו אוכלת חרקים קטנים",
+          "size": "פרת משה רבנו קטנה",
+          "unique": "לפרת משה רבנו יש נקודות שחורות"
+        },
+        "ru": {
+          "habitat": "Божья коровка живёт в саду",
+          "color": "Божья коровка красная с точками",
+          "diet": "Божья коровка ест маленьких жучков",
+          "size": "Божья коровка маленькая",
+          "unique": "У божьей коровки чёрные точки"
+        },
+        "uk": {
+          "habitat": "Сонечко живе в саду",
+          "color": "Сонечко червоне з цятками",
+          "diet": "Сонечко їсть маленьких жучків",
+          "size": "Сонечко маленьке",
+          "unique": "У сонечка чорні цятки"
+        },
+        "en": {
+          "habitat": "The ladybug lives in the garden",
+          "color": "The ladybug is red with spots",
+          "diet": "The ladybug eats tiny bugs",
+          "size": "The ladybug is small",
+          "unique": "The ladybug has black spots"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["GARDEN"], "reject": []},
+        "color": {"accept": ["RED", "SPOTS"], "reject": []},
+        "diet": {"accept": ["INSECTS", "APHIDS", "LEAVES"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["SPOTS"], "reject": []}
+      }
+    }
+  ]
+}

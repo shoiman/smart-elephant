@@ -1,5 +1,7 @@
 package com.smartelephant.service;
 
+import com.smartelephant.i18n.AnimalCatalog;
+import com.smartelephant.i18n.AnimalCatalog.AnimalContent;
 import com.smartelephant.i18n.GameLanguage;
 import com.smartelephant.i18n.QuestionTemplates;
 import com.smartelephant.i18n.QuestionTemplates.LocalizedQuestion;
@@ -16,8 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Service for question generation and management
@@ -32,6 +34,7 @@ public class QuestionService {
     private final GameSessionRepository gameSessionRepository;
     private final QuestionTemplates questionTemplates;
     private final TtsService ttsService;
+    private final AnimalCatalog animalCatalog;
 
     /**
      * Generate the next question for a child
@@ -54,12 +57,7 @@ public class QuestionService {
 
         log.debug("Determined difficulty for child {}: {}", child.getId(), difficulty);
 
-        // Select random animal
-        Optional<Animal> animalOpt = animalRepository.findRandomAnimal();
-        if (animalOpt.isEmpty()) {
-            throw new RuntimeException("No animals found in database");
-        }
-        Animal animal = animalOpt.get();
+        Animal animal = selectRandomAnimal();
 
         // Generate question using LLM
         LocalizedQuestion question = llmService.generateQuestion(
@@ -83,6 +81,18 @@ public class QuestionService {
                 .hints(questionTemplates.hints(difficulty, language))
                 .createdAt(LocalDateTime.now())
                 .build();
+    }
+
+    /**
+     * Picks a random animal that has game content (names, answers, rules), so every question
+     * can be asked in the child's language and checked. Falls back to any animal in the database.
+     */
+    private Animal selectRandomAnimal() {
+        List<AnimalContent> animals = animalCatalog.all();
+        AnimalContent content = animals.get(ThreadLocalRandom.current().nextInt(animals.size()));
+        return animalRepository.findByNameIgnoreCase(content.nameEn())
+                .or(animalRepository::findRandomAnimal)
+                .orElseThrow(() -> new RuntimeException("No animals found in database"));
     }
 
     /**

@@ -1,0 +1,249 @@
+{
+  "animals": [
+    {
+      "id": "rhino",
+      "nameEn": "Rhino",
+      "category": "savanna",
+      "names": {
+        "he": {"name": "קרנף", "gender": "m"},
+        "ru": {"name": "носорог", "gender": "m"},
+        "uk": {"name": "носоріг", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הקרנף חי בסוואנה",
+          "color": "הקרנף אפור",
+          "sound": "הקרנף נוחר: חרר!",
+          "diet": "הקרנף אוכל צמחים",
+          "size": "הקרנף גדול",
+          "unique": "לקרנף יש קרן גדולה"
+        },
+        "ru": {
+          "habitat": "Носорог живёт в саванне",
+          "color": "Носорог серый",
+          "sound": "Носорог фыркает: фыр-фыр!",
+          "diet": "Носорог ест растения",
+          "size": "Носорог большой",
+          "unique": "У носорога есть рог"
+        },
+        "uk": {
+          "habitat": "Носоріг живе в савані",
+          "color": "Носоріг сірий",
+          "sound": "Носоріг фиркає: фир-фир!",
+          "diet": "Носоріг їсть рослини",
+          "size": "Носоріг великий",
+          "unique": "У носорога є ріг"
+        },
+        "en": {
+          "habitat": "The rhino lives in the savanna",
+          "color": "The rhino is gray",
+          "sound": "The rhino snorts: snort-snort!",
+          "diet": "The rhino eats plants",
+          "size": "The rhino is big",
+          "unique": "The rhino has a horn"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SAVANNA"], "reject": []},
+        "color": {"accept": ["GRAY"], "reject": []},
+        "sound": {"accept": ["SNORT"], "reject": []},
+        "diet": {"accept": ["VEGETABLES", "GRASS", "LEAVES"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["HORNS"], "reject": []}
+      }
+    },
+    {
+      "id": "tiger",
+      "nameEn": "Tiger",
+      "category": "jungle",
+      "names": {
+        "he": {"name": "טיגריס", "gender": "m"},
+        "ru": {"name": "тигр", "gender": "m"},
+        "uk": {"name": "тигр", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הטיגריס חי ביער",
+          "color": "הטיגריס כתום ושחור",
+          "sound": "הטיגריס שואג: ררר!",
+          "diet": "הטיגריס אוכל בשר",
+          "size": "הטיגריס גדול",
+          "unique": "לטיגריס יש פסים שחורים"
+        },
+        "ru": {
+          "habitat": "Тигр живёт в лесу",
+          "color": "Тигр оранжевый с полосками",
+          "sound": "Тигр рычит: р-р-р!",
+          "diet": "Тигр ест мясо",
+          "size": "Тигр большой",
+          "unique": "У тигра чёрные полоски"
+        },
+        "uk": {
+          "habitat": "Тигр живе в лісі",
+          "color": "Тигр помаранчевий зі смужками",
+          "sound": "Тигр гарчить: р-р-р!",
+          "diet": "Тигр їсть м'ясо",
+          "size": "Тигр великий",
+          "unique": "У тигра чорні смужки"
+        },
+        "en": {
+          "habitat": "The tiger lives in the forest",
+          "color": "The tiger is orange with stripes",
+          "sound": "The tiger roars: roar!",
+          "diet": "The tiger eats meat",
+          "size": "The tiger is big",
+          "unique": "The tiger has black stripes"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["FOREST", "JUNGLE"], "reject": []},
+        "color": {"accept": ["YELLOW", "BLACK_WHITE", "STRIPES"], "reject": []},
+        "sound": {"accept": ["ROAR"], "reject": []},
+        "diet": {"accept": ["MEAT"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["STRIPES"], "reject": []}
+      }
+    },
+    {
+      "id": "ostrich",
+      "nameEn": "Ostrich",
+      "category": "savanna",
+      "names": {
+        "he": {"name": "יען", "gender": "m"},
+        "ru": {"name": "страус", "gender": "m"},
+        "uk": {"name": "страус", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "היען חי בסוואנה",
+          "color": "היען שחור ולבן",
+          "diet": "היען אוכל צמחים",
+          "size": "היען גדול",
+          "unique": "ליען יש רגליים ארוכות"
+        },
+        "ru": {
+          "habitat": "Страус живёт в саванне",
+          "color": "Страус чёрно-белый",
+          "diet": "Страус ест растения",
+          "size": "Страус большой",
+          "unique": "У страуса длинные ноги"
+        },
+        "uk": {
+          "habitat": "Страус живе в савані",
+          "color": "Страус чорно-білий",
+          "diet": "Страус їсть рослини",
+          "size": "Страус великий",
+          "unique": "У страуса довгі ноги"
+        },
+        "en": {
+          "habitat": "The ostrich lives in the savanna",
+          "color": "The ostrich is black and white",
+          "diet": "The ostrich eats plants",
+          "size": "The ostrich is big",
+          "unique": "The ostrich has long legs"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SAVANNA"], "reject": []},
+        "color": {"accept": ["BLACK_WHITE"], "reject": []},
+        "diet": {"accept": ["VEGETABLES", "GRASS", "LEAVES"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["LONG_LEGS"], "reject": []}
+      }
+    },
+    {
+      "id": "kangaroo",
+      "nameEn": "Kangaroo",
+      "category": "australia",
+      "names": {
+        "he": {"name": "קנגורו", "gender": "m"},
+        "ru": {"name": "кенгуру", "gender": "m"},
+        "uk": {"name": "кенгуру", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הקנגורו חי באוסטרליה",
+          "color": "הקנגורו כתום",
+          "diet": "הקנגורו אוכל עשב",
+          "size": "הקנגורו גדול",
+          "unique": "לקנגורו יש כיס בבטן"
+        },
+        "ru": {
+          "habitat": "Кенгуру живёт в Австралии",
+          "color": "Кенгуру рыжий",
+          "diet": "Кенгуру ест траву",
+          "size": "Кенгуру большой",
+          "unique": "У кенгуру есть сумка"
+        },
+        "uk": {
+          "habitat": "Кенгуру живе в Австралії",
+          "color": "Кенгуру рудий",
+          "diet": "Кенгуру їсть траву",
+          "size": "Кенгуру великий",
+          "unique": "У кенгуру є сумка"
+        },
+        "en": {
+          "habitat": "The kangaroo lives in Australia",
+          "color": "The kangaroo is orange",
+          "diet": "The kangaroo eats grass",
+          "size": "The kangaroo is big",
+          "unique": "The kangaroo has a belly pouch"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["AUSTRALIA"], "reject": []},
+        "color": {"accept": ["YELLOW", "BROWN"], "reject": []},
+        "diet": {"accept": ["GRASS", "VEGETABLES"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["POUCH", "JUMP"], "reject": []}
+      }
+    },
+    {
+      "id": "koala",
+      "nameEn": "Koala",
+      "category": "australia",
+      "names": {
+        "he": {"name": "קואלה", "gender": "f"},
+        "ru": {"name": "коала", "gender": "m"},
+        "uk": {"name": "коала", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הקואלה חיה באוסטרליה",
+          "color": "הקואלה אפורה",
+          "diet": "הקואלה אוכלת עלי אקליפטוס",
+          "size": "הקואלה קטנה",
+          "unique": "הקואלה ישנה על עצים"
+        },
+        "ru": {
+          "habitat": "Коала живёт в Австралии",
+          "color": "Коала серая",
+          "diet": "Коала ест листья эвкалипта",
+          "size": "Коала маленькая",
+          "unique": "Коала спит на деревьях"
+        },
+        "uk": {
+          "habitat": "Коала живе в Австралії",
+          "color": "Коала сіра",
+          "diet": "Коала їсть листя евкаліпта",
+          "size": "Коала маленька",
+          "unique": "Коала спить на деревах"
+        },
+        "en": {
+          "habitat": "The koala lives in Australia",
+          "color": "The koala is gray",
+          "diet": "The koala eats eucalyptus leaves",
+          "size": "The koala is small",
+          "unique": "The koala sleeps in trees"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["AUSTRALIA"], "reject": []},
+        "color": {"accept": ["GRAY"], "reject": []},
+        "diet": {"accept": ["LEAVES"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["SLEEP", "CLIMB"], "reject": []}
+      }
+    }
+  ]
+}

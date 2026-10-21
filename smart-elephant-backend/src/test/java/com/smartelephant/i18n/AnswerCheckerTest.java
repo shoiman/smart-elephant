@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class AnswerCheckerTest {
 
-    private final AnswerChecker checker = new AnswerChecker();
+    private final AnswerChecker checker = new AnswerChecker(new AnimalCatalog());
 
     @ParameterizedTest(name = "[{0}] {1} {2}: \"{3}\" -> {4}")
     @CsvSource(delimiter = ';', value = {
@@ -21,6 +21,9 @@ class AnswerCheckerTest {
             "RU; hippopotamus; HABITAT; в речке; true",
             "RU; hippopotamus; HABITAT; в Африке; true",
             "UK; hippopotamus; HABITAT; у воді; true",
+            "UK; hippopotamus; HABITAT; у річці; true",
+            "UK; hippopotamus; HABITAT; в річечці; true",
+            "UK; hippopotamus; HABITAT; в савані; true",
             // Colors with word forms and Hebrew vowel marks
             "HE; elephant; COLOR; אָפוֹר; true",
             "HE; elephant; COLOR; ורוד; false",
@@ -53,6 +56,31 @@ class AnswerCheckerTest {
             "HE; giraffe; UNIQUE; צוואר ארוך; true",
             "RU; penguin; UNIQUE; он плавает; true",
             "UK; zebra; UNIQUE; смужки; true",
+            // Animals from resources/content: word forms a child really says
+            "RU; penguin; COLOR; серый; true",
+            "RU; cow; SOUND; му-у; true",
+            "UK; cow; SOUND; мичить; true",
+            "RU; cow; COLOR; коричневая; false",
+            "RU; sheep; SOUND; бе-е-е; true",
+            "RU; horse; SOUND; ржёт; true",
+            "RU; rabbit; DIET; морковку; true",
+            "RU; rabbit; UNIQUE; ушки; true",
+            "RU; chicken; DIET; зёрнышки; true",
+            "RU; frog; HABITAT; в пруду; true",
+            "RU; frog; SOUND; ква-ква; true",
+            "RU; catfish; UNIQUE; усы; true",
+            "RU; shark; HABITAT; в море; true",
+            "RU; shark; HABITAT; в холоде; false",
+            "RU; octopus; COLOR; красный; false",
+            "RU; squirrel; DIET; орешки; true",
+            "RU; raven; COLOR; белая; false",
+            "RU; parrot; SOUND; привет; true",
+            "HE; boar; SOUND; חרר; true",
+            "RU; bee; HABITAT; в улье; true",
+            "UK; fly; HABITAT; в будинку; true",
+            "RU; grasshopper; SOUND; тр-р-р; true",
+            "RU; ladybug; UNIQUE; точки; true",
+            "HE; parrot; HABITAT; בג׳ונגל; true",
             // Silence or nonsense
             "RU; elephant; COLOR; ' '; false",
     })
@@ -62,7 +90,7 @@ class AnswerCheckerTest {
 
     @Test
     void unknownAnimalOrTopicCannotBeJudged() {
-        assertThat(checker.check("kangaroo", Topic.COLOR, GameLanguage.RU, "серый")).isEmpty();
+        assertThat(checker.check("unicorn", Topic.COLOR, GameLanguage.RU, "серый")).isEmpty();
         assertThat(checker.check("elephant", null, GameLanguage.RU, "серый")).isEmpty();
     }
 

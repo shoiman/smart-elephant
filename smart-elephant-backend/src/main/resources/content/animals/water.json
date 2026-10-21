@@ -1,0 +1,598 @@
+{
+  "animals": [
+    {
+      "id": "crocodile",
+      "nameEn": "Crocodile",
+      "category": "river_lake",
+      "names": {
+        "he": {"name": "תנין", "gender": "m"},
+        "ru": {"name": "крокодил", "gender": "m"},
+        "uk": {"name": "крокодил", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "התנין חי במים",
+          "color": "התנין ירוק",
+          "sound": "התנין שואג: ררר!",
+          "diet": "התנין אוכל בשר",
+          "size": "התנין גדול",
+          "unique": "לתנין יש שיניים חדות"
+        },
+        "ru": {
+          "habitat": "Крокодил живёт в воде",
+          "color": "Крокодил зелёный",
+          "sound": "Крокодил рычит: р-р-р!",
+          "diet": "Крокодил ест мясо",
+          "size": "Крокодил большой",
+          "unique": "У крокодила острые зубы"
+        },
+        "uk": {
+          "habitat": "Крокодил живе у воді",
+          "color": "Крокодил зелений",
+          "sound": "Крокодил гарчить: р-р-р!",
+          "diet": "Крокодил їсть м'ясо",
+          "size": "Крокодил великий",
+          "unique": "У крокодила гострі зуби"
+        },
+        "en": {
+          "habitat": "The crocodile lives in water",
+          "color": "The crocodile is green",
+          "sound": "The crocodile roars: roar!",
+          "diet": "The crocodile eats meat",
+          "size": "The crocodile is big",
+          "unique": "The crocodile has sharp teeth"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["RIVER", "SAVANNA"], "reject": []},
+        "color": {"accept": ["GREEN"], "reject": []},
+        "sound": {"accept": ["ROAR"], "reject": []},
+        "diet": {"accept": ["MEAT", "FISH"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["SHARP_TEETH"], "reject": []}
+      }
+    },
+    {
+      "id": "frog",
+      "nameEn": "Frog",
+      "category": "river_lake",
+      "names": {
+        "he": {"name": "צפרדע", "gender": "f"},
+        "ru": {"name": "лягушка", "gender": "f"},
+        "uk": {"name": "жаба", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הצפרדע חיה ליד מים",
+          "color": "הצפרדע ירוקה",
+          "sound": "הצפרדע מקרקרת: קווה-קווה!",
+          "diet": "הצפרדע אוכלת חרקים",
+          "size": "הצפרדע קטנה",
+          "unique": "הצפרדע קופצת גבוה"
+        },
+        "ru": {
+          "habitat": "Лягушка живёт у воды",
+          "color": "Лягушка зелёная",
+          "sound": "Лягушка квакает: ква-ква!",
+          "diet": "Лягушка ест насекомых",
+          "size": "Лягушка маленькая",
+          "unique": "Лягушка высоко прыгает"
+        },
+        "uk": {
+          "habitat": "Жаба живе біля води",
+          "color": "Жаба зелена",
+          "sound": "Жаба квакає: ква-ква!",
+          "diet": "Жаба їсть комах",
+          "size": "Жаба маленька",
+          "unique": "Жаба високо стрибає"
+        },
+        "en": {
+          "habitat": "The frog lives near water",
+          "color": "The frog is green",
+          "sound": "The frog croaks: ribbit-ribbit!",
+          "diet": "The frog eats insects",
+          "size": "The frog is small",
+          "unique": "The frog jumps very high"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["RIVER"], "reject": []},
+        "color": {"accept": ["GREEN"], "reject": []},
+        "sound": {"accept": ["CROAK"], "reject": []},
+        "diet": {"accept": ["INSECTS"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["JUMP"], "reject": []}
+      }
+    },
+    {
+      "id": "duck",
+      "nameEn": "Duck",
+      "category": "river_lake",
+      "names": {
+        "he": {"name": "ברווז", "gender": "m"},
+        "ru": {"name": "утка", "gender": "f"},
+        "uk": {"name": "качка", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הברווז חי ליד מים",
+          "color": "הברווז צהוב",
+          "sound": "הברווז מגעגע: גע-גע!",
+          "diet": "הברווז אוכל צמחים",
+          "size": "הברווז קטן",
+          "unique": "לברווז יש מקור רחב"
+        },
+        "ru": {
+          "habitat": "Утка живёт возле воды",
+          "color": "Утка жёлтая",
+          "sound": "Утка крякает: кря-кря!",
+          "diet": "Утка ест растения",
+          "size": "Утка маленькая",
+          "unique": "У утки широкий клюв"
+        },
+        "uk": {
+          "habitat": "Качка живе біля води",
+          "color": "Качка жовта",
+          "sound": "Качка крякає: кря-кря!",
+          "diet": "Качка їсть рослини",
+          "size": "Качка маленька",
+          "unique": "У качки широкий дзьоб"
+        },
+        "en": {
+          "habitat": "The duck lives near water",
+          "color": "The duck is yellow",
+          "sound": "The duck quacks: quack-quack!",
+          "diet": "The duck eats plants",
+          "size": "The duck is small",
+          "unique": "The duck has a wide bill"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["RIVER"], "reject": []},
+        "color": {"accept": ["YELLOW"], "reject": []},
+        "sound": {"accept": ["QUACK"], "reject": []},
+        "diet": {"accept": ["PLANTS", "GRASS", "SEEDS", "INSECTS"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["BILL"], "reject": []}
+      }
+    },
+    {
+      "id": "swan",
+      "nameEn": "Swan",
+      "category": "river_lake",
+      "names": {
+        "he": {"name": "ברבור", "gender": "m"},
+        "ru": {"name": "лебедь", "gender": "m"},
+        "uk": {"name": "лебідь", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הברבור חי באגם",
+          "color": "הברבור לבן",
+          "sound": "הברבור שורק: ששש!",
+          "diet": "הברבור אוכל צמחים",
+          "size": "הברבור גדול",
+          "unique": "לברבור יש צוואר ארוך"
+        },
+        "ru": {
+          "habitat": "Лебедь живёт на озере",
+          "color": "Лебедь белый",
+          "sound": "Лебедь шипит: ш-ш-ш!",
+          "diet": "Лебедь ест растения",
+          "size": "Лебедь большой",
+          "unique": "У лебедя длинная шея"
+        },
+        "uk": {
+          "habitat": "Лебідь живе на озері",
+          "color": "Лебідь білий",
+          "sound": "Лебідь шипить: ш-ш-ш!",
+          "diet": "Лебідь їсть рослини",
+          "size": "Лебідь великий",
+          "unique": "У лебедя довга шия"
+        },
+        "en": {
+          "habitat": "The swan lives on a lake",
+          "color": "The swan is white",
+          "sound": "The swan hisses: hiss!",
+          "diet": "The swan eats plants",
+          "size": "The swan is big",
+          "unique": "The swan has a long neck"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["RIVER"], "reject": []},
+        "color": {"accept": ["WHITE"], "reject": []},
+        "sound": {"accept": ["HISS", "HUM"], "reject": []},
+        "diet": {"accept": ["PLANTS", "GRASS", "SEEDS"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["NECK"], "reject": []}
+      }
+    },
+    {
+      "id": "heron",
+      "nameEn": "Heron",
+      "category": "river_lake",
+      "names": {
+        "he": {"name": "אנפה", "gender": "f"},
+        "ru": {"name": "цапля", "gender": "f"},
+        "uk": {"name": "чапля", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "האנפה חיה ליד מים",
+          "color": "האנפה אפורה",
+          "diet": "האנפה אוכלת דגים",
+          "size": "האנפה גדולה",
+          "unique": "לאנפה יש רגליים ארוכות"
+        },
+        "ru": {
+          "habitat": "Цапля живёт у воды",
+          "color": "Цапля серая",
+          "diet": "Цапля ест рыбу",
+          "size": "Цапля большая",
+          "unique": "У цапли длинные ноги"
+        },
+        "uk": {
+          "habitat": "Чапля живе біля води",
+          "color": "Чапля сіра",
+          "diet": "Чапля їсть рибу",
+          "size": "Чапля велика",
+          "unique": "У чаплі довгі ноги"
+        },
+        "en": {
+          "habitat": "The heron lives near water",
+          "color": "The heron is gray",
+          "diet": "The heron eats fish",
+          "size": "The heron is big",
+          "unique": "The heron has long legs"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["RIVER"], "reject": []},
+        "color": {"accept": ["GRAY", "WHITE"], "reject": []},
+        "diet": {"accept": ["FISH"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["LONG_LEGS"], "reject": []}
+      }
+    },
+    {
+      "id": "catfish",
+      "nameEn": "Catfish",
+      "category": "river_lake",
+      "names": {
+        "he": {"name": "שפמנון", "gender": "m"},
+        "ru": {"name": "сом", "gender": "m"},
+        "uk": {"name": "сом", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "השפמנון חי בנהר",
+          "color": "השפמנון אפור",
+          "diet": "השפמנון אוכל דגים",
+          "size": "השפמנון גדול",
+          "unique": "לשפמנון יש שפמים ארוכים"
+        },
+        "ru": {
+          "habitat": "Сом живёт в реке",
+          "color": "Сом серый",
+          "diet": "Сом ест рыбу",
+          "size": "Сом большой",
+          "unique": "У сома длинные усы"
+        },
+        "uk": {
+          "habitat": "Сом живе в річці",
+          "color": "Сом сірий",
+          "diet": "Сом їсть рибу",
+          "size": "Сом великий",
+          "unique": "У сома довгі вуса"
+        },
+        "en": {
+          "habitat": "The catfish lives in a river",
+          "color": "The catfish is gray",
+          "diet": "The catfish eats fish",
+          "size": "The catfish is big",
+          "unique": "The catfish has long whiskers"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["RIVER"], "reject": []},
+        "color": {"accept": ["GRAY"], "reject": []},
+        "diet": {"accept": ["FISH"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["WHISKERS"], "reject": []}
+      }
+    },
+    {
+      "id": "crab",
+      "nameEn": "Crab",
+      "category": "sea",
+      "names": {
+        "he": {"name": "סרטן", "gender": "m"},
+        "ru": {"name": "краб", "gender": "m"},
+        "uk": {"name": "краб", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הסרטן חי בים",
+          "color": "הסרטן אדום",
+          "diet": "הסרטן אוכל דגים",
+          "size": "הסרטן קטן",
+          "unique": "לסרטן יש צבתות"
+        },
+        "ru": {
+          "habitat": "Краб живёт в море",
+          "color": "Краб красный",
+          "diet": "Краб ест рыбу",
+          "size": "Краб маленький",
+          "unique": "У краба есть клешни"
+        },
+        "uk": {
+          "habitat": "Краб живе в морі",
+          "color": "Краб червоний",
+          "diet": "Краб їсть рибу",
+          "size": "Краб маленький",
+          "unique": "У краба є клешні"
+        },
+        "en": {
+          "habitat": "The crab lives in the sea",
+          "color": "The crab is red",
+          "diet": "The crab eats fish",
+          "size": "The crab is small",
+          "unique": "The crab has two claws"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SEA"], "reject": []},
+        "color": {"accept": ["RED", "YELLOW"], "reject": []},
+        "diet": {"accept": ["FISH", "PLANTS"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["CLAWS"], "reject": []}
+      }
+    },
+    {
+      "id": "tuna",
+      "nameEn": "Tuna",
+      "category": "sea",
+      "names": {
+        "he": {"name": "טונה", "gender": "f"},
+        "ru": {"name": "тунец", "gender": "m"},
+        "uk": {"name": "тунець", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הטונה חיה בים",
+          "color": "הטונה כחולה",
+          "diet": "הטונה אוכלת דגים",
+          "size": "הטונה גדולה",
+          "unique": "הטונה שוחה מהר"
+        },
+        "ru": {
+          "habitat": "Тунец живёт в море",
+          "color": "Тунец синий",
+          "diet": "Тунец ест рыбу",
+          "size": "Тунец большой",
+          "unique": "Тунец быстро плавает"
+        },
+        "uk": {
+          "habitat": "Тунець живе в морі",
+          "color": "Тунець синій",
+          "diet": "Тунець їсть рибу",
+          "size": "Тунець великий",
+          "unique": "Тунець швидко плаває"
+        },
+        "en": {
+          "habitat": "The tuna lives in the sea",
+          "color": "The tuna is blue",
+          "diet": "The tuna eats fish",
+          "size": "The tuna is big",
+          "unique": "The tuna swims very fast"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SEA"], "reject": []},
+        "color": {"accept": ["BLUE", "GRAY"], "reject": []},
+        "diet": {"accept": ["FISH"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["SWIM"], "reject": []}
+      }
+    },
+    {
+      "id": "octopus",
+      "nameEn": "Octopus",
+      "category": "sea",
+      "names": {
+        "he": {"name": "תמנון", "gender": "m"},
+        "ru": {"name": "осьминог", "gender": "m"},
+        "uk": {"name": "восьминіг", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "התמנון חי בים",
+          "color": "התמנון סגול",
+          "diet": "התמנון אוכל סרטנים",
+          "size": "התמנון קטן",
+          "unique": "לתמנון יש שמונה זרועות"
+        },
+        "ru": {
+          "habitat": "Осьминог живёт в море",
+          "color": "Осьминог фиолетовый",
+          "diet": "Осьминог ест крабов",
+          "size": "Осьминог маленький",
+          "unique": "У осьминога восемь щупалец"
+        },
+        "uk": {
+          "habitat": "Восьминіг живе в морі",
+          "color": "Восьминіг фіолетовий",
+          "diet": "Восьминіг їсть крабів",
+          "size": "Восьминіг маленький",
+          "unique": "У восьминога вісім щупалець"
+        },
+        "en": {
+          "habitat": "The octopus lives in the sea",
+          "color": "The octopus is purple",
+          "diet": "The octopus eats crabs",
+          "size": "The octopus is small",
+          "unique": "The octopus has eight arms"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SEA"], "reject": []},
+        "color": {"accept": ["PURPLE"], "reject": []},
+        "diet": {"accept": ["CRAB", "FISH"], "reject": []},
+        "size": {"accept": ["SMALL"], "reject": ["BIG"]},
+        "unique": {"accept": ["TENTACLES"], "reject": []}
+      }
+    },
+    {
+      "id": "whale",
+      "nameEn": "Whale",
+      "category": "sea",
+      "names": {
+        "he": {"name": "לווייתן", "gender": "m"},
+        "ru": {"name": "кит", "gender": "m"},
+        "uk": {"name": "кит", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הלווייתן חי בים",
+          "color": "הלווייתן כחול",
+          "sound": "הלווייתן שר בקול",
+          "diet": "הלווייתן אוכל דגים קטנים",
+          "size": "הלווייתן גדול",
+          "unique": "הלווייתן הכי גדול בים"
+        },
+        "ru": {
+          "habitat": "Кит живёт в море",
+          "color": "Кит синий",
+          "sound": "Кит поёт громкие песни",
+          "diet": "Кит ест маленьких рыбок",
+          "size": "Кит большой",
+          "unique": "Кит самый большой в море"
+        },
+        "uk": {
+          "habitat": "Кит живе в морі",
+          "color": "Кит синій",
+          "sound": "Кит співає гучні пісні",
+          "diet": "Кит їсть маленьких рибок",
+          "size": "Кит великий",
+          "unique": "Кит найбільший у морі"
+        },
+        "en": {
+          "habitat": "The whale lives in the sea",
+          "color": "The whale is blue",
+          "sound": "The whale sings loud songs",
+          "diet": "The whale eats little fish",
+          "size": "The whale is big",
+          "unique": "The whale is the biggest in the sea"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SEA"], "reject": []},
+        "color": {"accept": ["BLUE", "GRAY"], "reject": []},
+        "sound": {"accept": ["SING"], "reject": []},
+        "diet": {"accept": ["FISH", "PLANKTON"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["BIG", "BLOWHOLE", "FOUNTAIN"], "reject": []}
+      }
+    },
+    {
+      "id": "dolphin",
+      "nameEn": "Dolphin",
+      "category": "sea",
+      "names": {
+        "he": {"name": "דולפין", "gender": "m"},
+        "ru": {"name": "дельфин", "gender": "m"},
+        "uk": {"name": "дельфін", "gender": "m"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הדולפין חי בים",
+          "color": "הדולפין כחול",
+          "sound": "הדולפין מצפצף: אי-אי-אי!",
+          "diet": "הדולפין אוכל דגים",
+          "size": "הדולפין גדול",
+          "unique": "הדולפין קופץ מעל המים"
+        },
+        "ru": {
+          "habitat": "Дельфин живёт в море",
+          "color": "Дельфин голубой",
+          "sound": "Дельфин свистит: и-и-и!",
+          "diet": "Дельфин ест рыбу",
+          "size": "Дельфин большой",
+          "unique": "Дельфин прыгает над водой"
+        },
+        "uk": {
+          "habitat": "Дельфін живе в морі",
+          "color": "Дельфін блакитний",
+          "sound": "Дельфін свистить: і-і-і!",
+          "diet": "Дельфін їсть рибу",
+          "size": "Дельфін великий",
+          "unique": "Дельфін стрибає над водою"
+        },
+        "en": {
+          "habitat": "The dolphin lives in the sea",
+          "color": "The dolphin is blue",
+          "sound": "The dolphin whistles: eee-eee!",
+          "diet": "The dolphin eats fish",
+          "size": "The dolphin is big",
+          "unique": "The dolphin jumps above water"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SEA"], "reject": []},
+        "color": {"accept": ["BLUE", "GRAY"], "reject": []},
+        "sound": {"accept": ["WHISTLE", "SQUEAK"], "reject": []},
+        "diet": {"accept": ["FISH"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["JUMP"], "reject": []}
+      }
+    },
+    {
+      "id": "shark",
+      "nameEn": "Shark",
+      "category": "sea",
+      "names": {
+        "he": {"name": "כריש", "gender": "m"},
+        "ru": {"name": "акула", "gender": "f"},
+        "uk": {"name": "акула", "gender": "f"}
+      },
+      "answers": {
+        "he": {
+          "habitat": "הכריש חי בים",
+          "color": "הכריש אפור",
+          "diet": "הכריש אוכל דגים",
+          "size": "הכריש גדול",
+          "unique": "לכריש יש שיניים חדות"
+        },
+        "ru": {
+          "habitat": "Акула живёт в море",
+          "color": "Акула серая",
+          "diet": "Акула ест рыбу",
+          "size": "Акула большая",
+          "unique": "У акулы острые зубы"
+        },
+        "uk": {
+          "habitat": "Акула живе в морі",
+          "color": "Акула сіра",
+          "diet": "Акула їсть рибу",
+          "size": "Акула велика",
+          "unique": "В акули гострі зуби"
+        },
+        "en": {
+          "habitat": "The shark lives in the sea",
+          "color": "The shark is gray",
+          "diet": "The shark eats fish",
+          "size": "The shark is big",
+          "unique": "The shark has sharp teeth"
+        }
+      },
+      "check": {
+        "habitat": {"accept": ["SEA"], "reject": []},
+        "color": {"accept": ["BLUE", "GRAY"], "reject": []},
+        "diet": {"accept": ["FISH"], "reject": []},
+        "size": {"accept": ["BIG"], "reject": ["SMALL"]},
+        "unique": {"accept": ["SHARP_TEETH"], "reject": []}
+      }
+    }
+  ]
+}
