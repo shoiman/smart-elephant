@@ -44,7 +44,7 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["FLOWERS", "HIVE", "GARDEN"], "reject": []},
+        "habitat": {"accept": ["FLOWERS", "HIVE", "GARDEN", "FARM", "FOREST"], "reject": []},
         "color": {"accept": ["YELLOW", "BLACK"], "reject": []},
         "sound": {"accept": ["BUZZ"], "reject": []},
         "diet": {"accept": ["NECTAR", "FLOWERS", "HONEY"], "reject": []},
@@ -64,36 +64,36 @@
       "answers": {
         "he": {
           "habitat": "הפרפר עף בין הפרחים",
-          "color": "הפרפר צבעוני מאוד",
+          "color": "הפרפר כתום וכחול",
           "diet": "הפרפר שותה צוף מפרחים",
           "size": "הפרפר קטן",
           "unique": "לפרפר יש כנפיים צבעוניות"
         },
         "ru": {
           "habitat": "Бабочка летает среди цветов",
-          "color": "Бабочка очень разноцветная",
+          "color": "Бабочка оранжевая с синим",
           "diet": "Бабочка пьёт нектар цветов",
           "size": "Бабочка маленькая",
           "unique": "У бабочки красивые крылья"
         },
         "uk": {
           "habitat": "Метелик літає серед квітів",
-          "color": "Метелик дуже різнокольоровий",
+          "color": "Метелик помаранчевий із синім",
           "diet": "Метелик п’є квітковий нектар",
           "size": "Метелик маленький",
           "unique": "У метелика гарні крила"
         },
         "en": {
           "habitat": "The butterfly flies among flowers",
-          "color": "The butterfly is very colorful",
+          "color": "The butterfly is orange and blue",
           "diet": "The butterfly drinks flower nectar",
           "size": "The butterfly is small",
           "unique": "The butterfly has colorful wings"
         }
       },
       "check": {
-        "habitat": {"accept": ["FLOWERS"], "reject": []},
-        "color": {"accept": ["COLORFUL"], "reject": []},
+        "habitat": {"accept": ["FLOWERS", "FOREST", "JUNGLE"], "reject": []},
+        "color": {"accept": ["COLORFUL", "YELLOW"], "reject": []},
         "diet": {"accept": ["NECTAR", "FLOWERS"], "reject": []},
         "size": {"accept": ["SMALL"], "reject": ["BIG"]},
         "unique": {"accept": ["WINGS"], "reject": []}
@@ -139,9 +139,9 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["ANTHILL"], "reject": []},
+        "habitat": {"accept": ["ANTHILL", "FOREST", "HOUSE"], "reject": []},
         "color": {"accept": ["BROWN", "RED", "YELLOW"], "reject": []},
-        "diet": {"accept": ["SEEDS"], "reject": []},
+        "diet": {"accept": ["SEEDS", "INSECTS", "HONEY"], "reject": []},
         "size": {"accept": ["SMALL"], "reject": ["BIG"]},
         "unique": {"accept": ["STRONG"], "reject": []}
       }
@@ -237,7 +237,7 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["HOUSE"], "reject": []},
+        "habitat": {"accept": ["HOUSE", "FARM"], "reject": []},
         "color": {"accept": ["GRAY", "BLACK"], "reject": []},
         "sound": {"accept": ["BUZZ"], "reject": []},
         "diet": {"accept": ["LEFTOVERS"], "reject": []},
@@ -259,7 +259,7 @@
           "habitat": "החגב חי בין העשבים",
           "color": "החגב ירוק",
           "sound": "החגב מצרצר: טר-טר!",
-          "diet": "החגב אוכל עלים ועשב",
+          "diet": "החגב אוכל עשב, עלים ופרחים",
           "size": "החגב קטן",
           "unique": "החגב קופץ בעזרת רגליו"
         },
@@ -267,7 +267,7 @@
           "habitat": "Кузнечик живёт среди травы",
           "color": "Кузнечик зелёный",
           "sound": "Кузнечик стрекочет: тр-р-р!",
-          "diet": "Кузнечик ест листья и траву",
+          "diet": "Кузнечик ест траву, листья и цветы",
           "size": "Кузнечик маленький",
           "unique": "Кузнечик высоко прыгает"
         },
@@ -275,7 +275,7 @@
           "habitat": "Коник живе серед трави",
           "color": "Коник зелений",
           "sound": "Коник сюркоче: тр-р-р!",
-          "diet": "Коник їсть листя й траву",
+          "diet": "Коник їсть траву, листя і квіти",
           "size": "Коник маленький",
           "unique": "Коник високо стрибає"
         },
@@ -283,16 +283,16 @@
           "habitat": "The grasshopper lives in grass",
           "color": "The grasshopper is green",
           "sound": "The grasshopper chirps: chirr-chirr!",
-          "diet": "The grasshopper eats leaves and grass",
+          "diet": "The grasshopper eats grass, leaves and flowers",
           "size": "The grasshopper is small",
           "unique": "The grasshopper jumps with strong legs"
         }
       },
       "check": {
-        "habitat": {"accept": ["GRASS", "GARDEN"], "reject": []},
+        "habitat": {"accept": ["GRASS", "GARDEN", "FARM", "FOREST", "FLOWERS"], "reject": []},
         "color": {"accept": ["GREEN"], "reject": []},
         "sound": {"accept": ["CHIRR"], "reject": []},
-        "diet": {"accept": ["LEAVES", "GRASS"], "reject": []},
+        "diet": {"accept": ["LEAVES", "GRASS", "FLOWERS"], "reject": []},
         "size": {"accept": ["SMALL"], "reject": ["BIG"]},
         "unique": {"accept": ["JUMP"], "reject": []}
       }
@@ -337,8 +337,8 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["GARDEN"], "reject": []},
-        "color": {"accept": ["RED", "SPOTS"], "reject": []},
+        "habitat": {"accept": ["GARDEN", "FLOWERS", "FOREST", "FARM", "HOUSE"], "reject": []},
+        "color": {"accept": ["RED", "SPOTS", "BLACK"], "reject": []},
         "diet": {"accept": ["INSECTS", "APHIDS", "LEAVES"], "reject": []},
         "size": {"accept": ["SMALL"], "reject": ["BIG"]},
         "unique": {"accept": ["SPOTS"], "reject": []}

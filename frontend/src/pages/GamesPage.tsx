@@ -10,13 +10,21 @@
  * The child answers by voice (Web Speech API); a text field is the fallback
  * when the browser has no speech recognition.
  */
-import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 
 import Host from "../components/Host/Host";
 import RewardStar from "../components/RewardStar/RewardStar";
 import SpeechBubble from "../components/SpeechBubble/SpeechBubble";
 import { findAnimalByName } from "../data/animals/lookup";
 import { useSpeechRecognition, type RecognitionError } from "../hooks/useSpeechRecognition";
+import {
+  AnswerOptions,
+  buildChoices,
+  findAnimalOptions,
+  shouldShowChoices,
+  toOptionTopic,
+  useAnswerLevel,
+} from "../modules/answer-options";
 import type { GameEndResponse, Question } from "../services/api-types";
 import { playAudio, speakText } from "../services/audioService";
 import GameService from "../services/gameService";
@@ -71,6 +79,14 @@ export function GamesPage() {
   // The answer to the question that was asked; older backends only know the animal name
   const correctAnswer = question?.answer || (localizedName ? formatMessage(t("game.thisIs"), { name: localizedName }) : "");
   const togetherAnswer = question?.answer || localizedName;
+
+  // Picture answer cards; shuffled once per question so they don't jump on re-render
+  const level = useAnswerLevel();
+  const choices = useMemo(
+    () => buildChoices(findAnimalOptions(animal?.id), toOptionTopic(question?.topic), level),
+    [animal?.id, question, level],
+  );
+  const showChoices = choices.length > 0 && shouldShowChoices(level, attempts);
 
   const fail = useCallback((retry: () => void) => {
     setRetryAction(() => retry);
@@ -192,6 +208,12 @@ export function GamesPage() {
     });
   }
 
+  // Toddler level: tapping a card is an answer; its caption goes to the backend like a spoken word
+  function handleChoiceSelect(label: string) {
+    speech.stop();
+    void submitAnswer(label);
+  }
+
   function handleTypedSubmit(event: FormEvent) {
     event.preventDefault();
     const answer = typedAnswer.trim();
@@ -278,7 +300,7 @@ export function GamesPage() {
   const isResult = phase === "correct" || phase === "incorrect" || phase === "together";
 
   return (
-    <section aria-label={question.questionText} className={`game game--${phase}`}>
+    <section aria-label={question.questionText} className={`game game--${phase}${showChoices ? " game--with-options" : ""}`}>
       <div className={`game__stage${isResult ? " game__stage--result" : ""}`}>
         {phase === "correct" && (
           <>
@@ -339,6 +361,14 @@ export function GamesPage() {
               {question.questionText}
             </p>
           </div>
+
+          {showChoices && (
+            <AnswerOptions
+              choices={choices}
+              disabled={phase === "checking"}
+              onSelect={level === "toddler" ? (_choice, label) => handleChoiceSelect(label) : undefined}
+            />
+          )}
 
           <div className="voice">
             {speech.isSupported ? (

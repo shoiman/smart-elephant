@@ -96,7 +96,7 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["RIVER"], "reject": []},
+        "habitat": {"accept": ["RIVER", "JUNGLE", "FOREST"], "reject": []},
         "color": {"accept": ["GREEN"], "reject": []},
         "sound": {"accept": ["CROAK"], "reject": []},
         "diet": {"accept": ["INSECTS"], "reject": []},
@@ -148,7 +148,7 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["RIVER"], "reject": []},
+        "habitat": {"accept": ["RIVER", "FARM"], "reject": []},
         "color": {"accept": ["YELLOW"], "reject": []},
         "sound": {"accept": ["QUACK"], "reject": []},
         "diet": {"accept": ["PLANTS", "GRASS", "SEEDS", "INSECTS"], "reject": []},
@@ -203,7 +203,7 @@
         "habitat": {"accept": ["RIVER"], "reject": []},
         "color": {"accept": ["WHITE"], "reject": []},
         "sound": {"accept": ["HISS", "HUM"], "reject": []},
-        "diet": {"accept": ["PLANTS", "GRASS", "SEEDS"], "reject": []},
+        "diet": {"accept": ["PLANTS", "GRASS", "SEEDS", "INSECTS"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["NECK"], "reject": []}
       }
@@ -248,9 +248,9 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["RIVER"], "reject": []},
+        "habitat": {"accept": ["RIVER", "SEA"], "reject": []},
         "color": {"accept": ["GRAY", "WHITE"], "reject": []},
-        "diet": {"accept": ["FISH"], "reject": []},
+        "diet": {"accept": ["FISH", "INSECTS"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["LONG_LEGS"], "reject": []}
       }
@@ -297,7 +297,7 @@
       "check": {
         "habitat": {"accept": ["RIVER"], "reject": []},
         "color": {"accept": ["GRAY"], "reject": []},
-        "diet": {"accept": ["FISH"], "reject": []},
+        "diet": {"accept": ["FISH", "INSECTS"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["WHISKERS"], "reject": []}
       }
@@ -344,7 +344,7 @@
       "check": {
         "habitat": {"accept": ["SEA"], "reject": []},
         "color": {"accept": ["RED", "YELLOW"], "reject": []},
-        "diet": {"accept": ["FISH", "PLANTS"], "reject": []},
+        "diet": {"accept": ["FISH", "PLANTS", "INSECTS"], "reject": []},
         "size": {"accept": ["SMALL"], "reject": ["BIG"]},
         "unique": {"accept": ["CLAWS"], "reject": []}
       }
@@ -487,7 +487,7 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["SEA"], "reject": []},
+        "habitat": {"accept": ["SEA", "COLD"], "reject": []},
         "color": {"accept": ["BLUE", "GRAY"], "reject": []},
         "sound": {"accept": ["SING"], "reject": []},
         "diet": {"accept": ["FISH", "PLANKTON"], "reject": []},

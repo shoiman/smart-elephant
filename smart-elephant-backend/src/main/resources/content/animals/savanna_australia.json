@@ -44,7 +44,7 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["SAVANNA"], "reject": []},
+        "habitat": {"accept": ["SAVANNA", "FOREST"], "reject": []},
         "color": {"accept": ["GRAY"], "reject": []},
         "sound": {"accept": ["SNORT"], "reject": []},
         "diet": {"accept": ["VEGETABLES", "GRASS", "LEAVES"], "reject": []},
@@ -146,7 +146,7 @@
       "check": {
         "habitat": {"accept": ["SAVANNA"], "reject": []},
         "color": {"accept": ["BLACK_WHITE"], "reject": []},
-        "diet": {"accept": ["VEGETABLES", "GRASS", "LEAVES"], "reject": []},
+        "diet": {"accept": ["VEGETABLES", "GRASS", "LEAVES", "SEEDS", "INSECTS"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["LONG_LEGS"], "reject": []}
       }
@@ -191,9 +191,9 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["AUSTRALIA"], "reject": []},
+        "habitat": {"accept": ["AUSTRALIA", "SAVANNA", "DESERT"], "reject": []},
         "color": {"accept": ["YELLOW", "BROWN"], "reject": []},
-        "diet": {"accept": ["GRASS", "VEGETABLES"], "reject": []},
+        "diet": {"accept": ["GRASS", "VEGETABLES", "LEAVES"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["POUCH", "JUMP"], "reject": []}
       }
@@ -238,8 +238,8 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["AUSTRALIA"], "reject": []},
-        "color": {"accept": ["GRAY"], "reject": []},
+        "habitat": {"accept": ["AUSTRALIA", "FOREST"], "reject": []},
+        "color": {"accept": ["GRAY", "WHITE"], "reject": []},
         "diet": {"accept": ["LEAVES"], "reject": []},
         "size": {"accept": ["SMALL"], "reject": ["BIG"]},
         "unique": {"accept": ["SLEEP", "CLIMB"], "reject": []}

@@ -1,0 +1,2498 @@
+[
+  {
+    "animal": "elephant",
+    "options": {
+      "habitat": {
+        "correct": [
+          "savanna"
+        ],
+        "alsoTrue": [
+          "forest"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "sea",
+          "desert"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass",
+          "leaves"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "fish"
+        ],
+        "medium": [
+          "fish",
+          "meat",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "gray"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "green"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "lion",
+    "options": {
+      "habitat": {
+        "correct": [
+          "savanna"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "sea",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "meat"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "banana",
+          "carrot"
+        ]
+      },
+      "color": {
+        "correct": [
+          "yellow",
+          "brown"
+        ],
+        "alsoTrue": [
+          "orange"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "giraffe",
+    "options": {
+      "habitat": {
+        "correct": [
+          "savanna"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "leaves"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "fish"
+        ],
+        "medium": [
+          "fish",
+          "meat",
+          "milk"
+        ]
+      },
+      "color": {
+        "correct": [
+          "yellow",
+          "brown"
+        ],
+        "alsoTrue": [
+          "orange"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "zebra",
+    "options": {
+      "habitat": {
+        "correct": [
+          "savanna"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "sea",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "black",
+          "white"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "green"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "leopard",
+    "options": {
+      "habitat": {
+        "correct": [
+          "savanna"
+        ],
+        "alsoTrue": [
+          "jungle",
+          "forest"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "sea",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "meat"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "banana",
+          "carrot"
+        ]
+      },
+      "color": {
+        "correct": [
+          "yellow",
+          "brown"
+        ],
+        "alsoTrue": [
+          "orange",
+          "black"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "rhino",
+    "options": {
+      "habitat": {
+        "correct": [
+          "savanna"
+        ],
+        "alsoTrue": [
+          "forest"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "sea",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass",
+          "leaves"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "gray"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "green"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "ostrich",
+    "options": {
+      "habitat": {
+        "correct": [
+          "savanna"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "sea",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass"
+        ],
+        "alsoTrue": [
+          "grain",
+          "leaves",
+          "insects"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "black",
+          "white"
+        ],
+        "alsoTrue": [
+          "brown",
+          "pink"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "red"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "parrot",
+    "options": {
+      "habitat": {
+        "correct": [
+          "jungle"
+        ],
+        "alsoTrue": [
+          "forest"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "sea",
+          "desert"
+        ]
+      },
+      "food": {
+        "correct": [
+          "banana"
+        ],
+        "alsoTrue": [
+          "grain",
+          "nuts",
+          "insects"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "milk"
+        ]
+      },
+      "color": {
+        "correct": [
+          "red"
+        ],
+        "alsoTrue": [
+          "green",
+          "yellow",
+          "blue"
+        ],
+        "easy": [
+          "gray"
+        ],
+        "medium": [
+          "gray",
+          "white",
+          "brown"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "tiger",
+    "options": {
+      "habitat": {
+        "correct": [
+          "jungle"
+        ],
+        "alsoTrue": [
+          "forest"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "sea",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "meat"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "banana",
+          "carrot"
+        ]
+      },
+      "color": {
+        "correct": [
+          "orange",
+          "black"
+        ],
+        "alsoTrue": [
+          "white"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "cow",
+    "options": {
+      "habitat": {
+        "correct": [
+          "farm"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "jungle"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass"
+        ],
+        "alsoTrue": [
+          "grain"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "white",
+          "black"
+        ],
+        "alsoTrue": [
+          "brown"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "pink",
+          "green"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "pig",
+    "options": {
+      "habitat": {
+        "correct": [
+          "farm"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "mountains"
+        ]
+      },
+      "food": {
+        "correct": [
+          "carrot"
+        ],
+        "alsoTrue": [
+          "banana",
+          "grain",
+          "grass"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "pink"
+        ],
+        "alsoTrue": [
+          "brown",
+          "black",
+          "white"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "yellow"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "sheep",
+    "options": {
+      "habitat": {
+        "correct": [
+          "farm"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "desert"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass"
+        ],
+        "alsoTrue": [
+          "leaves"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "white"
+        ],
+        "alsoTrue": [
+          "black",
+          "brown"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "red"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "chicken",
+    "options": {
+      "habitat": {
+        "correct": [
+          "farm"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "mountains"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grain",
+          "insects"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "orange"
+        ],
+        "alsoTrue": [
+          "brown",
+          "red",
+          "yellow",
+          "white"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "horse",
+    "options": {
+      "habitat": {
+        "correct": [
+          "farm"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "jungle"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass"
+        ],
+        "alsoTrue": [
+          "grain"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "brown"
+        ],
+        "alsoTrue": [
+          "orange",
+          "gray",
+          "black",
+          "white"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "goat",
+    "options": {
+      "habitat": {
+        "correct": [
+          "farm"
+        ],
+        "alsoTrue": [
+          "mountains"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "jungle"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass",
+          "leaves"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "white"
+        ],
+        "alsoTrue": [
+          "brown",
+          "black"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "pink",
+          "green"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "alpaca",
+    "options": {
+      "habitat": {
+        "correct": [
+          "farm"
+        ],
+        "alsoTrue": [
+          "mountains"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "jungle"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass"
+        ],
+        "alsoTrue": [
+          "leaves"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "white"
+        ],
+        "alsoTrue": [
+          "brown",
+          "gray",
+          "black"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "red"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "rabbit",
+    "options": {
+      "habitat": {
+        "correct": [
+          "farm"
+        ],
+        "alsoTrue": [
+          "forest",
+          "house"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "desert"
+        ]
+      },
+      "food": {
+        "correct": [
+          "carrot",
+          "grass"
+        ],
+        "alsoTrue": [
+          "leaves"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "gray"
+        ],
+        "alsoTrue": [
+          "white"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "red"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "hippo",
+    "options": {
+      "habitat": {
+        "correct": [
+          "river"
+        ],
+        "alsoTrue": [
+          "savanna"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "farm",
+          "desert"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "gray"
+        ],
+        "alsoTrue": [
+          "pink"
+        ],
+        "easy": [
+          "yellow"
+        ],
+        "medium": [
+          "yellow",
+          "green",
+          "red"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "crocodile",
+    "options": {
+      "habitat": {
+        "correct": [
+          "river"
+        ],
+        "alsoTrue": [
+          "savanna"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "farm",
+          "desert"
+        ]
+      },
+      "food": {
+        "correct": [
+          "meat"
+        ],
+        "alsoTrue": [
+          "fish"
+        ],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "banana",
+          "carrot"
+        ]
+      },
+      "color": {
+        "correct": [
+          "green"
+        ],
+        "alsoTrue": [
+          "brown"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "yellow"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "frog",
+    "options": {
+      "habitat": {
+        "correct": [
+          "river"
+        ],
+        "alsoTrue": [
+          "jungle",
+          "forest"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "desert",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "insects"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "meat",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "green"
+        ],
+        "alsoTrue": [
+          "brown"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "yellow"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "duck",
+    "options": {
+      "habitat": {
+        "correct": [
+          "river"
+        ],
+        "alsoTrue": [
+          "farm"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "desert",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "insects",
+          "grain"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "honey",
+          "banana"
+        ]
+      },
+      "color": {
+        "correct": [
+          "yellow"
+        ],
+        "alsoTrue": [
+          "orange",
+          "brown",
+          "white",
+          "green",
+          "black"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "pink",
+          "red"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "swan",
+    "options": {
+      "habitat": {
+        "correct": [
+          "river"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "desert",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass"
+        ],
+        "alsoTrue": [
+          "insects"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "honey",
+          "banana"
+        ]
+      },
+      "color": {
+        "correct": [
+          "white"
+        ],
+        "alsoTrue": [
+          "black"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "heron",
+    "options": {
+      "habitat": {
+        "correct": [
+          "river"
+        ],
+        "alsoTrue": [
+          "sea"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "desert",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "fish"
+        ],
+        "alsoTrue": [
+          "insects"
+        ],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "honey",
+          "banana"
+        ]
+      },
+      "color": {
+        "correct": [
+          "gray"
+        ],
+        "alsoTrue": [
+          "white",
+          "black"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "yellow"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "catfish",
+    "options": {
+      "habitat": {
+        "correct": [
+          "river"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "desert",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "fish",
+          "insects"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "honey",
+          "banana"
+        ]
+      },
+      "color": {
+        "correct": [
+          "gray"
+        ],
+        "alsoTrue": [
+          "brown"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "yellow"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "penguin",
+    "options": {
+      "habitat": {
+        "correct": [
+          "arctic"
+        ],
+        "alsoTrue": [
+          "sea"
+        ],
+        "easy": [
+          "desert"
+        ],
+        "medium": [
+          "desert",
+          "farm",
+          "jungle"
+        ]
+      },
+      "food": {
+        "correct": [
+          "fish"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "honey",
+          "carrot"
+        ]
+      },
+      "color": {
+        "correct": [
+          "black",
+          "white"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "green"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "crab",
+    "options": {
+      "habitat": {
+        "correct": [
+          "sea"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "mountains"
+        ],
+        "medium": [
+          "mountains",
+          "farm",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "fish"
+        ],
+        "alsoTrue": [
+          "insects"
+        ],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "banana",
+          "milk"
+        ]
+      },
+      "color": {
+        "correct": [
+          "red"
+        ],
+        "alsoTrue": [
+          "orange",
+          "brown"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "tuna",
+    "options": {
+      "habitat": {
+        "correct": [
+          "sea"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "farm"
+        ],
+        "medium": [
+          "farm",
+          "house",
+          "mountains"
+        ]
+      },
+      "food": {
+        "correct": [
+          "fish"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "carrot",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "blue"
+        ],
+        "alsoTrue": [
+          "gray",
+          "yellow"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "green",
+          "red"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "octopus",
+    "options": {
+      "habitat": {
+        "correct": [
+          "sea"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "farm"
+        ],
+        "medium": [
+          "farm",
+          "house",
+          "mountains"
+        ]
+      },
+      "food": {
+        "correct": [
+          "fish"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "banana",
+          "milk"
+        ]
+      },
+      "color": {
+        "correct": [
+          "purple"
+        ],
+        "alsoTrue": [
+          "pink"
+        ],
+        "easy": [
+          "yellow"
+        ],
+        "medium": [
+          "yellow",
+          "green",
+          "orange"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "whale",
+    "options": {
+      "habitat": {
+        "correct": [
+          "sea"
+        ],
+        "alsoTrue": [
+          "arctic"
+        ],
+        "easy": [
+          "farm"
+        ],
+        "medium": [
+          "farm",
+          "house",
+          "mountains"
+        ]
+      },
+      "food": {
+        "correct": [
+          "fish"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "carrot",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "blue"
+        ],
+        "alsoTrue": [
+          "gray",
+          "white"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "green",
+          "yellow"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "dolphin",
+    "options": {
+      "habitat": {
+        "correct": [
+          "sea"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "farm"
+        ],
+        "medium": [
+          "farm",
+          "house",
+          "mountains"
+        ]
+      },
+      "food": {
+        "correct": [
+          "fish"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "banana",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "blue"
+        ],
+        "alsoTrue": [
+          "gray"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "green",
+          "yellow"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "shark",
+    "options": {
+      "habitat": {
+        "correct": [
+          "sea"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "farm"
+        ],
+        "medium": [
+          "farm",
+          "house",
+          "mountains"
+        ]
+      },
+      "food": {
+        "correct": [
+          "fish"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "banana",
+          "carrot"
+        ]
+      },
+      "color": {
+        "correct": [
+          "gray"
+        ],
+        "alsoTrue": [
+          "blue"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "green",
+          "yellow"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "kangaroo",
+    "options": {
+      "habitat": {
+        "correct": [
+          "savanna"
+        ],
+        "alsoTrue": [
+          "desert"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grass",
+          "leaves"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "orange"
+        ],
+        "alsoTrue": [
+          "brown",
+          "yellow"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "koala",
+    "options": {
+      "habitat": {
+        "correct": [
+          "forest"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "leaves"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "carrot"
+        ]
+      },
+      "color": {
+        "correct": [
+          "gray",
+          "white"
+        ],
+        "alsoTrue": [
+          "brown"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "hedgehog",
+    "options": {
+      "habitat": {
+        "correct": [
+          "forest"
+        ],
+        "alsoTrue": [
+          "house"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "insects"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "brown"
+        ],
+        "alsoTrue": [
+          "gray"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "moose",
+    "options": {
+      "habitat": {
+        "correct": [
+          "forest"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "desert",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "leaves"
+        ],
+        "alsoTrue": [
+          "grass"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "brown"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "pink",
+          "green"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "owl",
+    "options": {
+      "habitat": {
+        "correct": [
+          "forest"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "desert",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "meat",
+          "insects"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "banana",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "brown",
+          "white"
+        ],
+        "alsoTrue": [
+          "gray",
+          "black"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "raven",
+    "options": {
+      "habitat": {
+        "correct": [
+          "forest"
+        ],
+        "alsoTrue": [
+          "mountains"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "farm",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "insects",
+          "meat"
+        ],
+        "alsoTrue": [
+          "grain",
+          "banana"
+        ],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "carrot",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "black"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "yellow"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "squirrel",
+    "options": {
+      "habitat": {
+        "correct": [
+          "forest"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "nuts"
+        ],
+        "alsoTrue": [
+          "grain",
+          "insects"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "orange"
+        ],
+        "alsoTrue": [
+          "brown",
+          "red"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "wolf",
+    "options": {
+      "habitat": {
+        "correct": [
+          "forest"
+        ],
+        "alsoTrue": [
+          "mountains",
+          "arctic"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "farm",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "meat"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "banana",
+          "carrot"
+        ]
+      },
+      "color": {
+        "correct": [
+          "gray"
+        ],
+        "alsoTrue": [
+          "white",
+          "black",
+          "brown"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "yellow"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "boar",
+    "options": {
+      "habitat": {
+        "correct": [
+          "forest"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "nuts",
+          "insects"
+        ],
+        "alsoTrue": [
+          "grass",
+          "grain"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "brown",
+          "black"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "pink",
+          "green"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "bird",
+    "options": {
+      "habitat": {
+        "correct": [
+          "forest"
+        ],
+        "alsoTrue": [
+          "house",
+          "mountains"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "farm"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grain",
+          "insects"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "milk",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "yellow"
+        ],
+        "alsoTrue": [
+          "orange"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "pink",
+          "gray"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "bee",
+    "options": {
+      "habitat": {
+        "correct": [
+          "flowers"
+        ],
+        "alsoTrue": [
+          "farm",
+          "forest"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "sea",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "flowers"
+        ],
+        "alsoTrue": [
+          "honey"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "carrot"
+        ]
+      },
+      "color": {
+        "correct": [
+          "yellow",
+          "black"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "butterfly",
+    "options": {
+      "habitat": {
+        "correct": [
+          "flowers"
+        ],
+        "alsoTrue": [
+          "forest",
+          "jungle"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "flowers"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "carrot"
+        ]
+      },
+      "color": {
+        "correct": [
+          "orange"
+        ],
+        "alsoTrue": [
+          "blue",
+          "black",
+          "yellow"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "green",
+          "gray"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "ant",
+    "options": {
+      "habitat": {
+        "correct": [
+          "forest"
+        ],
+        "alsoTrue": [
+          "house"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "desert"
+        ]
+      },
+      "food": {
+        "correct": [
+          "grain"
+        ],
+        "alsoTrue": [
+          "insects",
+          "honey"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "milk"
+        ]
+      },
+      "color": {
+        "correct": [
+          "brown"
+        ],
+        "alsoTrue": [
+          "red",
+          "black"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "pink",
+          "green"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "dragonfly",
+    "options": {
+      "habitat": {
+        "correct": [
+          "river"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "farm",
+          "desert"
+        ]
+      },
+      "food": {
+        "correct": [
+          "insects"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "honey",
+          "carrot"
+        ]
+      },
+      "color": {
+        "correct": [
+          "blue",
+          "green"
+        ],
+        "alsoTrue": [
+          "red",
+          "yellow",
+          "black"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "brown",
+          "white"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "fly",
+    "options": {
+      "habitat": {
+        "correct": [
+          "house"
+        ],
+        "alsoTrue": [
+          "farm"
+        ],
+        "easy": [
+          "arctic"
+        ],
+        "medium": [
+          "arctic",
+          "sea",
+          "mountains"
+        ]
+      },
+      "color": {
+        "correct": [
+          "black",
+          "gray"
+        ],
+        "alsoTrue": [
+          "green"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "yellow"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "grasshopper",
+    "options": {
+      "habitat": {
+        "correct": [
+          "grass"
+        ],
+        "alsoTrue": [
+          "farm",
+          "forest",
+          "flowers"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "house"
+        ]
+      },
+      "food": {
+        "correct": [
+          "flowers",
+          "grass"
+        ],
+        "alsoTrue": [
+          "leaves"
+        ],
+        "easy": [
+          "meat"
+        ],
+        "medium": [
+          "meat",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "green"
+        ],
+        "alsoTrue": [
+          "brown"
+        ],
+        "easy": [
+          "pink"
+        ],
+        "medium": [
+          "pink",
+          "blue",
+          "white"
+        ]
+      }
+    }
+  },
+  {
+    "animal": "ladybug",
+    "options": {
+      "habitat": {
+        "correct": [
+          "flowers"
+        ],
+        "alsoTrue": [
+          "forest",
+          "farm",
+          "house"
+        ],
+        "easy": [
+          "sea"
+        ],
+        "medium": [
+          "sea",
+          "arctic",
+          "desert"
+        ]
+      },
+      "food": {
+        "correct": [
+          "insects"
+        ],
+        "alsoTrue": [],
+        "easy": [
+          "grass"
+        ],
+        "medium": [
+          "grass",
+          "fish",
+          "honey"
+        ]
+      },
+      "color": {
+        "correct": [
+          "red",
+          "black"
+        ],
+        "alsoTrue": [
+          "orange",
+          "yellow"
+        ],
+        "easy": [
+          "blue"
+        ],
+        "medium": [
+          "blue",
+          "green",
+          "pink"
+        ]
+      }
+    }
+  }
+]

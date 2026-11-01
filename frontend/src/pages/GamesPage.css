@@ -382,6 +382,13 @@
   margin: var(--space-4) 0 var(--space-6);
 }
 
+/* ---------- Picture answer cards ---------- */
+
+/* The cards need room on phones: make the animal card a little lower */
+.game--with-options .game__stage {
+  aspect-ratio: 1 / 0.7;
+}
+
 /* ---------- Motion ---------- */
 
 @keyframes animal-in {
@@ -448,6 +455,20 @@
     grid-column: 2;
     grid-row: 3;
     padding-bottom: 0;
+  }
+
+  /* With picture cards: question, cards, microphone */
+  .game.game--with-options:not(.game--status):not(.game--reward) {
+    grid-template-rows: 1fr auto auto auto 1fr;
+  }
+
+  .game--with-options .answer-options {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .game--with-options .voice {
+    grid-row: 4;
   }
 
   .game__actions {

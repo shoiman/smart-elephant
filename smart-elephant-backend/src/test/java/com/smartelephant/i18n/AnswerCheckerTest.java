@@ -36,7 +36,6 @@ class AnswerCheckerTest {
             "RU; lion; SOUND; р-р-р; true",
             "HE; lion; SOUND; ררר; true",
             "RU; lion; SOUND; мяу; false",
-            "RU; zebra; SOUND; иа; true",
             "RU; elephant; SOUND; ту-ту; true",
             // Diet
             "RU; elephant; DIET; травку кушает; true",

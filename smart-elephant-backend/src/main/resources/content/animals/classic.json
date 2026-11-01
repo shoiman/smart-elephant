@@ -44,7 +44,7 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["SAVANNA"], "reject": []},
+        "habitat": {"accept": ["SAVANNA", "FOREST"], "reject": []},
         "color": {"accept": ["GRAY"], "reject": []},
         "sound": {"accept": ["TRUMPET"], "reject": []},
         "diet": {"accept": ["GRASS", "LEAVES", "FRUIT"], "reject": []},
@@ -169,7 +169,6 @@
         "he": {
           "habitat": "הג׳ירפה גרה בסוואנה",
           "color": "הג׳ירפה צהובה עם כתמים חומים",
-          "sound": "הג׳ירפה מזמזמת בשקט: מממ",
           "diet": "הג׳ירפה אוכלת עלים מהעצים",
           "size": "הג׳ירפה גדולה וגבוהה מאוד",
           "unique": "לג׳ירפה יש צוואר ארוך מאוד"
@@ -177,7 +176,6 @@
         "ru": {
           "habitat": "Жираф живёт в саванне",
           "color": "Жираф жёлтый с коричневыми пятнами",
-          "sound": "Жираф тихонько мычит: м-м-м",
           "diet": "Жираф ест листья с деревьев",
           "size": "Жираф очень большой и высокий",
           "unique": "У жирафа очень длинная шея"
@@ -185,7 +183,6 @@
         "uk": {
           "habitat": "Жираф живе в савані",
           "color": "Жираф жовтий з коричневими плямами",
-          "sound": "Жираф тихенько мукає: м-м-м",
           "diet": "Жираф їсть листя з дерев",
           "size": "Жираф дуже великий і високий",
           "unique": "У жирафа дуже довга шия"
@@ -193,7 +190,6 @@
         "en": {
           "habitat": "The giraffe lives in the savanna",
           "color": "The giraffe is yellow with brown spots",
-          "sound": "The giraffe hums quietly: mmm",
           "diet": "The giraffe eats leaves from trees",
           "size": "The giraffe is very big and tall",
           "unique": "The giraffe has a very long neck"
@@ -202,7 +198,6 @@
       "check": {
         "habitat": {"accept": ["SAVANNA"], "reject": []},
         "color": {"accept": ["YELLOW", "SPOTS", "BROWN"], "reject": []},
-        "sound": {"accept": ["HUM"], "reject": []},
         "diet": {"accept": ["LEAVES"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["NECK", "SPOTS"], "reject": []}
@@ -273,7 +268,6 @@
         "he": {
           "habitat": "הזברה גרה בסוואנה",
           "color": "הזברה מפוספסת בשחור ולבן",
-          "sound": "הזברה צועקת: אִי-אָה!",
           "diet": "הזברה אוכלת עשב",
           "size": "הזברה גדולה",
           "unique": "לזברה יש פסים על כל הגוף"
@@ -281,7 +275,6 @@
         "ru": {
           "habitat": "Зебра живёт в саванне",
           "color": "Зебра в чёрно-белую полоску",
-          "sound": "Зебра кричит: иа-иа!",
           "diet": "Зебра ест траву",
           "size": "Зебра большая",
           "unique": "Зебра вся в полосках"
@@ -289,7 +282,6 @@
         "uk": {
           "habitat": "Зебра живе в савані",
           "color": "Зебра в чорно-білу смужку",
-          "sound": "Зебра кричить: іа-іа!",
           "diet": "Зебра їсть траву",
           "size": "Зебра велика",
           "unique": "Зебра вся в смужках"
@@ -297,7 +289,6 @@
         "en": {
           "habitat": "The zebra lives in the savanna",
           "color": "The zebra has black and white stripes",
-          "sound": "The zebra calls: hee-haw!",
           "diet": "The zebra eats grass",
           "size": "The zebra is big",
           "unique": "The zebra has stripes all over"
@@ -306,7 +297,6 @@
       "check": {
         "habitat": {"accept": ["SAVANNA"], "reject": []},
         "color": {"accept": ["BLACK_WHITE", "STRIPES"], "reject": []},
-        "sound": {"accept": ["ZEBRA_SOUND"], "reject": []},
         "diet": {"accept": ["GRASS"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["STRIPES", "BLACK_WHITE"], "reject": []}
@@ -356,8 +346,8 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["SAVANNA"], "reject": []},
-        "color": {"accept": ["YELLOW", "SPOTS"], "reject": []},
+        "habitat": {"accept": ["SAVANNA", "JUNGLE", "FOREST"], "reject": []},
+        "color": {"accept": ["YELLOW", "SPOTS", "BROWN"], "reject": []},
         "sound": {"accept": ["ROAR"], "reject": []},
         "diet": {"accept": ["MEAT"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},

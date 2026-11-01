@@ -47,7 +47,7 @@
         "habitat": {"accept": ["FARM"], "reject": []},
         "color": {"accept": ["BLACK_WHITE", "SPOTS"], "reject": []},
         "sound": {"accept": ["MOO"], "reject": []},
-        "diet": {"accept": ["GRASS"], "reject": []},
+        "diet": {"accept": ["GRASS", "SEEDS"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["MILK"], "reject": []}
       }
@@ -99,7 +99,7 @@
         "habitat": {"accept": ["FARM"], "reject": []},
         "color": {"accept": ["PINK"], "reject": []},
         "sound": {"accept": ["OINK"], "reject": []},
-        "diet": {"accept": ["VEGETABLES", "FRUIT", "GRASS"], "reject": []},
+        "diet": {"accept": ["VEGETABLES", "FRUIT", "GRASS", "SEEDS"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["SNOUT"], "reject": []}
       }
@@ -151,7 +151,7 @@
         "habitat": {"accept": ["FARM"], "reject": []},
         "color": {"accept": ["WHITE", "YELLOW"], "reject": []},
         "sound": {"accept": ["BAA"], "reject": []},
-        "diet": {"accept": ["GRASS"], "reject": []},
+        "diet": {"accept": ["GRASS", "LEAVES"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["WOOL"], "reject": []}
       }
@@ -203,7 +203,7 @@
         "habitat": {"accept": ["FARM"], "reject": []},
         "color": {"accept": ["YELLOW", "BROWN"], "reject": []},
         "sound": {"accept": ["CLUCK"], "reject": []},
-        "diet": {"accept": ["SEEDS"], "reject": []},
+        "diet": {"accept": ["SEEDS", "INSECTS"], "reject": []},
         "size": {"accept": ["SMALL"], "reject": ["BIG"]},
         "unique": {"accept": ["EGGS"], "reject": []}
       }
@@ -255,7 +255,7 @@
         "habitat": {"accept": ["FARM"], "reject": []},
         "color": {"accept": ["BROWN", "YELLOW"], "reject": []},
         "sound": {"accept": ["NEIGH"], "reject": []},
-        "diet": {"accept": ["GRASS"], "reject": []},
+        "diet": {"accept": ["GRASS", "SEEDS"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["MANE"], "reject": []}
       }
@@ -304,10 +304,10 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["FARM"], "reject": []},
+        "habitat": {"accept": ["FARM", "MOUNTAINS"], "reject": []},
         "color": {"accept": ["WHITE", "YELLOW"], "reject": []},
         "sound": {"accept": ["BAA"], "reject": []},
-        "diet": {"accept": ["GRASS"], "reject": []},
+        "diet": {"accept": ["GRASS", "LEAVES"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["HORNS"], "reject": []}
       }
@@ -325,7 +325,6 @@
         "he": {
           "habitat": "האלפקה גרה בחווה",
           "color": "האלפקה לבנה",
-          "sound": "האלפקה מזמזמת: מ-מ-מ!",
           "diet": "האלפקה אוכלת עשב",
           "size": "האלפקה גדולה",
           "unique": "לאלפקה יש צמר רך"
@@ -333,7 +332,6 @@
         "ru": {
           "habitat": "Альпака живёт на ферме",
           "color": "Альпака белая",
-          "sound": "Альпака тихо гудит: м-м-м!",
           "diet": "Альпака ест траву",
           "size": "Альпака большая",
           "unique": "У альпаки мягкая шерсть"
@@ -341,7 +339,6 @@
         "uk": {
           "habitat": "Альпака живе на фермі",
           "color": "Альпака біла",
-          "sound": "Альпака тихо гуде: м-м-м!",
           "diet": "Альпака їсть траву",
           "size": "Альпака велика",
           "unique": "В альпаки м'яка вовна"
@@ -349,17 +346,15 @@
         "en": {
           "habitat": "The alpaca lives on a farm",
           "color": "The alpaca is white",
-          "sound": "The alpaca hums: mmm!",
           "diet": "The alpaca eats grass",
           "size": "The alpaca is big",
           "unique": "The alpaca has soft wool"
         }
       },
       "check": {
-        "habitat": {"accept": ["FARM"], "reject": []},
+        "habitat": {"accept": ["FARM", "MOUNTAINS"], "reject": []},
         "color": {"accept": ["WHITE", "YELLOW"], "reject": []},
-        "sound": {"accept": ["HUM"], "reject": []},
-        "diet": {"accept": ["GRASS"], "reject": []},
+        "diet": {"accept": ["GRASS", "LEAVES"], "reject": []},
         "size": {"accept": ["BIG"], "reject": ["SMALL"]},
         "unique": {"accept": ["WOOL"], "reject": []}
       }
@@ -404,7 +399,7 @@
         }
       },
       "check": {
-        "habitat": {"accept": ["FARM"], "reject": []},
+        "habitat": {"accept": ["FARM", "FOREST", "HOUSE"], "reject": []},
         "color": {"accept": ["GRAY", "WHITE"], "reject": []},
         "diet": {"accept": ["VEGETABLES", "GRASS", "LEAVES"], "reject": []},
         "size": {"accept": ["SMALL"], "reject": ["BIG"]},
