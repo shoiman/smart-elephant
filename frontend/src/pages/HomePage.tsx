@@ -4,7 +4,8 @@ import meadowImage from "../assets/backgrounds/meadow-mobile.png";
 import Host from "../components/Host/Host";
 import { LevelPicker, useLevelPreference } from "../modules/answer-options";
 import SpeechBubble from "../components/SpeechBubble/SpeechBubble";
-import { ArrowForwardIcon, GamepadIcon, PawIcon, StarIcon } from "../shared/icons/Icons";
+// Temporarily hidden: GamepadIcon, PawIcon (Animals / Games tiles) — restore together with the tiles below
+import { ArrowForwardIcon, StarIcon } from "../shared/icons/Icons";
 import { useI18n } from "../shared/i18n";
 import "./HomePage.css";
 
@@ -14,8 +15,9 @@ export function HomePage() {
   const [level, setLevel] = useLevelPreference();
 
   const sections = [
-    { to: "/animals", label: t("animals.title"), icon: <PawIcon className="home-nav__icon" />, tone: "paw" },
-    { to: "/games", label: t("games.title"), icon: <GamepadIcon className="home-nav__icon" />, tone: "game" },
+    // Temporarily hidden until these sections have real content:
+    // { to: "/animals", label: t("animals.title"), icon: <PawIcon className="home-nav__icon" />, tone: "paw" },
+    // { to: "/games", label: t("games.title"), icon: <GamepadIcon className="home-nav__icon" />, tone: "game" },
     { to: "/progress", label: t("nav.rewards"), icon: <StarIcon className="home-nav__icon" />, tone: "star" },
   ] as const;
 

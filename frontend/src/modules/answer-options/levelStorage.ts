@@ -3,7 +3,7 @@ import type { AnswerLevel } from "./types";
 const LEVEL_STORAGE_KEY = "smart-elephant.level";
 
 export const ANSWER_LEVELS: readonly AnswerLevel[] = ["toddler", "middle", "older"];
-export const DEFAULT_LEVEL: AnswerLevel = "middle";
+export const DEFAULT_LEVEL: AnswerLevel = "toddler";
 
 export function isAnswerLevel(value: string | null): value is AnswerLevel {
   return value !== null && (ANSWER_LEVELS as readonly string[]).includes(value);

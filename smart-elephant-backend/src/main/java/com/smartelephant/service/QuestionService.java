@@ -44,8 +44,10 @@ public class QuestionService {
      * 3. Last 20 games for difficulty adaptation
      *
      * @param requestedLanguage language code from the client ("he", "ru", "uk"), may be null
+     * @param answerLevel       level picked by the parent: "toddler", "middle" or "older", may be null.
+     *                          The "what is special about it" question is asked only on "older".
      */
-    public QuestionResponse generateNextQuestion(Child child, String requestedLanguage) {
+    public QuestionResponse generateNextQuestion(Child child, String requestedLanguage, String answerLevel) {
         GameLanguage language = GameLanguage.fromCode(
                 requestedLanguage != null && !requestedLanguage.isBlank() ? requestedLanguage : child.getLanguage());
         log.info("Generating next question for child: {} (age: {}, language: {})",
@@ -64,7 +66,8 @@ public class QuestionService {
                 animal,
                 difficulty,
                 child.getAge(),
-                language
+                language,
+                "older".equalsIgnoreCase(answerLevel)
         );
 
         // Build response

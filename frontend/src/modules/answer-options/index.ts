@@ -5,3 +5,5 @@ export { LevelPicker } from "./LevelPicker";
 export { useAnswerLevel, useLevelPreference } from "./useAnswerLevel";
 export type { AnswerLevel, Choice } from "./types";
 export { ToddlerQuestion } from "./flow/ToddlerQuestion";
+export { HandHintIcon } from "./flow/HandHintIcon";
+export { startHandHint } from "./flow/effects";

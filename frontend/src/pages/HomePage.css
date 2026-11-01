@@ -84,7 +84,10 @@
 /* Section shortcuts */
 .home-nav {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Columns are sized to the tiles and centered, so a single tile sits in the middle */
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 33.333%);
+  justify-content: center;
   gap: var(--space-4);
   width: 100%;
   margin-top: var(--space-5);

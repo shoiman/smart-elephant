@@ -4,6 +4,9 @@ import com.smartelephant.i18n.QuestionTemplates.Topic;
 import com.smartelephant.model.enums.QuestionDifficulty;
 import org.junit.jupiter.api.Test;
 
+import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.Map;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -89,5 +92,61 @@ class QuestionTemplatesTest {
         assertThat(templates.question("Elephant", Topic.DIET, GameLanguage.RU, random).answer()).isEqualTo("Слон ест траву и листья");
         assertThat(templates.question("Zebra", Topic.SIZE, GameLanguage.UK, random).answer()).isEqualTo("Зебра велика");
         assertThat(templates.question("Zebra", Topic.SIZE, GameLanguage.UK, random).topic()).isEqualTo(Topic.SIZE);
+    }
+
+    @Test
+    void everyTopicComesUpAtEveryDifficulty() {
+        for (QuestionDifficulty difficulty : QuestionDifficulty.values()) {
+            Map<Topic, Integer> counts = countTopics(difficulty);
+            assertThat(counts.keySet()).as(difficulty.name()).containsAll(EnumSet.allOf(Topic.class));
+        }
+    }
+
+    @Test
+    void difficultyMakesItsOwnTopicsMoreFrequent() {
+        Map<Topic, Integer> easy = countTopics(QuestionDifficulty.EASY);
+        assertThat(easy.get(Topic.HABITAT)).isGreaterThan(easy.get(Topic.DIET));
+        assertThat(easy.get(Topic.DIET)).isGreaterThan(easy.get(Topic.UNIQUE));
+
+        Map<Topic, Integer> medium = countTopics(QuestionDifficulty.MEDIUM);
+        assertThat(medium.get(Topic.DIET)).isGreaterThan(medium.get(Topic.HABITAT));
+
+        Map<Topic, Integer> hard = countTopics(QuestionDifficulty.HARD);
+        assertThat(hard.get(Topic.UNIQUE)).isGreaterThan(hard.get(Topic.DIET));
+        assertThat(hard.get(Topic.DIET)).isGreaterThan(hard.get(Topic.HABITAT));
+    }
+
+    @Test
+    void topicsTheAnimalDoesNotHaveAreNeverPicked() {
+        Random random = new Random(7);
+        EnumSet<Topic> noSound = EnumSet.complementOf(EnumSet.of(Topic.SOUND));
+        for (int i = 0; i < 500; i++) {
+            assertThat(QuestionTemplates.pickTopic(noSound, QuestionDifficulty.EASY, random)).isNotEqualTo(Topic.SOUND);
+        }
+        assertThat(QuestionTemplates.pickTopic(EnumSet.noneOf(Topic.class), QuestionDifficulty.EASY, random))
+                .isEqualTo(Topic.HABITAT);
+    }
+
+    @Test
+    void uniqueTopicIsAskedOnlyWhenAllowed() {
+        Random random = new Random(11);
+        for (QuestionDifficulty difficulty : QuestionDifficulty.values()) {
+            for (int i = 0; i < 500; i++) {
+                assertThat(QuestionTemplates.pickTopic(EnumSet.allOf(Topic.class), difficulty, false, random))
+                        .isNotEqualTo(Topic.UNIQUE);
+            }
+        }
+        // An animal with nothing but UNIQUE still gets a question
+        assertThat(QuestionTemplates.pickTopic(EnumSet.of(Topic.UNIQUE), QuestionDifficulty.HARD, false, random))
+                .isEqualTo(Topic.HABITAT);
+    }
+
+    private static Map<Topic, Integer> countTopics(QuestionDifficulty difficulty) {
+        Random random = new Random(3);
+        Map<Topic, Integer> counts = new EnumMap<>(Topic.class);
+        for (int i = 0; i < 6000; i++) {
+            counts.merge(QuestionTemplates.pickTopic(EnumSet.allOf(Topic.class), difficulty, random), 1, Integer::sum);
+        }
+        return counts;
     }
 }

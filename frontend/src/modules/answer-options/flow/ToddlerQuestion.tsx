@@ -7,6 +7,7 @@ import { CardArt } from "../AnswerOptions";
 import { optionLabels } from "../optionLabels";
 import type { Choice } from "../types";
 import { burstSparkles, startHandHint } from "./effects";
+import { HandHintIcon } from "./HandHintIcon";
 import { toddlerCardState, toddlerMicState } from "./toddlerCardState";
 import { useToddlerFlow, type ToddlerFlowSpeech } from "./useToddlerFlow";
 import "./ToddlerQuestion.css";
@@ -153,21 +154,7 @@ export function ToddlerQuestion(props: ToddlerQuestionProps) {
         )}
       </div>
 
-      <svg
-        aria-hidden="true"
-        className="qhand"
-        fill="#ffffff"
-        ref={handRef}
-        stroke="var(--color-ink)"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-        viewBox="0 0 24 24"
-      >
-        <path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15V4a2 2 0 0 1 4 0v5.5V9a2 2 0 0 1 4 0v1a2 2 0 0 1 3 1z" />
-        <path d="M11 9.5V9" />
-        <path d="M15 10v1" />
-      </svg>
+      <HandHintIcon ref={handRef} />
     </div>
   );
 }

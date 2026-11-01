@@ -45,7 +45,8 @@ public class LLMService {
             Animal animal,
             QuestionDifficulty difficulty,
             Integer childAge,
-            GameLanguage language) {
+            GameLanguage language,
+            boolean allowUnique) {
 
         log.info("Generating question for animal: {}, difficulty: {}, age: {}, language: {}",
                 animal.getName(), difficulty, childAge, language);
@@ -55,7 +56,8 @@ public class LLMService {
 
         // For now, return a mock question from localized templates
         // In Phase 2, we'll integrate actual Claude API
-        return questionTemplates.question(animal.getName(), difficulty, language, ThreadLocalRandom.current());
+        return questionTemplates.question(animal.getName(), difficulty, language, allowUnique,
+                ThreadLocalRandom.current());
     }
 
     /**

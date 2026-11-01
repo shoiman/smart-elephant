@@ -62,10 +62,14 @@ public class QuestionTemplates {
     public record LocalizedQuestion(Topic topic, String text, String answer) {
     }
 
-    private static final Map<QuestionDifficulty, List<Topic>> TOPICS_BY_DIFFICULTY = Map.of(
-            QuestionDifficulty.EASY, List.of(Topic.HABITAT, Topic.COLOR, Topic.SOUND),
-            QuestionDifficulty.MEDIUM, List.of(Topic.DIET, Topic.SIZE),
-            QuestionDifficulty.HARD, List.of(Topic.UNIQUE)
+    /** How hard each topic is on its own; used only to weight the choice of topic. */
+    private static final Map<Topic, QuestionDifficulty> TOPIC_DIFFICULTY = Map.of(
+            Topic.HABITAT, QuestionDifficulty.EASY,
+            Topic.COLOR, QuestionDifficulty.EASY,
+            Topic.SOUND, QuestionDifficulty.EASY,
+            Topic.DIET, QuestionDifficulty.MEDIUM,
+            Topic.SIZE, QuestionDifficulty.MEDIUM,
+            Topic.UNIQUE, QuestionDifficulty.HARD
     );
 
     private static final Map<GameLanguage, Map<Topic, List<Template>>> TEMPLATES = new EnumMap<>(GameLanguage.class);
@@ -183,24 +187,64 @@ public class QuestionTemplates {
 
     /**
      * Builds a question about the animal in the requested language.
-     * Only topics the animal has are used (a fish is never asked about its sound); when the
-     * difficulty level has no such topic, any topic of the animal is used.
+     * Every topic the animal has can be asked at any difficulty (a fish is never asked about
+     * its sound). Difficulty only changes how often a topic comes up: see {@link #topicWeight}.
      *
      * @param englishAnimalName animal name as stored in the database (e.g. "Zebra")
      */
     public LocalizedQuestion question(String englishAnimalName, QuestionDifficulty difficulty,
                                       GameLanguage language, RandomGenerator random) {
+        return question(englishAnimalName, difficulty, language, true, random);
+    }
+
+    /**
+     * Same as above; when allowUnique is false the "what is special about it" question is never
+     * asked (it is only for the parent-selected level "Сам" / older).
+     */
+    public LocalizedQuestion question(String englishAnimalName, QuestionDifficulty difficulty,
+                                      GameLanguage language, boolean allowUnique, RandomGenerator random) {
         Set<Topic> available = catalog.find(englishAnimalName)
                 .map(AnimalContent::topics)
                 .orElse(EnumSet.allOf(Topic.class));
-        List<Topic> candidates = TOPICS_BY_DIFFICULTY.getOrDefault(difficulty, List.of(Topic.HABITAT)).stream()
-                .filter(available::contains)
-                .toList();
-        if (candidates.isEmpty()) {
-            candidates = List.copyOf(available);
-        }
-        Topic topic = candidates.get(random.nextInt(candidates.size()));
+        Topic topic = pickTopic(available, difficulty, allowUnique, random);
         return question(englishAnimalName, topic, language, random);
+    }
+
+    /** Weighted random choice among the animal's topics. */
+    static Topic pickTopic(Set<Topic> available, QuestionDifficulty difficulty, RandomGenerator random) {
+        return pickTopic(available, difficulty, true, random);
+    }
+
+    static Topic pickTopic(Set<Topic> available, QuestionDifficulty difficulty, boolean allowUnique,
+                           RandomGenerator random) {
+        EnumSet<Topic> allowed = available.isEmpty() ? EnumSet.noneOf(Topic.class) : EnumSet.copyOf(available);
+        if (!allowUnique) {
+            allowed.remove(Topic.UNIQUE);
+        }
+        if (allowed.isEmpty()) {
+            return Topic.HABITAT;
+        }
+        List<Topic> topics = List.copyOf(allowed); // EnumSet order: stable for tests
+        int total = topics.stream().mapToInt(topic -> topicWeight(topic, difficulty)).sum();
+        int roll = random.nextInt(total);
+        for (Topic topic : topics) {
+            roll -= topicWeight(topic, difficulty);
+            if (roll < 0) {
+                return topic;
+            }
+        }
+        return topics.get(topics.size() - 1);
+    }
+
+    /**
+     * Weight of a topic for the child's difficulty: 3 when the topic matches the difficulty,
+     * 2 one step away, 1 two steps away. E.g. on EASY "what does it eat" comes up
+     * about half as often as "where does it live", but still comes up.
+     */
+    static int topicWeight(Topic topic, QuestionDifficulty difficulty) {
+        QuestionDifficulty own = TOPIC_DIFFICULTY.getOrDefault(topic, QuestionDifficulty.EASY);
+        QuestionDifficulty level = difficulty != null ? difficulty : QuestionDifficulty.EASY;
+        return 3 - Math.abs(own.ordinal() - level.ordinal());
     }
 
     /** Builds a question on a specific topic; package-private for tests. */

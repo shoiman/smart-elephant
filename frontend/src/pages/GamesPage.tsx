@@ -21,7 +21,9 @@ import {
   AnswerOptions,
   buildChoices,
   findAnimalOptions,
+  HandHintIcon,
   shouldShowChoices,
+  startHandHint,
   toOptionTopic,
   ToddlerQuestion,
   useAnswerLevel,
@@ -43,6 +45,8 @@ const TODDLER_ANSWER_TIMEOUT_MS = 5000;
 // After this many wrong attempts (silence included) the host says the answer together with the child.
 // 2 = one encouragement with picture hints, then "let's say it together" (see docs/PRODUCT_BRIEF.md)
 const MAX_ATTEMPTS = 2;
+/** Microphone-only screen: the hand points at the mic after this long without a touch. */
+const MIC_HAND_MS = 5000;
 
 type Phase =
   | "starting"
@@ -99,6 +103,39 @@ export function GamesPage() {
     setPhase("error");
   }, []);
 
+  // Microphone-only screen (no toddler cards): the mic pulses while it waits for the child, and on
+  // levels "Показываю" / "С подсказкой" a hand points at it after MIC_HAND_MS without a touch.
+  const sectionRef = useRef<HTMLElement>(null);
+  const micRef = useRef<HTMLButtonElement>(null);
+  const handRef = useRef<SVGSVGElement>(null);
+  const isWaitingForVoice = phase === "question" && !isToddlerScene && speech.isSupported && !speech.isListening;
+  const isHandAllowed = isWaitingForVoice && level !== "older";
+  // Id of the question the hand is shown for (null = hidden); a new question starts hidden by itself
+  const [handFor, setHandFor] = useState<string | null>(null);
+  const [idleRestart, setIdleRestart] = useState(0);
+  const questionId = question?.questionId ?? null;
+  const isHandShown = isHandAllowed && handFor !== null && handFor === questionId;
+
+  useEffect(() => {
+    if (!isHandAllowed || !questionId) return undefined;
+    const timer = window.setTimeout(() => setHandFor(questionId), MIC_HAND_MS);
+    return () => window.clearTimeout(timer);
+  }, [isHandAllowed, questionId, idleRestart]);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const hand = handRef.current;
+    const mic = micRef.current;
+    if (!isHandShown || !section || !hand || !mic) return undefined;
+    return startHandHint(section, hand, [mic]);
+  }, [isHandShown]);
+
+  /** Any touch hides the hand and restarts the countdown. */
+  const handleScreenTouch = useCallback(() => {
+    setHandFor(null);
+    setIdleRestart((count) => count + 1);
+  }, []);
+
   const askQuestion = useCallback(
     (nextQuestion: Question) => {
       const speak = () => speakText(nextQuestion.questionText, language);
@@ -120,7 +157,7 @@ export function GamesPage() {
   const loadQuestion = useCallback(async () => {
     setPhase("loading");
     try {
-      const nextQuestion = await QuestionService.getNextQuestion(MOCK_CHILD_ID, language);
+      const nextQuestion = await QuestionService.getNextQuestion(MOCK_CHILD_ID, language, level);
       setQuestion(nextQuestion);
       setAttempts(0);
       setHeardAnswer("");
@@ -133,7 +170,7 @@ export function GamesPage() {
       console.error("Failed to load question:", error);
       fail(() => void loadQuestion());
     }
-  }, [askQuestion, fail, language, usesToddlerScene]);
+  }, [askQuestion, fail, language, level, usesToddlerScene]);
 
   const startGame = useCallback(async () => {
     setPhase("starting");
@@ -362,7 +399,12 @@ export function GamesPage() {
   const isResult = phase === "correct" || phase === "incorrect" || phase === "together";
 
   return (
-    <section aria-label={question.questionText} className={`game game--${phase}${showChoices && !isResult ? " game--with-options" : ""}`}>
+    <section
+      aria-label={question.questionText}
+      className={`game game--${phase}${showChoices && !isResult ? " game--with-options" : ""}`}
+      onPointerDown={handleScreenTouch}
+      ref={sectionRef}
+    >
       <div className={`game__stage${isResult ? " game__stage--result" : ""}`}>
         {phase === "correct" && (
           <>
@@ -435,7 +477,9 @@ export function GamesPage() {
           <div className="voice">
             {speech.isSupported ? (
               <>
-                <div className={`voice__control${speech.isListening ? " voice__control--listening" : ""}`}>
+                <div
+                  className={`voice__control${speech.isListening ? " voice__control--listening" : ""}${isWaitingForVoice ? " voice__control--waiting" : ""}`}
+                >
                   <span aria-hidden="true" className="voice__wave">
                     <i /><i /><i /><i />
                   </span>
@@ -445,6 +489,7 @@ export function GamesPage() {
                     className="voice__mic"
                     disabled={phase === "checking"}
                     onClick={handleMicClick}
+                    ref={micRef}
                     type="button"
                   >
                     <MicIcon className="voice__mic-icon" />
@@ -485,6 +530,7 @@ export function GamesPage() {
         </>
       )}
 
+      <HandHintIcon ref={handRef} />
     </section>
   );
 }

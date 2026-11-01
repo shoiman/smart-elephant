@@ -1,4 +1,5 @@
 .game {
+  position: relative; /* anchor for the hand hint */
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -252,6 +253,11 @@
   animation: mic-pulse 1.4s ease-in-out infinite;
 }
 
+/* Waiting for the child's answer: the mic "calls" (grows and sends out a ring) */
+.voice__control--waiting .voice__mic:not(:disabled) {
+  animation: mic-call 1.4s ease-in-out infinite;
+}
+
 .voice__mic-icon {
   width: 40px;
   height: 40px;
@@ -436,6 +442,18 @@
 @keyframes peek-in {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: none; }
+}
+
+@keyframes mic-call {
+  0%, 100% { transform: scale(1); box-shadow: 0 10px 24px rgba(67, 134, 107, 0.32), 0 0 0 0 rgba(67, 134, 107, 0.45); }
+  50% { transform: scale(1.06); box-shadow: 0 10px 24px rgba(67, 134, 107, 0.32), 0 0 0 20px rgba(67, 134, 107, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice__control--waiting .voice__mic:not(:disabled) {
+    animation: none;
+    box-shadow: 0 10px 24px rgba(67, 134, 107, 0.32), 0 0 0 12px rgba(67, 134, 107, 0.25);
+  }
 }
 
 @keyframes mic-pulse {

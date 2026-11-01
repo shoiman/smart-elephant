@@ -78,12 +78,15 @@ class AnimalCatalogTest {
     }
 
     @Test
-    void difficultyWithoutTopicsFallsBackToAnyTopicOfTheAnimal() {
-        // The crow has no SIZE topic, but still has DIET for MEDIUM
+    void missingTopicIsNeverAskedButOtherTopicsStillComeUp() {
+        // The crow has no SIZE topic: it is never asked, while DIET comes up at any difficulty
         Random random = new Random(5);
-        for (int i = 0; i < 20; i++) {
-            assertThat(templates.question("Raven", QuestionDifficulty.MEDIUM, GameLanguage.RU, random).topic())
-                    .isEqualTo(Topic.DIET);
+        for (QuestionDifficulty difficulty : new QuestionDifficulty[]{QuestionDifficulty.EASY, QuestionDifficulty.MEDIUM}) {
+            java.util.Set<Topic> asked = java.util.EnumSet.noneOf(Topic.class);
+            for (int i = 0; i < 200; i++) {
+                asked.add(templates.question("Raven", difficulty, GameLanguage.RU, random).topic());
+            }
+            assertThat(asked).as(difficulty.name()).doesNotContain(Topic.SIZE).contains(Topic.DIET);
         }
     }
 }
