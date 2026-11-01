@@ -37,8 +37,9 @@ import "./GamesPage.css";
 // Mock child ID - in real app, this would come from user auth/selection
 const MOCK_CHILD_ID = 1;
 const QUESTIONS_PER_GAME = 5;
-// After this many wrong attempts the host says the answer together with the child
-const MAX_ATTEMPTS = 3;
+// After this many wrong attempts (silence included) the host says the answer together with the child.
+// 2 = one encouragement with picture hints, then "let's say it together" (see docs/PRODUCT_BRIEF.md)
+const MAX_ATTEMPTS = 2;
 
 type Phase =
   | "starting"

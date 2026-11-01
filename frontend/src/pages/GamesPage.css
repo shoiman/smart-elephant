@@ -177,6 +177,34 @@
   color: var(--color-ink);
 }
 
+/* Phones (everything except the desktop/landscape layout): the child does not read yet,
+   so the question strip stays small and the animal gets the space */
+@media (max-width: 899px), (orientation: portrait) {
+  .host-bar {
+    gap: var(--space-3);
+    min-height: 0;
+    padding: var(--space-1) var(--space-4) var(--space-1) var(--space-1);
+    box-shadow: var(--shadow-sm);
+  }
+
+  [dir="rtl"] .host-bar {
+    padding: var(--space-1) var(--space-1) var(--space-1) var(--space-4);
+  }
+
+  .host-bar__avatar {
+    width: 44px;
+    height: 44px;
+    margin-block: 0;
+    border-width: 2px;
+    box-shadow: none;
+  }
+
+  .host-bar__text {
+    font-size: var(--text-body);
+    font-weight: 700;
+  }
+}
+
 /* ---------- Voice control ---------- */
 
 .voice {
@@ -388,7 +416,7 @@
    so the animal card takes a share of the screen height instead of a fixed aspect ratio */
 .game--with-options .game__stage {
   aspect-ratio: auto;
-  height: clamp(150px, 28svh, 320px);
+  height: clamp(160px, 31svh, 340px);
   padding: var(--space-3);
 }
 
