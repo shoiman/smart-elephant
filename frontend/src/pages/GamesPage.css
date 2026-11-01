@@ -393,7 +393,8 @@
 
 .reward__star {
   width: 80%;
-  margin-bottom: -12%;
+  /* Small overlap only: the star floats above the raised arms, not on the head */
+  margin-bottom: -3%;
 }
 
 .reward__host {

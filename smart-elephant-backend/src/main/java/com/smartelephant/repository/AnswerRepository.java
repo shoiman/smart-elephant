@@ -23,6 +23,14 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     long countCorrectAnswersInSession(@Param("sessionId") Long sessionId);
 
     /**
+     * True if this question was already answered correctly in the session,
+     * so a retry after "correct" ("again" button) is not counted twice
+     */
+    @Query("SELECT CASE WHEN COUNT(a) > 0 THEN true ELSE false END FROM Answer a " +
+            "WHERE a.gameSession.id = :sessionId AND a.questionText = :questionText AND a.isCorrect = true")
+    boolean existsCorrectAnswer(@Param("sessionId") Long sessionId, @Param("questionText") String questionText);
+
+    /**
      * Get answers by animal and child for analysis
      */
     @Query("SELECT a FROM Answer a WHERE a.gameSession.child.id = :childId AND a.animal.id = :animalId " +

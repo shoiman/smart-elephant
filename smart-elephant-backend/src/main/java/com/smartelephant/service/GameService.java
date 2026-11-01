@@ -106,6 +106,10 @@ public class GameService {
                 ? request.getDifficulty()
                 : "MEDIUM";
 
+        // Checked before saving this answer: one correct answer per question counts
+        boolean alreadyAnsweredCorrectly = isCorrect
+                && answerRepository.existsCorrectAnswer(session.getId(), questionText);
+
         Answer answer = Answer.builder()
                 .gameSession(session)
                 .animal(animal)
@@ -118,9 +122,9 @@ public class GameService {
 
         answerRepository.save(answer);
 
-        // Update session
-        session.setTotalQuestions(session.getTotalQuestions() + 1);
-        if (isCorrect) {
+        // Update session. totalQuestions is the number of questions planned at start
+        // (not the number of attempts), so retries do not inflate "5 of 11"
+        if (isCorrect && !alreadyAnsweredCorrectly) {
             session.setCorrectAnswers(session.getCorrectAnswers() + 1);
         }
         gameSessionRepository.save(session);
