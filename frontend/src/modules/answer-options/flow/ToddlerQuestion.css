@@ -1,0 +1,594 @@
+/*
+ * Toddler question screen (design spec "Карточки-варианты: анимации и голос ведущего").
+ * Rule of the system: green and "breathing" = your turn, everything else stays still.
+ * JS only switches the is-* classes; all motion is here.
+ */
+
+.qflow {
+  /* Card and mic scale down on short screens so the mic always fits without scrolling */
+  --card-h: min(172px, 21svh);
+  --mic-size: min(114px, 13.2svh); /* 104 px in the spec, +10% */
+
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: var(--game-max);
+  margin-inline: auto;
+  padding-top: var(--space-2);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ---------- Animal ---------- */
+
+.qflow__stage {
+  position: relative;
+  flex: none;
+  height: clamp(180px, 34svh, 360px);
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: #f4f2e5;
+  box-shadow: inset 0 -30px 50px rgba(150, 170, 130, 0.12);
+}
+
+/* Absolutely positioned inside the stage: a % height on a grid/flex child is ignored,
+   so the picture used to spill out of the stage at its natural size */
+.qflow__animal {
+  position: absolute;
+  inset: var(--space-3);
+  display: block;
+  width: calc(100% - 2 * var(--space-3));
+  height: calc(100% - 2 * var(--space-3));
+  object-fit: contain;
+  object-position: center;
+  user-select: none;
+  -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 62%, transparent 100%);
+}
+
+.qflow__animal.is-joy {
+  animation: qhop 0.55s ease-out 2;
+}
+
+/* ---------- Host and bubble ---------- */
+
+.qflow__host-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.qhost {
+  position: relative;
+  flex: none;
+  width: 61px;
+  height: 61px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.qhost:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.qhost__avatar.host--avatar {
+  width: 61px;
+  height: 61px;
+  border-width: 2px;
+}
+
+.qhost.is-talk .qhost__avatar {
+  animation: qtalk 0.45s ease-in-out infinite alternate;
+}
+
+.qhost__speaker {
+  position: absolute;
+  bottom: -4px;
+  inset-inline-start: -4px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: 0 2px 8px rgba(42, 65, 48, 0.15);
+  color: var(--color-ink);
+}
+
+.qhost__speaker-icon {
+  width: 13px;
+  height: 13px;
+}
+
+.qbubble {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 61px;
+  padding: 8px 13px;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  transition: background 0.3s;
+}
+
+.qbubble.is-right,
+.qbubble.is-almost {
+  animation: qpopsoft 0.4s var(--ease-out);
+}
+
+.qbubble.is-right { background: var(--color-right-bg); }
+.qbubble.is-almost { background: var(--color-almost-bg); }
+
+.qbubble__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.qbubble__title {
+  font: 800 19px/1.1 var(--font-heading);
+}
+
+.qbubble.is-right .qbubble__title { color: var(--color-right-ink); }
+.qbubble.is-almost .qbubble__title { color: var(--color-almost-ink); }
+
+.qbubble__text {
+  color: var(--color-ink);
+  font: 700 15px/1.3 var(--font-heading);
+}
+
+/* Three "waves": the host is talking right now */
+.qbubble__wave {
+  display: none;
+  flex: none;
+  align-items: center;
+  gap: 3px;
+  height: 18px;
+}
+
+.qbubble.is-talking .qbubble__wave { display: flex; }
+
+.qbubble__wave span {
+  width: 5px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-green);
+  animation: qbar 0.7s ease-in-out infinite alternate;
+}
+
+.qbubble__wave span:nth-child(2) { animation-delay: 0.15s; }
+.qbubble__wave span:nth-child(3) { animation-delay: 0.3s; }
+
+/* ---------- Cards ---------- */
+
+.qcards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  /* Extra room for the 1.1 scale of the right card and its check mark */
+  height: calc(var(--card-h) + 24px);
+}
+
+.qcard {
+  position: relative;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: calc(var(--card-h) * 0.814);
+  height: var(--card-h);
+  padding: 12px 8px;
+  border: 0;
+  border-radius: 28px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  color: var(--color-ink);
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition:
+    transform 0.35s var(--ease-out),
+    opacity 0.35s var(--ease-out),
+    box-shadow 0.35s,
+    width 0.4s,
+    padding 0.4s,
+    margin 0.4s;
+}
+
+.qcard:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.qcard .answer-card__image {
+  width: calc(var(--card-h) * 0.6);
+  height: calc(var(--card-h) * 0.57);
+  object-fit: contain;
+}
+
+.qcard .answer-card__swatch {
+  width: calc(var(--card-h) * 0.42);
+  height: calc(var(--card-h) * 0.42);
+  margin: 0;
+}
+
+.qcard__label {
+  max-width: 100%;
+  overflow: hidden;
+  /* ~19 px on a full-size card */
+  font-size: calc(var(--card-h) * 0.11);
+  font-weight: 600;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Color cards: the circle keeps its size, the card around it is 10% smaller (less white space) */
+.qcard--color {
+  gap: 6px;
+  width: calc(var(--card-h) * 0.814 * 0.9);
+  height: calc(var(--card-h) * 0.9);
+  padding: 8px 6px;
+}
+
+/* Long words ("фиолетовый", "помаранчевий") get a smaller size so they are never cut */
+.qcard__label--long {
+  font-size: calc(var(--card-h) * 0.088);
+}
+
+/* ASK, and PRESENT for the cards not being named: dimmed, not pressable */
+.qcard.is-dim {
+  opacity: 0.4;
+  transform: scale(0.94);
+  pointer-events: none;
+}
+
+/* PRESENT: the card whose word is sounding */
+.qcard.is-spot {
+  transform: scale(1.08) translateY(-6px);
+  box-shadow: 0 0 0 5px var(--color-green), 0 16px 36px rgba(67, 134, 107, 0.3);
+  pointer-events: none;
+}
+
+/* TURN: "breathing" — your turn */
+.qcard.is-live {
+  animation: qbreathe var(--duration-breathe) ease-in-out infinite;
+}
+
+.qcard.is-live:active {
+  animation: none;
+  transform: scale(0.92);
+}
+
+/* Pressed, waiting for the backend */
+.qcard.is-press {
+  animation: none;
+  transform: scale(0.9);
+  box-shadow: 0 0 0 5px var(--color-green), var(--shadow-sm);
+  pointer-events: none;
+}
+
+.qcard.is-busy { pointer-events: none; }
+
+/* ALMOST: the pressed wrong card shakes once (symmetric, no RTL mirroring needed) */
+.qcard.is-wobble {
+  animation: qwobble var(--duration-wobble) ease-in-out;
+  pointer-events: none;
+}
+
+.qcard.is-right {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 6px var(--color-green), 0 18px 40px rgba(67, 134, 107, 0.32);
+  pointer-events: none;
+}
+
+/* RIGHT: the other card disappears and gives its place up, the right one slides to the center */
+.qcard.is-gone {
+  width: 0;
+  margin-inline: -8px;
+  padding: 0;
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+}
+
+.qcard__check {
+  position: absolute;
+  top: -12px;
+  inset-inline-end: -12px;
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-green);
+  box-shadow: 0 4px 12px rgba(67, 134, 107, 0.4);
+  color: #ffffff;
+}
+
+.qcard.is-right .qcard__check {
+  display: grid;
+  animation: qpop 0.4s var(--ease-out);
+}
+
+.qcard__check-icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* Narrowest phones: two 140 px cards still fit at 320 px with a smaller gap */
+@media (max-width: 340px) {
+  .qcards { gap: var(--space-3); }
+}
+
+/* ---------- Microphone ("now say the word") ---------- */
+
+.qflow__action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  /* Room for the mic is kept so the layout does not jump when it appears */
+  min-height: calc(var(--mic-size) + 8px);
+}
+
+.qflow__bars {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 56px;
+  opacity: 0.25;
+  transition: opacity 0.3s;
+}
+
+.qflow__bars span {
+  width: 7px;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--color-green);
+}
+
+.qflow__action.is-listening .qflow__bars { opacity: 0.8; }
+.qflow__action.is-listening .qflow__bars span { animation: qbar2 0.6s ease-in-out infinite alternate; }
+.qflow__action.is-listening .qflow__bars span:nth-child(2) { animation-delay: 0.1s; }
+.qflow__action.is-listening .qflow__bars span:nth-child(3) { animation-delay: 0.25s; }
+.qflow__action.is-listening .qflow__bars span:nth-child(4) { animation-delay: 0.4s; }
+
+.qmic {
+  position: relative;
+  z-index: 0;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--mic-size);
+  height: var(--mic-size);
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-green);
+  box-shadow: var(--shadow-primary);
+  color: #ffffff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background 0.3s;
+}
+
+.qmic:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.qmic__icon {
+  width: calc(var(--mic-size) * 0.42);
+  height: calc(var(--mic-size) * 0.42);
+}
+
+.qmic.is-rise {
+  animation:
+    qrise 0.4s var(--ease-out),
+    qcallpulse 1.4s ease-in-out 0.4s infinite;
+}
+
+.qmic.is-listening { background: var(--color-green-pressed); }
+
+.qmic__ripple {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 50%;
+  background: var(--color-green);
+  opacity: 0;
+}
+
+.qmic.is-listening .qmic__ripple { animation: qripple 1.3s ease-out infinite; }
+.qmic.is-listening .qmic__ripple--late { animation-delay: 0.65s; }
+
+/* ---------- Hand hint and sparkles ---------- */
+
+.qhand {
+  position: absolute;
+  top: 0;
+  left: 0; /* physical: positions come from getBoundingClientRect */
+  z-index: 4;
+  display: none;
+  width: 72px;
+  height: 72px;
+  pointer-events: none;
+  transform-origin: 24px 6px;
+  filter: drop-shadow(0 4px 8px rgba(23, 62, 60, 0.25));
+}
+
+.qspark {
+  position: absolute;
+  z-index: 4;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ---------- Desktop (landscape): animal on the left, question, cards and mic on the right ---------- */
+/* Same layout as the old game screen (GamesPage.css) */
+
+@media (min-width: 900px) and (orientation: landscape) {
+  .qflow {
+    --card-h: min(172px, 26svh);
+    --mic-size: min(114px, 15.4svh);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+    grid-template-rows: 1fr auto auto auto 1fr;
+    align-content: center;
+    column-gap: clamp(32px, 4vw, 64px);
+    row-gap: var(--space-6);
+    max-width: 1080px;
+  }
+
+  .qflow__stage {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    align-self: center;
+    /* Header (~72px) + page padding */
+    height: min(540px, calc(100svh - 120px));
+    min-height: 340px;
+  }
+
+  .qflow__animal {
+    inset: var(--space-6);
+    width: calc(100% - 2 * var(--space-6));
+    height: calc(100% - 2 * var(--space-6));
+  }
+
+  .qflow__host-row { grid-column: 2; grid-row: 2; }
+  .qcards { grid-column: 2; grid-row: 3; }
+  .qflow__action { grid-column: 2; grid-row: 4; }
+
+  /* There is room on desktop: the question is large again, as before */
+  .qhost,
+  .qhost__avatar.host--avatar {
+    width: 76px;
+    height: 76px;
+  }
+
+  .qhost__speaker {
+    width: 30px;
+    height: 30px;
+  }
+
+  .qhost__speaker-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .qbubble {
+    min-height: 76px;
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
+  }
+
+  .qbubble__title {
+    font-size: clamp(1.5rem, 1.25rem + 1vw, 1.875rem);
+  }
+
+  .qbubble__text {
+    font-size: clamp(1.25rem, 1.05rem + 1vw, 1.625rem);
+    font-weight: 800;
+    line-height: 1.2;
+  }
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes qbreathe {
+  0%, 100% { transform: scale(1); box-shadow: var(--shadow-md), 0 0 0 0 rgba(67, 134, 107, 0); }
+  50% { transform: scale(1.04); box-shadow: var(--shadow-md), 0 0 0 7px rgba(67, 134, 107, 0.35); }
+}
+
+@keyframes qwobble {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-9px) rotate(-3deg); }
+  40% { transform: translateX(8px) rotate(3deg); }
+  60% { transform: translateX(-6px) rotate(-2deg); }
+  80% { transform: translateX(4px); }
+}
+
+@keyframes qcallpulse {
+  0%, 100% { transform: scale(1); box-shadow: var(--shadow-primary), 0 0 0 0 rgba(67, 134, 107, 0.45); }
+  50% { transform: scale(1.06); box-shadow: var(--shadow-primary), 0 0 0 20px rgba(67, 134, 107, 0); }
+}
+
+@keyframes qpop {
+  0% { transform: scale(0); }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@keyframes qpopsoft {
+  0% { transform: scale(0.94); }
+  60% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes qtalk {
+  0% { transform: scale(1) rotate(-2deg); }
+  100% { transform: scale(1.05) rotate(2deg); }
+}
+
+@keyframes qhop {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-12px) scale(1.05); }
+}
+
+@keyframes qbar {
+  0% { height: 6px; }
+  100% { height: 20px; }
+}
+
+@keyframes qbar2 {
+  0% { height: 10px; }
+  100% { height: 46px; }
+}
+
+@keyframes qrise {
+  0% { opacity: 0; transform: translateY(24px) scale(0.8); }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes qripple {
+  0% { opacity: 0.45; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+
+/* ---------- Reduced motion: no movement, "your turn" stays visible as static rings ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .qflow *,
+  .qflow *::before,
+  .qflow *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .qcard.is-live {
+    box-shadow: 0 0 0 6px rgba(67, 134, 107, 0.45), var(--shadow-md);
+  }
+
+  .qmic.is-rise {
+    box-shadow: 0 0 0 12px rgba(67, 134, 107, 0.25);
+  }
+}

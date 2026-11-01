@@ -23,6 +23,7 @@ import {
   findAnimalOptions,
   shouldShowChoices,
   toOptionTopic,
+  ToddlerQuestion,
   useAnswerLevel,
 } from "../modules/answer-options";
 import type { GameEndResponse, Question } from "../services/api-types";
@@ -37,6 +38,8 @@ import "./GamesPage.css";
 // Mock child ID - in real app, this would come from user auth/selection
 const MOCK_CHILD_ID = 1;
 const QUESTIONS_PER_GAME = 5;
+// Toddler cards: a pressed card waits for the backend at most this long, then quietly comes back
+const TODDLER_ANSWER_TIMEOUT_MS = 5000;
 // After this many wrong attempts (silence included) the host says the answer together with the child.
 // 2 = one encouragement with picture hints, then "let's say it together" (see docs/PRODUCT_BRIEF.md)
 const MAX_ATTEMPTS = 2;
@@ -88,6 +91,8 @@ export function GamesPage() {
     [animal?.id, question, level],
   );
   const showChoices = choices.length > 0 && shouldShowChoices(level, attempts);
+  // Toddler level with picture cards runs the new voiced scene (design spec); other cases use the old flow for now
+  const isToddlerScene = level === "toddler" && choices.length > 0;
 
   const fail = useCallback((retry: () => void) => {
     setRetryAction(() => retry);
@@ -104,6 +109,14 @@ export function GamesPage() {
     [language],
   );
 
+  /** True when the question will be played by the toddler scene, which voices the question itself. */
+  const usesToddlerScene = useCallback(
+    (nextQuestion: Question) =>
+      level === "toddler" &&
+      buildChoices(findAnimalOptions(findAnimalByName(nextQuestion.animalName)?.id), toOptionTopic(nextQuestion.topic), level).length > 0,
+    [level],
+  );
+
   const loadQuestion = useCallback(async () => {
     setPhase("loading");
     try {
@@ -115,12 +128,12 @@ export function GamesPage() {
       setTypedAnswer("");
       answerStartRef.current = Date.now();
       setPhase("question");
-      askQuestion(nextQuestion);
+      if (!usesToddlerScene(nextQuestion)) askQuestion(nextQuestion);
     } catch (error) {
       console.error("Failed to load question:", error);
       fail(() => void loadQuestion());
     }
-  }, [askQuestion, fail, language]);
+  }, [askQuestion, fail, language, usesToddlerScene]);
 
   const startGame = useCallback(async () => {
     setPhase("starting");
@@ -215,6 +228,26 @@ export function GamesPage() {
     void submitAnswer(label);
   }
 
+  /** Toddler scene: checks a card caption; rejects on network error or timeout (the scene retries quietly). */
+  async function checkToddlerAnswer(caption: string): Promise<boolean> {
+    if (!question || sessionId === null) throw new Error("No active question");
+    const response = await QuestionService.submitAnswer(
+      {
+        gameSessionId: sessionId,
+        questionId: question.questionId,
+        animalId: question.animalId,
+        answer: caption,
+        responseTimeMs: Date.now() - answerStartRef.current,
+        questionText: question.questionText,
+        difficulty: question.difficulty,
+        topic: question.topic,
+        language,
+      },
+      { timeout: TODDLER_ANSWER_TIMEOUT_MS, retries: 1 },
+    );
+    return response.isCorrect;
+  }
+
   function handleTypedSubmit(event: FormEvent) {
     event.preventDefault();
     const answer = typedAnswer.trim();
@@ -295,6 +328,23 @@ export function GamesPage() {
         <Host className="game__status-host game__status-host--bob" />
         <p className="game__status-text">{t("game.loading")}</p>
       </section>
+    );
+  }
+
+  if (isToddlerScene && phase === "question") {
+    return (
+      <ToddlerQuestion
+        animalAlt={localizedName || question.animalName}
+        animalImage={animal?.image}
+        checkAnswer={checkToddlerAnswer}
+        choices={choices}
+        key={question.questionId}
+        onDone={() => void goNext()}
+        questionAudioUrl={question.audioUrl}
+        questionKey={question.questionId}
+        questionText={question.questionText}
+        speech={speech}
+      />
     );
   }
 

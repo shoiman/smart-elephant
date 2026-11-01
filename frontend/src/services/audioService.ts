@@ -1,23 +1,34 @@
 let currentAudio: HTMLAudioElement | null = null;
+/** Bumped by stopAudio(): a browser utterance queued before the stop must not start after it */
+let speechGeneration = 0;
+
+/** Stops the audio file and the browser voice, whatever is playing now. */
+export function stopAudio() {
+  speechGeneration++;
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  if (currentAudio) {
+    currentAudio.onended = null;
+    currentAudio.onerror = null;
+    currentAudio.pause();
+    currentAudio = null;
+  }
+}
 
 /**
  * Plays an audio file. onError runs if the file cannot be played
  * (missing file, network error, autoplay blocked), e.g. to fall back to speakText.
+ * onEnded runs when the file has played to the end.
  */
-export function playAudio(src: string, onError?: () => void) {
+export function playAudio(src: string, onError?: () => void, onEnded?: () => void) {
   // Do not talk over a file with the browser voice
-  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  stopAudio();
 
-  // If there's already an audio playing, pause it and reset its time
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-  }
+  const audio = new Audio(src);
+  currentAudio = audio;
 
-  currentAudio = new Audio(src);
-
-  currentAudio.onended = () => {
-    currentAudio = null;
+  audio.onended = () => {
+    if (currentAudio === audio) currentAudio = null;
+    onEnded?.();
   };
 
   let failed = false;
@@ -27,8 +38,8 @@ export function playAudio(src: string, onError?: () => void) {
     console.error("Audio playback failed:", error);
     onError?.();
   };
-  currentAudio.onerror = () => fail(currentAudio?.error ?? "load error");
-  currentAudio.play().catch(fail);
+  audio.onerror = () => fail(audio.error ?? "load error");
+  audio.play().catch(fail);
 }
 
 const speechLocales: Readonly<Record<string, string>> = { he: "he-IL", ru: "ru-RU", uk: "uk-UA" };
@@ -71,32 +82,57 @@ export async function hasVoiceFor(language: string): Promise<boolean> {
   return findVoice(voices, speechLocales[language] ?? language) !== undefined;
 }
 
-/** Reads text aloud with the browser's built-in speech synthesis (no-op if unsupported). */
-export function speakText(text: string, language: string): boolean {
-  if (!("speechSynthesis" in window) || !text) return false;
+interface SpeakCallbacks {
+  /** The utterance has been spoken to the end */
+  readonly onEnd?: () => void;
+  /** No voice for the language or the utterance failed */
+  readonly onFail?: () => void;
+}
+
+/**
+ * Reads text aloud with the browser's built-in speech synthesis (no-op if unsupported).
+ * Without callbacks it speaks even with no matching voice (old behaviour); with callbacks it
+ * reports onFail instead, so the caller can keep the line on screen for a while.
+ */
+export function speakText(text: string, language: string, callbacks?: SpeakCallbacks): boolean {
+  if (!("speechSynthesis" in window) || !text) {
+    callbacks?.onFail?.();
+    return false;
+  }
 
   const synth = window.speechSynthesis;
   const locale = speechLocales[language] ?? language;
   const wasBusy = synth.speaking || synth.pending;
-  synth.cancel();
+  stopAudio();
+  const generation = speechGeneration;
 
   void loadVoices().then((voices) => {
+    if (generation !== speechGeneration) return; // stopped while voices were loading
     const voice = findVoice(voices, locale);
     if (!voice) {
       console.warn(
         `[audio] No speech voice for "${locale}". Available:`,
         voices.map((v) => `${v.name} (${v.lang})`),
       );
+      if (callbacks) {
+        callbacks.onFail?.();
+        return;
+      }
     }
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = locale;
     if (voice) utterance.voice = voice;
     utterance.rate = 0.9;
-    utterance.onerror = (event) => console.warn("[audio] Speech failed:", event.error);
+    utterance.onend = () => callbacks?.onEnd?.();
+    utterance.onerror = (event) => {
+      console.warn("[audio] Speech failed:", event.error);
+      callbacks?.onFail?.();
+    };
 
     // Chrome may drop an utterance queued right after cancel(); give it a moment
     window.setTimeout(() => {
+      if (generation !== speechGeneration) return; // stopped in the meantime
       synth.resume(); // Chrome can get stuck in a paused state after long idle
       synth.speak(utterance);
     }, wasBusy ? 100 : 0);

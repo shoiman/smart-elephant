@@ -74,4 +74,15 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --duration-fast: 150ms;
   --duration-base: 240ms;
+  --duration-breathe: 1.6s;  /* "your turn" pulse of the answer cards */
+  --duration-wobble: 500ms;  /* "almost" shake */
+
+  /* Host feedback bubble */
+  --color-almost-bg: var(--color-apricot-light);
+  --color-almost-ink: #7a4f12;
+  --color-right-bg: var(--color-sage-soft);
+  --color-right-ink: var(--color-green-pressed);
+
+  /* Minimum tap target for the child */
+  --tap-kid: 64px;
 }

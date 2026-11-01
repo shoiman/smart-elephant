@@ -13,7 +13,7 @@ interface AnswerOptionsProps {
   readonly disabled?: boolean;
 }
 
-function CardArt({ choice }: { readonly choice: Choice }) {
+export function CardArt({ choice }: { readonly choice: Choice }) {
   if (choice.topic === "color") {
     // CSS custom properties are not in CSSProperties, hence the cast
     const swatch = { "--swatch": colorSwatches[choice.id] } as CSSProperties;

@@ -3,7 +3,7 @@
  * API calls for question generation and answer validation
  */
 
-import { httpClient } from './http-client';
+import { httpClient, type RequestOptions } from './http-client';
 import { ENDPOINTS } from './api-config';
 import type { Question, AnswerRequest, AnswerResponse } from './api-types';
 
@@ -26,10 +26,14 @@ export class QuestionService {
    *
    * POST /questions/answer
    */
-  static async submitAnswer(request: AnswerRequest): Promise<AnswerResponse> {
+  static async submitAnswer(
+    request: AnswerRequest,
+    options: Pick<RequestOptions, 'timeout' | 'retries'> = {}
+  ): Promise<AnswerResponse> {
     return httpClient.post<AnswerResponse>(
       ENDPOINTS.questions.answer,
-      request
+      request,
+      options
     );
   }
 
