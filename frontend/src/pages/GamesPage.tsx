@@ -301,7 +301,7 @@ export function GamesPage() {
   const isResult = phase === "correct" || phase === "incorrect" || phase === "together";
 
   return (
-    <section aria-label={question.questionText} className={`game game--${phase}${showChoices ? " game--with-options" : ""}`}>
+    <section aria-label={question.questionText} className={`game game--${phase}${showChoices && !isResult ? " game--with-options" : ""}`}>
       <div className={`game__stage${isResult ? " game__stage--result" : ""}`}>
         {phase === "correct" && (
           <>
