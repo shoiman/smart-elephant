@@ -16,7 +16,8 @@
   grid-template-rows: auto 1fr;
   column-gap: var(--space-2);
   width: 100%;
-  min-height: clamp(340px, 62vh, 470px);
+  /* Leaves room for the start button, the age picker and the sections on one phone screen */
+  min-height: clamp(300px, 46svh, 470px);
   margin-top: var(--space-2);
   padding: var(--space-6) var(--space-4) 44px;
   overflow: hidden;
@@ -74,13 +75,19 @@
   margin-top: -34px;
 }
 
+/* Child's age, chosen once by the parent */
+.home__level {
+  max-width: 380px;
+  margin-top: var(--space-4);
+}
+
 /* Section shortcuts */
 .home-nav {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
   width: 100%;
-  margin-top: var(--space-8);
+  margin-top: var(--space-5);
 }
 
 .home-nav__item {
@@ -141,7 +148,7 @@
   .home {
     display: grid;
     grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
-    grid-template-rows: 1fr auto auto 1fr;
+    grid-template-rows: 1fr auto auto auto 1fr;
     align-content: center;
     column-gap: clamp(32px, 4vw, 64px);
     max-width: 1080px;
@@ -165,9 +172,15 @@
     margin-top: 0;
   }
 
-  .home-nav {
+  .home__level {
     grid-column: 2;
     grid-row: 3;
+    max-width: none;
+  }
+
+  .home-nav {
+    grid-column: 2;
+    grid-row: 4;
     margin-top: var(--space-8);
   }
 }

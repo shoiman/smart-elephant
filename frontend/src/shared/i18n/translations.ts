@@ -58,6 +58,13 @@ export interface TranslationMessages {
   readonly "game.retry": string;
   readonly "game.progress": string;
   readonly "game.unknownAnimal": string;
+  readonly "level.label": string;
+  readonly "level.toddler": string;
+  readonly "level.middle": string;
+  readonly "level.older": string;
+  readonly "level.toddler.hint": string;
+  readonly "level.middle.hint": string;
+  readonly "level.older.hint": string;
   readonly "reward.title": string;
   readonly "reward.subtitle": string;
   readonly "reward.score": string;
@@ -125,6 +132,13 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "game.retry": "לנסות שוב",
     "game.progress": "שאלה {current} מתוך {total}",
     "game.unknownAnimal": "אין תמונה לחיה הזו",
+    "level.label": "רמה",
+    "level.toddler": "מצביע",
+    "level.middle": "עם רמז",
+    "level.older": "לבד",
+    "level.toddler.hint": "הילד בוחר מבין שתי תמונות — אפשר פשוט ללחוץ",
+    "level.middle.hint": "ארבע תמונות עוזרות לענות בקול",
+    "level.older.hint": "הילד עונה לבד, תמונות — רק אם קשה",
     "reward.title": "מצוין!",
     "reward.subtitle": "כל הכבוד, אלופים!",
     "reward.score": "תשובות נכונות: {correct} מתוך {total}",
@@ -188,6 +202,13 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "game.retry": "Попробовать снова",
     "game.progress": "Вопрос {current} из {total}",
     "game.unknownAnimal": "Для этого животного нет картинки",
+    "level.label": "Уровень",
+    "level.toddler": "Показываю",
+    "level.middle": "С подсказкой",
+    "level.older": "Сам",
+    "level.toddler.hint": "Ребёнок выбирает из двух картинок — можно просто нажать",
+    "level.middle.hint": "Четыре картинки помогают ответить голосом",
+    "level.older.hint": "Ребёнок отвечает сам, картинки — если трудно",
     "reward.title": "Отлично!",
     "reward.subtitle": "Ты большой молодец!",
     "reward.score": "Правильных ответов: {correct} из {total}",
@@ -251,6 +272,13 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "game.retry": "Спробувати знову",
     "game.progress": "Питання {current} з {total}",
     "game.unknownAnimal": "Для цієї тварини немає картинки",
+    "level.label": "Рівень",
+    "level.toddler": "Показую",
+    "level.middle": "З підказкою",
+    "level.older": "Сам",
+    "level.toddler.hint": "Дитина обирає з двох картинок — можна просто натиснути",
+    "level.middle.hint": "Чотири картинки допомагають відповісти голосом",
+    "level.older.hint": "Дитина відповідає сама, картинки — якщо важко",
     "reward.title": "Чудово!",
     "reward.subtitle": "Ти великий молодець!",
     "reward.score": "Правильних відповідей: {correct} з {total}",

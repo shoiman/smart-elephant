@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import meadowImage from "../assets/backgrounds/meadow-mobile.png";
 import Host from "../components/Host/Host";
+import { LevelPicker, useLevelPreference } from "../modules/answer-options";
 import SpeechBubble from "../components/SpeechBubble/SpeechBubble";
 import { ArrowForwardIcon, GamepadIcon, PawIcon, StarIcon } from "../shared/icons/Icons";
 import { useI18n } from "../shared/i18n";
@@ -10,6 +11,7 @@ import "./HomePage.css";
 export function HomePage() {
   const { t } = useI18n();
   const navigate = useNavigate();
+  const [level, setLevel] = useLevelPreference();
 
   const sections = [
     { to: "/animals", label: t("animals.title"), icon: <PawIcon className="home-nav__icon" />, tone: "paw" },
@@ -31,6 +33,8 @@ export function HomePage() {
         {t("home.start")}
         <ArrowForwardIcon className="btn__icon" />
       </button>
+
+      <LevelPicker className="home__level" onChange={setLevel} value={level} />
 
       <nav aria-label={t("app.name")} className="home-nav">
         {sections.map((section) => (

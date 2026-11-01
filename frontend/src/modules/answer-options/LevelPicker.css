@@ -1,0 +1,101 @@
+/* Child's age: segmented control on the home page */
+
+.level-picker {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-align: center;
+}
+
+/* Stars and the hint explain the control; the legend stays for screen readers only */
+.level-picker__legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.level-picker__options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.level-picker__option {
+  position: relative;
+  display: flex;
+}
+
+/* The native radio stays for keyboard and screen readers, the pill is the visible control */
+.level-picker__input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.level-picker__text {
+  flex: 1;
+  min-height: var(--tap-min);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: var(--space-2);
+  border-radius: calc(var(--radius-md) - 4px);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  color: var(--color-ink);
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.level-picker__stars {
+  display: flex;
+  gap: 2px;
+  line-height: 0;
+}
+
+.level-picker__star {
+  width: 16px;
+  height: 16px;
+  color: var(--color-gold);
+}
+
+.level-picker__hint {
+  min-height: 2.6em;
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-small);
+  line-height: 1.3;
+  color: var(--color-text-muted);
+}
+
+.level-picker__input:checked + .level-picker__text {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-primary);
+}
+
+.level-picker__input:focus-visible + .level-picker__text {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .level-picker__text {
+    transition: none;
+  }
+}
