@@ -384,9 +384,12 @@
 
 /* ---------- Picture answer cards ---------- */
 
-/* The cards need room on phones: make the animal card a little lower */
+/* Phones: animal, question, cards and microphone must fit on one screen without scrolling,
+   so the animal card takes a share of the screen height instead of a fixed aspect ratio */
 .game--with-options .game__stage {
-  aspect-ratio: 1 / 0.7;
+  aspect-ratio: auto;
+  height: clamp(150px, 28svh, 320px);
+  padding: var(--space-3);
 }
 
 /* ---------- Motion ---------- */
@@ -469,6 +472,21 @@
 
   .game--with-options .voice {
     grid-row: 4;
+  }
+
+  /* Cards share the column with the question and the microphone: scale them to the window height */
+  /* Desktop: the animal card fills the left column again */
+  .game--with-options .game__stage {
+    height: min(540px, calc(100svh - 120px));
+  }
+
+  .game--with-options .answer-options {
+    max-width: min(100%, 64svh);
+    margin-inline: auto;
+  }
+
+  .game--with-options .answer-options--2 {
+    max-width: min(360px, 40svh);
   }
 
   .game__actions {

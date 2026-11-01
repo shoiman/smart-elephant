@@ -5,6 +5,8 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-3);
   width: 100%;
+  max-width: min(100%, 52svh);
+  margin-inline: auto;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -14,7 +16,8 @@
 .answer-options--2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-4);
-  max-width: 360px;
+  /* Two cards are square-ish: limit them by the screen height too */
+  max-width: min(320px, 30svh);
   margin-inline: auto;
 }
 
