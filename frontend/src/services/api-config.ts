@@ -51,6 +51,8 @@ export const ENDPOINTS = {
   questions: {
     next: '/questions/next',
     answer: '/games/answer',
+    // Checks a word without recording it (toddler's repeated word)
+    check: '/questions/check',
   },
 
   // Progress

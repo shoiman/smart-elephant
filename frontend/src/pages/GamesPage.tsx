@@ -248,6 +248,16 @@ export function GamesPage() {
     return response.isCorrect;
   }
 
+  /** Toddler scene: checks the repeated word; nothing is saved and the score does not change. */
+  async function checkToddlerRepeat(spoken: string): Promise<boolean> {
+    if (!question) throw new Error("No active question");
+    const response = await QuestionService.checkAnswer(
+      { animalId: question.animalId, topic: question.topic, language, answer: spoken },
+      { timeout: TODDLER_ANSWER_TIMEOUT_MS, retries: 1 },
+    );
+    return response.isCorrect;
+  }
+
   function handleTypedSubmit(event: FormEvent) {
     event.preventDefault();
     const answer = typedAnswer.trim();
@@ -337,6 +347,7 @@ export function GamesPage() {
         animalAlt={localizedName || question.animalName}
         animalImage={animal?.image}
         checkAnswer={checkToddlerAnswer}
+        checkRepeat={checkToddlerRepeat}
         choices={choices}
         key={question.questionId}
         onDone={() => void goNext()}

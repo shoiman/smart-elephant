@@ -73,6 +73,18 @@ export interface AnswerRequest {
   language?: string;
 }
 
+/** POST /questions/check: validates a word without saving it or changing the score */
+export interface AnswerCheckRequest {
+  animalId: number;
+  topic?: string;
+  language?: string;
+  answer: string;
+}
+
+export interface AnswerCheckResponse {
+  isCorrect: boolean;
+}
+
 export interface AnswerResponse {
   isCorrect: boolean;
   correctAnswer?: string;

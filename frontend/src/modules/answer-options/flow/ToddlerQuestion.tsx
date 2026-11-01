@@ -20,6 +20,7 @@ interface ToddlerQuestionProps {
   readonly choices: readonly Choice[];
   readonly speech: ToddlerFlowSpeech;
   readonly checkAnswer: (caption: string) => Promise<boolean>;
+  readonly checkRepeat: (spoken: string) => Promise<boolean>;
   readonly onDone: (result: { readonly earned: boolean }) => void;
 }
 
@@ -34,6 +35,7 @@ export function ToddlerQuestion(props: ToddlerQuestionProps) {
   const screenRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const handRef = useRef<SVGSVGElement>(null);
+  const micRef = useRef<HTMLButtonElement>(null);
 
   const { phase, cards } = flow;
   const micState = toddlerMicState(phase);
@@ -46,14 +48,17 @@ export function ToddlerQuestion(props: ToddlerQuestionProps) {
     if (phase === "right" && screen && card) burstSparkles(screen, card);
   }, [phase, cards.correct]);
 
-  // The hand "presses" both cards in turn until the child touches the screen
+  // The hand "presses" both cards in turn (TURN) or the microphone (SAY) until the child touches the screen
   useEffect(() => {
     const screen = screenRef.current;
     const hand = handRef.current;
     if (!flow.isHandVisible || !screen || !hand) return undefined;
-    const targets = cardRefs.current.filter((card): card is HTMLButtonElement => card !== null);
+    const targets =
+      phase === "say"
+        ? [micRef.current].filter((mic): mic is HTMLButtonElement => mic !== null)
+        : cardRefs.current.filter((card): card is HTMLButtonElement => card !== null);
     return startHandHint(screen, hand, targets);
-  }, [flow.isHandVisible]);
+  }, [flow.isHandVisible, phase]);
 
   const bubbleClass = [
     "qbubble",
@@ -134,6 +139,7 @@ export function ToddlerQuestion(props: ToddlerQuestionProps) {
               aria-label={micState === "listening" ? t("game.listening") : t("game.micStart")}
               className={`qmic is-${micState}`}
               onClick={flow.micTap}
+              ref={micRef}
               type="button"
             >
               <span aria-hidden="true" className="qmic__ripple" />

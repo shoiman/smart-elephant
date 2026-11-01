@@ -5,7 +5,7 @@
 
 import { httpClient, type RequestOptions } from './http-client';
 import { ENDPOINTS } from './api-config';
-import type { Question, AnswerRequest, AnswerResponse } from './api-types';
+import type { Question, AnswerRequest, AnswerResponse, AnswerCheckRequest, AnswerCheckResponse } from './api-types';
 
 export class QuestionService {
   /**
@@ -35,6 +35,18 @@ export class QuestionService {
       request,
       options
     );
+  }
+
+  /**
+   * Check a word without recording it (toddler's "now say the word" step)
+   *
+   * POST /questions/check
+   */
+  static async checkAnswer(
+    request: AnswerCheckRequest,
+    options: Pick<RequestOptions, 'timeout' | 'retries'> = {}
+  ): Promise<AnswerCheckResponse> {
+    return httpClient.post<AnswerCheckResponse>(ENDPOINTS.questions.check, request, options);
   }
 
   /**

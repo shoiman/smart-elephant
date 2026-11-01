@@ -2,6 +2,8 @@ package com.smartelephant.service;
 
 import com.smartelephant.i18n.GameLanguage;
 import com.smartelephant.i18n.QuestionTemplates.Topic;
+import com.smartelephant.model.dto.AnswerCheckRequest;
+import com.smartelephant.model.dto.AnswerCheckResponse;
 import com.smartelephant.model.dto.AnswerRequest;
 import com.smartelephant.model.dto.AnswerResponse;
 import com.smartelephant.model.dto.GameSessionResponse;
@@ -205,6 +207,26 @@ public class GameService {
     }
 
     /** Topic echoed back by the client; null when missing or unknown (older clients). */
+    /**
+     * Checks an answer without saving it and without touching the score.
+     * Used for the toddler's repeated word: the question has already been scored by the card tap,
+     * and after "let's say it together" a correct repeat must not turn it into a correct answer.
+     */
+    public AnswerCheckResponse checkAnswer(AnswerCheckRequest request) {
+        Animal animal = animalRepository.findById(request.getAnimalId())
+                .orElseThrow(() -> new RuntimeException("Animal not found: " + request.getAnimalId()));
+
+        Map<String, Object> validation = llmService.validateAnswer(
+                request.getAnswer(),
+                animal,
+                parseTopic(request.getTopic()),
+                GameLanguage.fromCode(request.getLanguage())
+        );
+        boolean isCorrect = Boolean.TRUE.equals(validation.get("isCorrect"));
+        log.info("Answer check (not saved): '{}' -> {}", request.getAnswer(), isCorrect);
+        return AnswerCheckResponse.builder().isCorrect(isCorrect).build();
+    }
+
     private static Topic parseTopic(String topic) {
         if (topic == null || topic.isBlank()) {
             return null;

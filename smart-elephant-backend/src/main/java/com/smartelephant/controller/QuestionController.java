@@ -1,8 +1,11 @@
 package com.smartelephant.controller;
 
+import com.smartelephant.model.dto.AnswerCheckRequest;
+import com.smartelephant.model.dto.AnswerCheckResponse;
 import com.smartelephant.model.dto.QuestionResponse;
 import com.smartelephant.model.entity.Child;
 import com.smartelephant.repository.ChildRepository;
+import com.smartelephant.service.GameService;
 import com.smartelephant.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,7 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final ChildRepository childRepository;
+    private final GameService gameService;
 
     /**
      * Get next question for a child
@@ -43,6 +47,22 @@ public class QuestionController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Error generating next question", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    /**
+     * Check an answer without recording it (toddler's "now say the word" step)
+     * POST /api/questions/check
+     */
+    @PostMapping("/check")
+    public ResponseEntity<AnswerCheckResponse> checkAnswer(@RequestBody AnswerCheckRequest request) {
+        log.info("POST /questions/check - animalId: {}, topic: {}", request.getAnimalId(), request.getTopic());
+
+        try {
+            return ResponseEntity.ok(gameService.checkAnswer(request));
+        } catch (Exception e) {
+            log.error("Error checking answer", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

@@ -4,6 +4,7 @@ import type { Language } from "../../../shared/i18n";
  * The host's lines around the answer cards (keys from the design spec).
  * {X} — card caption with a capital letter, {x} — as is (lower case in ru/uk mid-sentence).
  * The host is a girl elephant: feminine first-person forms. Hebrew addresses the child in plural.
+ * No "almost" title in any language (Nata: no "Почти!/Майже!/כמעט" after a wrong answer), only "think again".
  * Later these lines move to the backend so Azure can voice them (plan, stage 3).
  */
 export type HostPhraseKey =
@@ -19,6 +20,8 @@ export type HostPhraseKey =
   | "almost.silence"
   | "together"
   | "say.repeat"
+  | "say.again"
+  | "notHeard.title"
   | "praise"
   | "praise.next";
 
@@ -31,11 +34,13 @@ const phrases: Readonly<Record<Language, Readonly<Record<HostPhraseKey, string>>
     listen: "Слушаю…",
     "right.title": "Правильно!",
     "right.text": "{X}!",
-    "almost.title": "Почти!",
+    "almost.title": "",
     "almost.text": "Подумай ещё",
     "almost.silence": "Я не услышала. Скажи ещё раз",
     together: "Давай скажем вместе: {x}!",
     "say.repeat": "Теперь скажи: {x}!",
+    "say.again": "Скажи ещё раз: {x}!",
+    "notHeard.title": "Я не услышала.",
     praise: "Молодец!",
     "praise.next": "Хорошо! Идём дальше",
   },
@@ -47,11 +52,13 @@ const phrases: Readonly<Record<Language, Readonly<Record<HostPhraseKey, string>>
     listen: "אני מקשיבה…",
     "right.title": "נכון!",
     "right.text": "{X}!",
-    "almost.title": "כמעט!",
+    "almost.title": "",
     "almost.text": "חשבו שוב",
     "almost.silence": "לא שמעתי. נסו שוב",
     together: "בואו נגיד ביחד: {X}!",
     "say.repeat": "עכשיו אומרים: {X}!",
+    "say.again": "תגידו שוב: {X}!",
+    "notHeard.title": "לא שמעתי.",
     praise: "כל הכבוד!",
     "praise.next": "יופי! ממשיכים",
   },
@@ -63,11 +70,13 @@ const phrases: Readonly<Record<Language, Readonly<Record<HostPhraseKey, string>>
     listen: "Слухаю…",
     "right.title": "Правильно!",
     "right.text": "{X}!",
-    "almost.title": "Майже!",
+    "almost.title": "",
     "almost.text": "Подумай ще",
     "almost.silence": "Я не почула. Скажи ще раз",
     together: "Скажімо разом: {x}!",
     "say.repeat": "Тепер скажи: {x}!",
+    "say.again": "Скажи ще раз: {x}!",
+    "notHeard.title": "Я не почула.",
     praise: "Молодець!",
     "praise.next": "Добре! Йдемо далі",
   },

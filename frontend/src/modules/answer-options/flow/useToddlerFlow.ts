@@ -15,7 +15,16 @@ const PAUSE_BEFORE_QUESTION_MS = 500;
 const PAUSE_AFTER_PRAISE_MS = 600;
 const IDLE_REPEAT_MS = 5000;
 const IDLE_HAND_MS = 8000;
-const SAY_SKIP_MS = 9000;
+/** SAY: the hand points at the mic after 5 s; without a tap the game moves on after 12 s */
+const SAY_HAND_MS = 5000;
+const SAY_SKIP_MS = 12000;
+/** The repeated word gets one more try ("say it again"), then the game moves on */
+const MAX_REPEAT_ATTEMPTS = 2;
+
+/** Title and text as one spoken line; an empty title is skipped. */
+function joinLine(title: string, text: string): string {
+  return [title, text].filter(Boolean).join(" ");
+}
 
 /** What the bubble shows; tone colours it: green "right", apricot "almost". */
 export interface BubbleContent {
@@ -42,6 +51,8 @@ export interface ToddlerFlowOptions {
   readonly speech: ToddlerFlowSpeech;
   /** Sends the caption to the backend; resolves to "is correct", rejects on network error or timeout */
   readonly checkAnswer: (caption: string) => Promise<boolean>;
+  /** Checks the repeated word without recording it; rejects on network error or timeout */
+  readonly checkRepeat: (spoken: string) => Promise<boolean>;
   /** The question is over; earned = answered without "let's say it together" */
   readonly onDone: (result: { readonly earned: boolean }) => void;
 }
@@ -73,6 +84,7 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
   const timersRef = useRef<number[]>([]);
   const attemptsRef = useRef(0);
   const earnedRef = useRef(true);
+  const repeatAttemptsRef = useRef(0);
 
   const correctIndex = options.choices.findIndex((choice) => choice.isCorrect);
 
@@ -166,6 +178,19 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
     [later, questionLine, speak],
   );
 
+  /** SAY idle hints: the hand points at the mic, later the game moves on without a penalty. */
+  const armSayIdle = useCallback(
+    (run: number) => {
+      later(() => {
+        if (isCurrent(run) && phaseRef.current === "say") setIsHandVisible(true);
+      }, SAY_HAND_MS);
+      later(() => {
+        if (isCurrent(run) && phaseRef.current === "say") void finish(run, false);
+      }, SAY_SKIP_MS);
+    },
+    [finish, later],
+  );
+
   const toTurn = useCallback(
     (run: number) => {
       setPhase("turn");
@@ -189,11 +214,27 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
       const text = phrase("say.repeat", correctCaption());
       setBubble({ text, tone: "plain" });
       if (!(await speak(run, { text }))) return;
-      later(() => {
-        if (isCurrent(run) && phaseRef.current === "say") void finish(run, false);
-      }, SAY_SKIP_MS);
+      armSayIdle(run);
     },
-    [correctCaption, finish, later, phrase, setPhase, speak],
+    [armSayIdle, correctCaption, finish, phrase, setPhase, speak],
+  );
+
+  /** Wrong or no repeated word: one more try ("say it again"), then move on without praise. */
+  const repeatMiss = useCallback(
+    async (run: number, reason: "wrong" | "silence") => {
+      repeatAttemptsRef.current += 1;
+      if (repeatAttemptsRef.current >= MAX_REPEAT_ATTEMPTS) {
+        await finish(run, false);
+        return;
+      }
+      setPhase("say");
+      const title = phrase(reason === "wrong" ? "almost.title" : "notHeard.title");
+      const text = phrase("say.again", correctCaption());
+      setBubble({ title: title || undefined, text, tone: "almost" });
+      if (!(await speak(run, { text: joinLine(title, text) }))) return;
+      armSayIdle(run);
+    },
+    [armSayIdle, correctCaption, finish, phrase, setPhase, speak],
   );
 
   const right = useCallback(
@@ -211,8 +252,10 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
     async (run: number, index: number) => {
       setWrong(index);
       setPhase("almost");
-      setBubble({ title: phrase("almost.title"), text: phrase("almost.text"), tone: "almost" });
-      if (!(await speak(run, { text: `${phrase("almost.title")} ${phrase("almost.text")}` }))) return;
+      const title = phrase("almost.title");
+      const text = phrase("almost.text");
+      setBubble({ title: title || undefined, text, tone: "almost" });
+      if (!(await speak(run, { text: joinLine(title, text) }))) return;
       toTurn(run);
     },
     [phrase, setPhase, speak, toTurn],
@@ -234,6 +277,7 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
   const start = useCallback(async () => {
     const run = interrupt();
     attemptsRef.current = 0;
+    repeatAttemptsRef.current = 0;
     earnedRef.current = true;
     setSpot(-1);
     setPress(-1);
@@ -287,21 +331,35 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
     [almost, caption, interrupt, right, setPhase, together, toTurn],
   );
 
-  /** Mic in SAY: any recognized word is praised; it is not sent to the backend yet. */
+  /** Mic in SAY: the repeated word is checked (not recorded); a miss gets one more try. */
   const micTap = useCallback(() => {
     if (phaseRef.current !== "say") return;
     const run = interrupt(); // recognition never runs while the host is talking
     setPhase("listen");
     setBubble({ text: phrase("listen"), tone: "plain" });
     optionsRef.current.speech.listen({
-      onResult: () => {
-        if (isCurrent(run)) void finish(run, true);
+      onResult: (spoken) => {
+        if (!isCurrent(run)) return;
+        optionsRef.current
+          .checkRepeat(spoken)
+          .then((isCorrect) => {
+            if (!isCurrent(run)) return;
+            if (isCorrect) void finish(run, true);
+            else void repeatMiss(run, "wrong");
+          })
+          .catch((error: unknown) => {
+            // Network problem: do not blame the child, just move on
+            console.warn("[toddler] repeat check failed:", error);
+            if (isCurrent(run)) void finish(run, false);
+          });
       },
-      onError: () => {
-        if (isCurrent(run)) void finish(run, false);
+      onError: (error) => {
+        if (!isCurrent(run)) return;
+        if (error === "no-speech") void repeatMiss(run, "silence");
+        else void finish(run, false); // no mic permission or recognition failure
       },
     });
-  }, [finish, interrupt, phrase, setPhase]);
+  }, [finish, interrupt, phrase, repeatMiss, setPhase]);
 
   /** Tap on the host: repeat the current line (TURN — the question, SAY — "now say") and restart idle timers. */
   const replay = useCallback(async () => {
@@ -318,11 +376,13 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
 
   /** Any touch on the screen hides the hand and restarts the idle countdown. */
   const touch = useCallback(() => {
-    if (phaseRef.current !== "turn") return;
+    const current = phaseRef.current;
+    if (current !== "turn" && current !== "say") return;
     setIsHandVisible(false);
     clearTimers();
-    armIdle(runRef.current);
-  }, [armIdle, clearTimers]);
+    if (current === "turn") armIdle(runRef.current);
+    else armSayIdle(runRef.current);
+  }, [armIdle, armSayIdle, clearTimers]);
 
   // Start the scene for every new question (deferred one tick so the effect itself sets no state);
   // the component is keyed by question, so a new question also means a fresh state
