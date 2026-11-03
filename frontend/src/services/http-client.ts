@@ -14,9 +14,9 @@ interface ApiErrorResponse {
 
 export class HttpClientError extends Error {
   status: number;
-  response: any;
+  response: unknown;
 
-  constructor(status: number, response: any, message: string) {
+  constructor(status: number, response: unknown, message: string) {
     super(message);
     this.status = status;
     this.response = response;
@@ -26,7 +26,7 @@ export class HttpClientError extends Error {
 
 export interface RequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-  body?: any;
+  body?: unknown;
   headers?: Record<string, string>;
   timeout?: number;
   retries?: number;
@@ -37,16 +37,17 @@ export interface RequestOptions {
  * Simple in-memory cache with TTL support
  */
 class SimpleCache {
-  private cache: Map<string, { data: any; expires: number }> = new Map();
+  private cache: Map<string, { data: unknown; expires: number }> = new Map();
 
-  set(key: string, data: any, ttlMs: number): void {
+  set(key: string, data: unknown, ttlMs: number): void {
     this.cache.set(key, {
       data,
       expires: Date.now() + ttlMs,
     });
   }
 
-  get(key: string): any {
+  /** The caller knows the type: it is the same request that stored the entry */
+  get<T>(key: string): T | null {
     const entry = this.cache.get(key);
     if (!entry) return null;
 
@@ -55,7 +56,7 @@ class SimpleCache {
       return null;
     }
 
-    return entry.data;
+    return entry.data as T;
   }
 
   has(key: string): boolean {
@@ -100,7 +101,7 @@ export class HttpClient {
 
     // Check cache for GET requests
     if (method === 'GET' && cache && this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey);
+      return this.cache.get<T>(cacheKey) as T;
     }
 
     // Retry logic with exponential backoff. "retries" is the number of attempts;
@@ -157,7 +158,7 @@ export class HttpClient {
    */
   async post<T>(
     endpoint: string,
-    body?: any,
+    body?: unknown,
     options: Omit<RequestOptions, 'method' | 'body'> = {}
   ): Promise<T> {
     return this.request<T>(endpoint, { ...options, method: 'POST', body });
@@ -168,7 +169,7 @@ export class HttpClient {
    */
   async put<T>(
     endpoint: string,
-    body?: any,
+    body?: unknown,
     options: Omit<RequestOptions, 'method' | 'body'> = {}
   ): Promise<T> {
     return this.request<T>(endpoint, { ...options, method: 'PUT', body });
@@ -201,7 +202,7 @@ export class HttpClient {
     url: string,
     options: {
       method: string;
-      body?: any;
+      body?: unknown;
       headers: Record<string, string>;
       timeout: number;
     }
@@ -246,11 +247,11 @@ export class HttpClient {
       }
 
       if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-        throw new Error('Network error: Failed to connect to server');
+        throw new Error('Network error: Failed to connect to server', { cause: error });
       }
 
       if (error instanceof DOMException && error.name === 'AbortError') {
-        throw new Error(`Request timeout after ${options.timeout}ms`);
+        throw new Error(`Request timeout after ${options.timeout}ms`, { cause: error });
       }
 
       throw error;

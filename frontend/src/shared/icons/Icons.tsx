@@ -127,10 +127,10 @@ export function LockIcon({ className = "" }: IconProps) {
   );
 }
 
-/** Play triangle; mirrors in RTL like the other directional icons. */
+/** Play triangle; media controls keep their direction in RTL, so it does not mirror. */
 export function PlayIcon({ className = "" }: IconProps) {
   return (
-    <svg aria-hidden="true" className={`icon--directional ${className}`} viewBox="0 0 24 24">
+    <svg aria-hidden="true" className={className} viewBox="0 0 24 24">
       <path d="M8 5l11 7-11 7z" fill="currentColor" />
     </svg>
   );

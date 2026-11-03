@@ -5,7 +5,7 @@
 
 export const API_CONFIG = {
   // API Base URL - adjust based on environment
-  BASE_URL: (import.meta as any).env?.VITE_API_URL || 'http://localhost:8080/api',
+  BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api',
 
   // Default request timeout (ms)
   TIMEOUT: 30000,
