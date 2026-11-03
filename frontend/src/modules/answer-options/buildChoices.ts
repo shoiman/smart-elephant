@@ -1,6 +1,9 @@
 import type { AnimalOptions, AnswerLevel, Choice, OptionTopic } from "./types";
 
-/** Backend Question.topic → picture-card topic. Other topics (SOUND, SIZE, UNIQUE) have no cards. */
+/**
+ * Backend Question.topic → picture-card topic. Other topics (SOUND, SIZE, UNIQUE) have no cards;
+ * NAME ("Who is this?") uses animal cards, see nameChoices.ts.
+ */
 const BACKEND_TOPICS: Readonly<Record<string, OptionTopic>> = {
   HABITAT: "habitat",
   DIET: "food",

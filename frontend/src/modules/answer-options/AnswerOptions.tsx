@@ -1,9 +1,10 @@
 import type { CSSProperties } from "react";
 
+import { findAnimalByName } from "../../data/animals/lookup";
 import { useI18n } from "../../shared/i18n";
-import { optionLabels } from "./optionLabels";
+import { choiceLabel } from "./optionLabels";
 import { colorSwatches, getOptionImage } from "./optionImages";
-import type { Choice } from "./types";
+import type { Choice, OptionId } from "./types";
 import "./AnswerOptions.css";
 
 interface AnswerOptionsProps {
@@ -16,10 +17,11 @@ interface AnswerOptionsProps {
 export function CardArt({ choice }: { readonly choice: Choice }) {
   if (choice.topic === "color") {
     // CSS custom properties are not in CSSProperties, hence the cast
-    const swatch = { "--swatch": colorSwatches[choice.id] } as CSSProperties;
+    const swatch = { "--swatch": colorSwatches[choice.id as OptionId] } as CSSProperties;
     return <span aria-hidden="true" className="answer-card__swatch" style={swatch} />;
   }
-  const image = getOptionImage(choice.id);
+  // "Who is this?" cards show the animal's own artwork
+  const image = choice.topic === "animal" ? findAnimalByName(choice.id)?.image : getOptionImage(choice.id as OptionId);
   return image ? <img alt="" className="answer-card__image" draggable={false} src={image} /> : null;
 }
 
@@ -32,7 +34,7 @@ export function AnswerOptions({ choices, onSelect, disabled = false }: AnswerOpt
   return (
     <ul className={listClass}>
       {choices.map((choice) => {
-        const label = optionLabels[language][choice.id];
+        const label = choiceLabel(choice, language);
         return (
           <li className="answer-options__item" key={choice.id}>
             {onSelect ? (

@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { fetchHostLineAudio } from "../../../services/hostLineService";
 import type { Language } from "../../../shared/i18n";
-import { optionLabels } from "../optionLabels";
+import { choiceLabel } from "../optionLabels";
 import type { Choice } from "../types";
 import { hostPhrase } from "./hostPhrases";
 import { sayLine, stopHostVoice, type HostLine } from "./hostVoice";
@@ -20,6 +21,8 @@ const SAY_HAND_MS = 5000;
 const SAY_SKIP_MS = 12000;
 /** The repeated word gets one more try ("say it again"), then the game moves on */
 const MAX_REPEAT_ATTEMPTS = 2;
+/** A line waits at most this long for the host-line audio list, then uses the browser voice */
+const LINE_AUDIO_WAIT_MS = 1500;
 
 /** Title and text as one spoken line; an empty title is skipped. */
 function joinLine(title: string, text: string): string {
@@ -85,6 +88,8 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
   const attemptsRef = useRef(0);
   const earnedRef = useRef(true);
   const repeatAttemptsRef = useRef(0);
+  /** Azure audio for this question's host lines (text -> URL); loaded when the scene starts */
+  const lineAudioRef = useRef<Promise<Record<string, string>>>(Promise.resolve({}));
 
   const correctIndex = options.choices.findIndex((choice) => choice.isCorrect);
 
@@ -96,7 +101,7 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
   const caption = useCallback((index: number) => {
     const { choices, language } = optionsRef.current;
     const choice = choices[index];
-    return choice ? optionLabels[language][choice.id] : "";
+    return choice ? choiceLabel(choice, language) : "";
   }, []);
 
   const correctCaption = useCallback(() => {
@@ -145,7 +150,15 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
   /** Says a line; resolves to false if the run was interrupted meanwhile. */
   const speak = useCallback(async (run: number, line: HostLine): Promise<boolean> => {
     setIsTalking(true);
-    await sayLine(line, optionsRef.current.language);
+    let audioUrl = line.audioUrl;
+    if (!audioUrl) {
+      // Host lines come with Azure audio from the backend; without it the browser voice is tried
+      const timeout = new Promise<Record<string, string>>((resolve) => window.setTimeout(() => resolve({}), LINE_AUDIO_WAIT_MS));
+      const lines = await Promise.race([lineAudioRef.current, timeout]);
+      if (run !== runRef.current) return false;
+      audioUrl = lines[line.text];
+    }
+    await sayLine({ ...line, audioUrl }, optionsRef.current.language);
     if (run !== runRef.current) return false;
     setIsTalking(false);
     return true;
@@ -279,6 +292,8 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
     attemptsRef.current = 0;
     repeatAttemptsRef.current = 0;
     earnedRef.current = true;
+    const { choices, language } = optionsRef.current;
+    lineAudioRef.current = fetchHostLineAudio(language, choices.map((_, index) => caption(index)));
     setSpot(-1);
     setPress(-1);
     setWrong(-1);

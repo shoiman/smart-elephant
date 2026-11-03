@@ -1,5 +1,6 @@
+import { findAnimalByName } from "../../data/animals/lookup";
 import type { Language } from "../../shared/i18n";
-import type { OptionId } from "./types";
+import type { Choice, OptionId } from "./types";
 
 /** Card captions; the same word is sent to the backend when a toddler taps a card. */
 export const optionLabels: Readonly<Record<Language, Readonly<Record<OptionId, string>>>> = {
@@ -28,3 +29,15 @@ export const optionLabels: Readonly<Record<Language, Readonly<Record<OptionId, s
     black: "чорний", pink: "рожевий", green: "зелений", blue: "синій", red: "червоний", purple: "фіолетовий",
   },
 };
+
+/**
+ * Caption of any card; the same word is sent to the backend when a toddler taps it.
+ * Animal cards use the animal's name in lower case like the other cards ("Или корова?"); Hebrew has no case.
+ */
+export function choiceLabel(choice: Choice, language: Language): string {
+  if (choice.topic === "animal") {
+    const name = findAnimalByName(choice.id)?.names[language] ?? choice.id;
+    return name.toLocaleLowerCase(language);
+  }
+  return optionLabels[language][choice.id as OptionId];
+}

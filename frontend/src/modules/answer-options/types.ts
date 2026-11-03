@@ -44,8 +44,12 @@ export interface AnimalOptions {
  */
 export type AnswerLevel = "toddler" | "middle" | "older";
 
+/** Topic of a card: an answer-option topic, or "animal" for "Who is this?" (the cards are animals). */
+export type CardTopic = OptionTopic | "animal";
+
 export interface Choice {
-  readonly id: OptionId;
-  readonly topic: OptionTopic;
+  /** OptionId for habitat/food/color cards; animal id from data/animals ("cow") for "animal" cards */
+  readonly id: string;
+  readonly topic: CardTopic;
   readonly isCorrect: boolean;
 }

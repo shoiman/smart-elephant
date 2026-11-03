@@ -4,7 +4,7 @@ import Host from "../../../components/Host/Host";
 import { CheckIcon, MicIcon, SpeakerIcon } from "../../../shared/icons/Icons";
 import { useI18n } from "../../../shared/i18n";
 import { CardArt } from "../AnswerOptions";
-import { optionLabels } from "../optionLabels";
+import { choiceLabel } from "../optionLabels";
 import type { Choice } from "../types";
 import { burstSparkles, startHandHint } from "./effects";
 import { HandHintIcon } from "./HandHintIcon";
@@ -108,7 +108,7 @@ export function ToddlerQuestion(props: ToddlerQuestionProps) {
       <div className="qcards" role="group">
         {props.choices.map((choice, index) => {
           const state = toddlerCardState(phase, index, cards);
-          const label = optionLabels[language][choice.id];
+          const label = choiceLabel(choice, language);
           return (
             <button
               aria-label={label}
