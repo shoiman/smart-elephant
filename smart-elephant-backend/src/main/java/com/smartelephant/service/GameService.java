@@ -186,20 +186,24 @@ public class GameService {
                         .child(childRepository.findById(childId).orElseThrow())
                         .totalGames(0)
                         .totalCorrect(0)
+                        .totalQuestions(0)
                         .build());
 
-        // Calculate totals from all completed games
+        // Totals over all completed games; the list is ordered newest first
         var sessions = gameSessionRepository.findCompletedGamesByChildId(childId);
 
-        long totalGames = sessions.size();
-        long totalCorrect = sessions.stream()
-                .mapToLong(GameSession::getCorrectAnswers)
+        int totalCorrect = sessions.stream()
+                .mapToInt(GameSession::getCorrectAnswers)
+                .sum();
+        int totalQuestions = sessions.stream()
+                .mapToInt(GameSession::getTotalQuestions)
                 .sum();
 
-        progress.setTotalGames((int) totalGames);
-        progress.setTotalCorrect((int) totalCorrect);
+        progress.setTotalGames(sessions.size());
+        progress.setTotalCorrect(totalCorrect);
+        progress.setTotalQuestions(totalQuestions);
         progress.recalculateSuccessRate();
-        progress.determineDifficulty();
+        progress.determineDifficulty(sessions);
         progress.setLastGameAt(LocalDateTime.now());
 
         progressRepository.save(progress);
