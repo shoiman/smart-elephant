@@ -69,6 +69,17 @@ export interface TranslationMessages {
   readonly "reward.subtitle": string;
   readonly "reward.score": string;
   readonly "reward.continue": string;
+  readonly "stars.title": string;
+  readonly "stars.greetingNew": string;
+  readonly "stars.greeting": string;
+  readonly "stars.greetingEmpty": string;
+  readonly "stars.soon": string;
+  readonly "stars.listen": string;
+  readonly "stars.today": string;
+  readonly "stars.album": string;
+  readonly "stars.next": string;
+  readonly "stars.playMore": string;
+  readonly "stars.parents": string;
 }
 
 export type TranslationKey = keyof TranslationMessages;
@@ -143,6 +154,17 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "reward.subtitle": "כל הכבוד, אלופים!",
     "reward.score": "תשובות נכונות: {correct} מתוך {total}",
     "reward.continue": "ממשיכים",
+    "stars.title": "הכוכבים שלי",
+    "stars.greetingNew": "יש! חברים חדשים באלבום!",
+    "stars.greeting": "תראו כמה חברים יש לכם!",
+    "stars.greetingEmpty": "בואו נאסוף חברים לאלבום!",
+    "stars.soon": "עוד מעט נכיר!",
+    "stars.listen": "להקשיב",
+    "stars.today": "הכוכבים של היום",
+    "stars.album": "האלבום שלי",
+    "stars.next": "חבר חדש",
+    "stars.playMore": "משחקים עוד",
+    "stars.parents": "להורים",
   },
   ru: {
     "app.name": "Умный слон",
@@ -213,6 +235,17 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "reward.subtitle": "Ты большой молодец!",
     "reward.score": "Правильных ответов: {correct} из {total}",
     "reward.continue": "Продолжить",
+    "stars.title": "Мои звёзды",
+    "stars.greetingNew": "Ура! Новые друзья в альбоме!",
+    "stars.greeting": "Смотри, сколько у тебя друзей!",
+    "stars.greetingEmpty": "Давай соберём друзей в альбом!",
+    "stars.soon": "Скоро познакомимся!",
+    "stars.listen": "Послушать",
+    "stars.today": "Звёзды за сегодня",
+    "stars.album": "Мой альбом",
+    "stars.next": "Новый друг",
+    "stars.playMore": "Играть ещё",
+    "stars.parents": "Для родителей",
   },
   uk: {
     "app.name": "Розумний слон",
@@ -283,5 +316,16 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "reward.subtitle": "Ти великий молодець!",
     "reward.score": "Правильних відповідей: {correct} з {total}",
     "reward.continue": "Продовжити",
+    "stars.title": "Мої зірки",
+    "stars.greetingNew": "Ура! Нові друзі в альбомі!",
+    "stars.greeting": "Дивись, скільки в тебе друзів!",
+    "stars.greetingEmpty": "Збираймо друзів в альбом!",
+    "stars.soon": "Скоро познайомимося!",
+    "stars.listen": "Послухати",
+    "stars.today": "Зірки за сьогодні",
+    "stars.album": "Мій альбом",
+    "stars.next": "Новий друг",
+    "stars.playMore": "Грати ще",
+    "stars.parents": "Для батьків",
   },
 };

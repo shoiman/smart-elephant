@@ -117,3 +117,30 @@ export function StarIcon({ className = "" }: IconProps) {
     </svg>
   );
 }
+
+export function LockIcon({ className = "" }: IconProps) {
+  return (
+    <svg aria-hidden="true" className={className} {...strokeProps} strokeWidth={2}>
+      <rect height="10" rx="2" width="14" x="5" y="11" />
+      <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+    </svg>
+  );
+}
+
+/** Play triangle; mirrors in RTL like the other directional icons. */
+export function PlayIcon({ className = "" }: IconProps) {
+  return (
+    <svg aria-hidden="true" className={`icon--directional ${className}`} viewBox="0 0 24 24">
+      <path d="M8 5l11 7-11 7z" fill="currentColor" />
+    </svg>
+  );
+}
+
+export function AlbumIcon({ className = "" }: IconProps) {
+  return (
+    <svg aria-hidden="true" className={className} {...strokeProps} strokeWidth={2}>
+      <rect height="16" rx="3" width="18" x="3" y="4" />
+      <path d="M12 4v16" />
+    </svg>
+  );
+}

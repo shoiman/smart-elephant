@@ -414,7 +414,12 @@
 }
 
 .reward__continue {
-  margin: var(--space-4) 0 var(--space-6);
+  margin: var(--space-4) 0 var(--space-3);
+}
+
+.reward__album {
+  margin-bottom: var(--space-6);
+  text-decoration: none;
 }
 
 /* ---------- Picture answer cards ---------- */
@@ -559,5 +564,9 @@
   .reward__continue {
     max-width: 420px;
     margin-bottom: var(--space-2);
+  }
+
+  .reward__album {
+    max-width: 420px;
   }
 }

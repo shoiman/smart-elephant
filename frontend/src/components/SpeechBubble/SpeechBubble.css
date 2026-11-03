@@ -39,3 +39,15 @@
   left: calc(50% - 13px);
   clip-path: polygon(0 0, 100% 0, 45% 100%);
 }
+
+/* Tail on the start side, pointing at the character next to the bubble */
+.speech-bubble--tail-start::after {
+  top: calc(50% - 11px);
+  inset-inline-start: -14px;
+  width: 18px;
+  clip-path: polygon(100% 0, 100% 100%, 0 50%);
+}
+
+[dir="rtl"] .speech-bubble--tail-start::after {
+  clip-path: polygon(0 0, 0 100%, 100% 50%);
+}

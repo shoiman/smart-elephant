@@ -8,8 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ChildStickerRepository extends JpaRepository<ChildSticker, ChildStickerId> {
+
+    /** The child's album, the newest stickers first */
+    List<ChildSticker> findByIdChildIdOrderByEarnedAtDesc(Long childId);
 
     /** Adds the sticker; an animal collected earlier keeps its first date. */
     @Modifying

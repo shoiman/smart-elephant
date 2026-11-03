@@ -4,8 +4,8 @@ import "./SpeechBubble.css";
 
 interface SpeechBubbleProps {
   readonly children: ReactNode;
-  /** Where the tail points: towards the bottom-start corner or straight down. */
-  readonly tail?: "bottom-start" | "bottom";
+  /** Where the tail points: towards the bottom-start corner, straight down, or to the start side. */
+  readonly tail?: "bottom-start" | "bottom" | "start";
   readonly tone?: "cream" | "white";
   readonly className?: string;
 }

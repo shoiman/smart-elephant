@@ -60,6 +60,12 @@ export const ENDPOINTS = {
     hostLines: '/audio/host-lines',
   },
 
+  // Children
+  children: {
+    // "My stars" screen; tz = the child's IANA time zone ("today" starts at midnight there)
+    stars: (childId: number) => `/children/${childId}/stars`,
+  },
+
   // Progress
   progress: {
     get: (childId: number) => `/progress/${childId}`,

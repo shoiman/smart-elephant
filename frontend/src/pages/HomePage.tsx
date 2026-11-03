@@ -18,7 +18,7 @@ export function HomePage() {
     // Temporarily hidden until these sections have real content:
     // { to: "/animals", label: t("animals.title"), icon: <PawIcon className="home-nav__icon" />, tone: "paw" },
     // { to: "/games", label: t("games.title"), icon: <GamepadIcon className="home-nav__icon" />, tone: "game" },
-    { to: "/progress", label: t("nav.rewards"), icon: <StarIcon className="home-nav__icon" />, tone: "star" },
+    { to: "/stars", label: t("nav.rewards"), icon: <StarIcon className="home-nav__icon" />, tone: "star" },
   ] as const;
 
   return (

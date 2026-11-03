@@ -2,7 +2,9 @@ package com.smartelephant.controller;
 
 import com.smartelephant.model.dto.ChildRegistrationRequest;
 import com.smartelephant.model.dto.ChildResponse;
+import com.smartelephant.model.dto.StarsResponse;
 import com.smartelephant.service.ChildService;
+import com.smartelephant.service.StarsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ import java.util.List;
 public class ChildController {
 
     private final ChildService childService;
+    private final StarsService starsService;
 
     /**
      * Register a new child
@@ -42,6 +45,16 @@ public class ChildController {
     public ResponseEntity<ChildResponse> getChild(@PathVariable Long id) {
         log.info("GET /children/{}", id);
         return ResponseEntity.ok(childService.getChildById(id));
+    }
+
+    /**
+     * The child's "My stars" screen: today's stars, the album, the next animals
+     * GET /api/children/{id}/stars?tz=Asia/Jerusalem
+     */
+    @GetMapping("/{id}/stars")
+    public ResponseEntity<StarsResponse> getStars(@PathVariable Long id, @RequestParam(required = false) String tz) {
+        log.info("GET /children/{}/stars tz={}", id, tz);
+        return ResponseEntity.ok(starsService.getStars(id, tz));
     }
 
     /**

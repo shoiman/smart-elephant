@@ -189,3 +189,27 @@ export interface ApiResponse<T> {
   status: 'success' | 'error';
   timestamp: string;
 }
+
+/** GET /children/{childId}/stars: the child's "My stars" screen */
+export interface StarsResponse {
+  /** One star per game finished today (a game is about one animal) */
+  todayStars: number;
+  /** Collected animals, the newest first */
+  stickers: StarSticker[];
+  /** Up to 3 animals not collected yet, in catalog order */
+  next: NextAnimal[];
+}
+
+export interface StarSticker {
+  animalId: number;
+  /** English name, the same as Question.animalName */
+  animalName: string;
+  earnedAt: string;
+  /** Earned today in the child's time zone */
+  isNew: boolean;
+}
+
+export interface NextAnimal {
+  animalId: number | null;
+  animalName: string;
+}

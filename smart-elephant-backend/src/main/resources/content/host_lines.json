@@ -5,7 +5,8 @@
     "{X} = card caption with a capital letter, {x} = as is. Only these lines with known card words",
     "can be voiced by Azure, so the public endpoint cannot spend the quota on arbitrary text.",
     "When a phrase changes in hostPhrases.ts, change it here too (otherwise it falls back to the browser voice).",
-    "screenLines: the microphone screen (levels ★★/★★★), from frontend/src/shared/i18n/translations.ts (game.incorrect, game.notHeard, game.correctTitle + answer, game.together + answer). {answer} = the backend's own answer."
+    "screenLines: the microphone screen (levels ★★/★★★), from frontend/src/shared/i18n/translations.ts (game.incorrect, game.notHeard, game.correctTitle + answer, game.together + answer). {answer} = the backend's own answer.",
+    "Stars screen (frontend/src/shared/i18n/translations.ts, stars.*): the host's greeting, 'soon' for a silhouette, and '{X}!' for the animal name on a sticker tap."
   ],
   "lines": {
     "he": [
@@ -19,7 +20,12 @@
       "תגידו שוב: {X}!",
       "לא שמעתי. תגידו שוב: {X}!",
       "כל הכבוד!",
-      "יופי! ממשיכים"
+      "יופי! ממשיכים",
+      "{X}!",
+      "יש! חברים חדשים באלבום!",
+      "תראו כמה חברים יש לכם!",
+      "בואו נאסוף חברים לאלבום!",
+      "עוד מעט נכיר!"
     ],
     "ru": [
       "{X}?",
@@ -32,7 +38,12 @@
       "Скажи ещё раз: {x}!",
       "Я не услышала. Скажи ещё раз: {x}!",
       "Молодец!",
-      "Хорошо! Идём дальше"
+      "Хорошо! Идём дальше",
+      "{X}!",
+      "Ура! Новые друзья в альбоме!",
+      "Смотри, сколько у тебя друзей!",
+      "Давай соберём друзей в альбом!",
+      "Скоро познакомимся!"
     ],
     "uk": [
       "{X}?",
@@ -45,7 +56,12 @@
       "Скажи ще раз: {x}!",
       "Я не почула. Скажи ще раз: {x}!",
       "Молодець!",
-      "Добре! Йдемо далі"
+      "Добре! Йдемо далі",
+      "{X}!",
+      "Ура! Нові друзі в альбомі!",
+      "Дивись, скільки в тебе друзів!",
+      "Збираймо друзів в альбом!",
+      "Скоро познайомимося!"
     ]
   },
   "cardWords": {

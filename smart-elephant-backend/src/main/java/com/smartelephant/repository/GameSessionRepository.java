@@ -25,6 +25,9 @@ public interface GameSessionRepository extends JpaRepository<GameSession, Long> 
             "ORDER BY completed_at DESC LIMIT 20", nativeQuery = true)
     List<GameSession> findLast20ByChildId(@Param("childId") Long childId);
 
+    /** Games finished since this moment ("today's stars") */
+    long countByChildIdAndCompletedAtGreaterThanEqual(Long childId, java.time.LocalDateTime from);
+
     /**
      * Get total games count for a child
      */

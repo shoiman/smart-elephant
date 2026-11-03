@@ -16,6 +16,7 @@
  * when the browser has no speech recognition.
  */
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { Link } from "react-router-dom";
 
 import Host from "../components/Host/Host";
 import RewardStar from "../components/RewardStar/RewardStar";
@@ -35,7 +36,7 @@ import type { GameEndResponse, Question } from "../services/api-types";
 import { playAudio, speakText } from "../services/audioService";
 import GameService from "../services/gameService";
 import QuestionService from "../services/questionService";
-import { ArrowForwardIcon, MicIcon, RefreshIcon, SendIcon, SpeakerIcon } from "../shared/icons/Icons";
+import { AlbumIcon, ArrowForwardIcon, MicIcon, RefreshIcon, SendIcon, SpeakerIcon } from "../shared/icons/Icons";
 import { formatMessage, useI18n } from "../shared/i18n";
 import { usePageHeader } from "../shared/layout/PageHeaderContext";
 import "./GamesPage.css";
@@ -411,6 +412,10 @@ export function GamesPage() {
           {t("reward.continue")}
           <ArrowForwardIcon className="btn__icon" />
         </button>
+        <Link className="btn btn--secondary btn--lg btn--block reward__album" to="/stars">
+          <AlbumIcon className="btn__icon" />
+          {t("stars.album")}
+        </Link>
       </section>
     );
   }
