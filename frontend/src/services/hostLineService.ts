@@ -18,7 +18,7 @@ export async function fetchHostLineAudio(language: string, words: readonly strin
     const response = await httpClient.post<HostLinesResponse>(
       ENDPOINTS.audio.hostLines,
       { language, words },
-      { timeout: 4000, retries: 0 },
+      { timeout: 4000, retries: 1 }, // retries = number of attempts (1 = no repeat)
     );
     return response.lines ?? {};
   } catch (error) {

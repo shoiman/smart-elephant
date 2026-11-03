@@ -103,9 +103,11 @@ export class HttpClient {
       return this.cache.get(cacheKey);
     }
 
-    // Retry logic with exponential backoff
+    // Retry logic with exponential backoff. "retries" is the number of attempts;
+    // at least one request is always sent (retries: 0 used to send nothing at all)
+    const attempts = Math.max(1, retries);
     let lastError: Error | null = null;
-    for (let attempt = 1; attempt <= retries; attempt++) {
+    for (let attempt = 1; attempt <= attempts; attempt++) {
       try {
         const data = await this.fetch<T>(url, {
           method,
@@ -130,7 +132,7 @@ export class HttpClient {
         }
 
         // Wait before retry with exponential backoff
-        if (attempt < retries) {
+        if (attempt < attempts) {
           const delay = Math.pow(
             API_CONFIG.RETRY.backoffMultiplier,
             attempt - 1
