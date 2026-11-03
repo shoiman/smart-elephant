@@ -17,4 +17,6 @@ public class AnswerRequest {
     private String difficulty;   // Echoed back from the QuestionResponse (EASY/MEDIUM/HARD)
     private String topic;        // Echoed back from the QuestionResponse (HABITAT, COLOR, ...)
     private String language;     // UI language the child answered in (he/ru/uk)
+    private Integer attempt;     // 1 or 2: which attempt at this question
+    private String outcome;      // "TOGETHER" when the child did not answer and the host said it together (nothing to validate)
 }

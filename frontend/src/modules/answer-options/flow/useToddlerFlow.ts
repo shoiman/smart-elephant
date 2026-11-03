@@ -52,8 +52,8 @@ export interface ToddlerFlowOptions {
   readonly choices: readonly Choice[];
   readonly language: Language;
   readonly speech: ToddlerFlowSpeech;
-  /** Sends the caption to the backend; resolves to "is correct", rejects on network error or timeout */
-  readonly checkAnswer: (caption: string) => Promise<boolean>;
+  /** Sends the caption and the attempt number (1, 2) to the backend; resolves to "is correct", rejects on network error or timeout */
+  readonly checkAnswer: (caption: string, attempt: number) => Promise<boolean>;
   /** Checks the repeated word without recording it; rejects on network error or timeout */
   readonly checkRepeat: (spoken: string) => Promise<boolean>;
   /** The question is over; earned = answered without "let's say it together" */
@@ -325,7 +325,7 @@ export function useToddlerFlow(options: ToddlerFlowOptions) {
 
       let isCorrect: boolean;
       try {
-        isCorrect = await optionsRef.current.checkAnswer(caption(index));
+        isCorrect = await optionsRef.current.checkAnswer(caption(index), attemptsRef.current + 1);
       } catch (error) {
         // Network error or timeout: quietly back to TURN, the attempt is not spent
         console.warn("[toddler] answer check failed:", error);

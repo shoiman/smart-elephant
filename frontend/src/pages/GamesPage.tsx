@@ -243,11 +243,34 @@ export function GamesPage() {
     void startGame();
   }, [startGame]);
 
-  function registerWrongAttempt(message: string) {
+  /**
+   * A miss: a wrong answer (already sent) or silence (nothing sent).
+   * When it ends the question with "let's say it together" after silence, the backend is told separately.
+   */
+  function registerWrongAttempt(message: string, wasAnswerSent = true) {
     const nextAttempts = attempts + 1;
+    const isTogether = nextAttempts >= MAX_ATTEMPTS;
     setAttempts(nextAttempts);
     setFeedback(message);
-    setPhase(nextAttempts >= MAX_ATTEMPTS ? "together" : "incorrect");
+    setPhase(isTogether ? "together" : "incorrect");
+    if (isTogether && !wasAnswerSent) reportTogether(nextAttempts);
+  }
+
+  /** Records that the host said the answer together with a silent child; the game does not wait for it. */
+  function reportTogether(attempt: number) {
+    if (!question || sessionId === null) return;
+    QuestionService.submitAnswer({
+      gameSessionId: sessionId,
+      questionId: question.questionId,
+      animalId: question.animalId,
+      answer: "",
+      questionText: question.questionText,
+      difficulty: question.difficulty,
+      topic: question.topic,
+      language,
+      attempt,
+      outcome: "TOGETHER",
+    }).catch((error) => console.warn("Failed to record 'together':", error));
   }
 
   async function submitAnswer(answer: string) {
@@ -265,6 +288,7 @@ export function GamesPage() {
         difficulty: question.difficulty,
         topic: question.topic,
         language,
+        attempt: attempts + 1,
       });
       if (response.isCorrect) {
         setPhase("correct");
@@ -287,7 +311,7 @@ export function GamesPage() {
       onResult: (transcript) => void submitAnswer(transcript),
       onError: (error: RecognitionError) => {
         if (error === "not-allowed") setFeedback(t("game.micDenied"));
-        else if (error === "no-speech") registerWrongAttempt(t("game.notHeard")); // silence = failed attempt
+        else if (error === "no-speech") registerWrongAttempt(t("game.notHeard"), false); // silence = failed attempt
         else setFeedback(t("game.error"));
       },
     });
@@ -300,7 +324,7 @@ export function GamesPage() {
   }
 
   /** Toddler scene: checks a card caption; rejects on network error or timeout (the scene retries quietly). */
-  async function checkToddlerAnswer(caption: string): Promise<boolean> {
+  async function checkToddlerAnswer(caption: string, attempt: number): Promise<boolean> {
     if (!question || sessionId === null) throw new Error("No active question");
     const response = await QuestionService.submitAnswer(
       {
@@ -313,6 +337,7 @@ export function GamesPage() {
         difficulty: question.difficulty,
         topic: question.topic,
         language,
+        attempt,
       },
       { timeout: TODDLER_ANSWER_TIMEOUT_MS, retries: 1 },
     );

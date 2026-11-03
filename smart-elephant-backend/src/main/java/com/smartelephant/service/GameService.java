@@ -8,6 +8,7 @@ import com.smartelephant.model.dto.AnswerRequest;
 import com.smartelephant.model.dto.AnswerResponse;
 import com.smartelephant.model.dto.GameSessionResponse;
 import com.smartelephant.model.entity.*;
+import com.smartelephant.model.enums.AnswerOutcome;
 import com.smartelephant.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class GameService {
     private final ChildRepository childRepository;
     private final AnimalRepository animalRepository;
     private final ProgressRepository progressRepository;
+    private final ChildStickerRepository childStickerRepository;
     private final LLMService llmService;
 
     /**
@@ -79,23 +81,32 @@ public class GameService {
         Animal animal = animalRepository.findById(request.getAnimalId())
                 .orElseThrow(() -> new RuntimeException("Animal not found: " + request.getAnimalId()));
 
-        // Validate answer using LLM
-        // Language the child answered in; falls back to the child's profile language
-        String languageCode = request.getLanguage() != null && !request.getLanguage().isBlank()
-                ? request.getLanguage()
-                : session.getChild().getLanguage();
-        Map<String, Object> validation = llmService.validateAnswer(
-                request.getAnswer(),
-                animal,
-                parseTopic(request.getTopic()),
-                GameLanguage.fromCode(languageCode)
-        );
+        Topic topic = parseTopic(request.getTopic());
+        int attempt = AnswerOutcome.clampAttempt(request.getAttempt());
+        // The child did not answer (e.g. silence) and the host said it together: nothing to validate
+        boolean saidTogether = AnswerOutcome.TOGETHER.name().equalsIgnoreCase(request.getOutcome());
 
-        Boolean isCorrect = (Boolean) validation.get("isCorrect");
-        String explanation = (String) validation.get("explanation");
-        Integer score = (Integer) validation.get("score");
+        Boolean isCorrect = false;
+        String explanation = null;
+        Integer score = 0;
+        if (!saidTogether) {
+            // Language the child answered in; falls back to the child's profile language
+            String languageCode = request.getLanguage() != null && !request.getLanguage().isBlank()
+                    ? request.getLanguage()
+                    : session.getChild().getLanguage();
+            Map<String, Object> validation = llmService.validateAnswer(
+                    request.getAnswer(),
+                    animal,
+                    topic,
+                    GameLanguage.fromCode(languageCode)
+            );
+            isCorrect = (Boolean) validation.get("isCorrect");
+            explanation = (String) validation.get("explanation");
+            score = (Integer) validation.get("score");
+        }
+        AnswerOutcome outcome = AnswerOutcome.of(isCorrect, attempt, saidTogether);
 
-        log.info("Answer validation: isCorrect={}, score={}", isCorrect, score);
+        log.info("Answer validation: isCorrect={}, score={}, attempt={}, outcome={}", isCorrect, score, attempt, outcome);
 
         // Save answer
         // questionText/difficulty are echoed back by the client from the QuestionResponse
@@ -116,10 +127,13 @@ public class GameService {
                 .gameSession(session)
                 .animal(animal)
                 .questionText(questionText)
-                .answerText(request.getAnswer())
+                .answerText(request.getAnswer() != null ? request.getAnswer() : "")
                 .isCorrect(isCorrect)
                 .difficulty(difficulty)
                 .responseTimeMs(request.getResponseTimeMs())
+                .topic(topic)
+                .attempt((short) attempt)
+                .outcome(outcome)
                 .build();
 
         answerRepository.save(answer);
@@ -159,6 +173,8 @@ public class GameService {
 
         // Update child's progress
         updateProgress(session.getChild().getId());
+        // The game is over: the animal goes into the child's album
+        addStickers(session);
 
         log.info("Game session completed: {}", sessionId);
 
@@ -210,7 +226,14 @@ public class GameService {
         log.debug("Progress updated: {}", progress);
     }
 
-    /** Topic echoed back by the client; null when missing or unknown (older clients). */
+    /** Adds a sticker for each animal of the finished game; animals collected earlier are kept as they are. */
+    private void addStickers(GameSession session) {
+        Long childId = session.getChild().getId();
+        for (Long animalId : answerRepository.findAnimalIdsInSession(session.getId())) {
+            childStickerRepository.addIfAbsent(childId, animalId);
+        }
+    }
+
     /**
      * Checks an answer without saving it and without touching the score.
      * Used for the toddler's repeated word: the question has already been scored by the card tap,
@@ -231,6 +254,7 @@ public class GameService {
         return AnswerCheckResponse.builder().isCorrect(isCorrect).build();
     }
 
+    /** Topic echoed back by the client; null when missing or unknown (older clients). */
     private static Topic parseTopic(String topic) {
         if (topic == null || topic.isBlank()) {
             return null;

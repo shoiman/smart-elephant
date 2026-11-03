@@ -75,6 +75,10 @@ export interface AnswerRequest {
   topic?: string;
   /** Language the child answered in */
   language?: string;
+  /** 1 or 2: which attempt at this question */
+  attempt?: number;
+  /** "TOGETHER": the child did not answer (silence) and the host said it together; nothing to validate */
+  outcome?: "TOGETHER";
 }
 
 /** POST /questions/check: validates a word without saving it or changing the score */

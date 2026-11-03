@@ -20,7 +20,7 @@ interface ToddlerQuestionProps {
   readonly animalAlt: string;
   readonly choices: readonly Choice[];
   readonly speech: ToddlerFlowSpeech;
-  readonly checkAnswer: (caption: string) => Promise<boolean>;
+  readonly checkAnswer: (caption: string, attempt: number) => Promise<boolean>;
   readonly checkRepeat: (spoken: string) => Promise<boolean>;
   readonly onDone: (result: { readonly earned: boolean }) => void;
 }
