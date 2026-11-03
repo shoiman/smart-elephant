@@ -101,44 +101,41 @@ export interface AnswerResponse {
   nextQuestionAvailableAt: string;
 }
 
-export interface RecentGame {
-  gameSessionId: number;
-  completedAt: string;
-  totalQuestions: number;
-  correctAnswers: number;
-  finalScore: number;
-  difficulty?: QuestionDifficulty;
-}
+/** Period of the parent's progress screen */
+export type ProgressPeriod = 'week' | 'month' | 'all';
 
+/** How a question ended: on their own, after the hint, or said together with the host */
+export type TopicStatus = 'CONFIDENT' | 'LEARNING' | 'HARD_FOR_NOW';
+
+/** Question topics, as in the backend's QuestionTemplates.Topic */
+export type QuestionTopic = 'NAME' | 'HABITAT' | 'COLOR' | 'SOUND' | 'DIET' | 'SIZE' | 'UNIQUE';
+
+/** GET /progress/{childId}?period=...&tz=...: the parent's progress screen; times are in the client's zone */
 export interface ProgressResponse {
-  childId: number;
-  totalGames: number;
-  totalCorrect: number;
-  successRate: number;
-  currentLevel: QuestionDifficulty;
+  period: ProgressPeriod;
+  /** The last finished game, whatever the period */
   lastGameAt: string | null;
+  games: number;
+  minutes: number;
+  animals: number;
+  /** Minutes per day (week), per week (month, label = first day) or per month (all, label = "2026-10") */
+  activity: { label: string; minutes: number }[];
+  answers: { total: number; firstTry: number; secondTry: number; together: number };
+  /** Topics with fewer than 3 questions in the period are left out */
+  topics: { topic: QuestionTopic; total: number; firstTry: number; status: TopicStatus }[];
+  /** Up to 3 hardest (animal, topic) pairs */
+  repeat: { animalId: number; animalName: string; topic: QuestionTopic }[];
+  /** The last 20 games, newest first, whatever the period */
   recentGames: RecentGame[];
 }
 
-export interface ProgressAnalyzeRequest {
-  childId: number;
-}
-
-export interface PersonalizedPlan {
-  focusAnimal: string;
-  suggestedQuestions: number;
-  nextSession: string;
-}
-
-export interface ProgressAnalysisResponse {
-  childId: number;
-  analysisDate: string;
-  strengths: string[];
-  areasForImprovement: string[];
-  recommendations: string[];
-  nextDifficulty: QuestionDifficulty;
-  projectedLevel: string;
-  personalizedPlan: PersonalizedPlan;
+export interface RecentGame {
+  gameSessionId: number;
+  completedAt: string;
+  minutes: number;
+  /** English animal names, as in questions */
+  animals: string[];
+  stars: number;
 }
 
 export interface AnimalFacts {

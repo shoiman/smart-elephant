@@ -16,9 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Clock;
-import java.time.DateTimeException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashSet;
@@ -44,7 +41,7 @@ public class StarsService {
     private final GameSessionRepository gameSessionRepository;
     private final AnimalRepository animalRepository;
     private final AnimalCatalog catalog;
-    private final Clock clock;
+    private final ClientTime clientTime;
 
     /**
      * @param timeZone the client's IANA zone ("Asia/Jerusalem"); "today" starts at midnight there.
@@ -72,11 +69,8 @@ public class StarsService {
 
     /** Midnight in the client's zone, as the server-zone time the database timestamps use. */
     LocalDateTime startOfToday(String timeZone) {
-        ZoneId clientZone = parseZone(timeZone).orElse(clock.getZone());
-        return LocalDate.now(clock.withZone(clientZone))
-                .atStartOfDay(clientZone)
-                .withZoneSameInstant(clock.getZone())
-                .toLocalDateTime();
+        ZoneId clientZone = clientTime.zone(timeZone);
+        return clientTime.startOfDayOnServer(clientTime.today(clientZone), clientZone);
     }
 
     /** Stickers of animals no longer in the content files (old seed data) are skipped: there is no picture for them. */
@@ -104,18 +98,6 @@ public class StarsService {
                     return new NextAnimal(animal != null ? animal.getId() : null, content.nameEn());
                 })
                 .toList();
-    }
-
-    private static Optional<ZoneId> parseZone(String timeZone) {
-        if (timeZone == null || timeZone.isBlank()) {
-            return Optional.empty();
-        }
-        try {
-            return Optional.of(ZoneId.of(timeZone.trim()));
-        } catch (DateTimeException e) {
-            log.warn("Unknown time zone '{}', using the server's zone", timeZone);
-            return Optional.empty();
-        }
     }
 
     private static String key(String name) {

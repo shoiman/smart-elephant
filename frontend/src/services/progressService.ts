@@ -1,53 +1,22 @@
 /**
  * Progress Service
- * API calls for child progress tracking and LLM-based analysis
+ * The parent's progress screen
  */
 
-import { httpClient } from './http-client';
 import { ENDPOINTS } from './api-config';
-import type {
-  ProgressResponse,
-  ProgressAnalyzeRequest,
-  ProgressAnalysisResponse,
-} from './api-types';
+import { httpClient } from './http-client';
+import type { ProgressPeriod, ProgressResponse } from './api-types';
 
 export class ProgressService {
   /**
-   * Get child's progress data
-   *
-   * GET /progress/{childId}
+   * GET /progress/{childId}?period=week|month|all&tz=...
+   * tz = the device's zone, so "today" and the days of the week are the family's own
    */
-  static async getProgress(childId: number): Promise<ProgressResponse> {
-    return httpClient.get<ProgressResponse>(ENDPOINTS.progress.get(childId));
-  }
-
-  /**
-   * Analyze child's progress using LLM (long-context Claude)
-   *
-   * POST /progress/analyze
-   */
-  static async analyzeProgress(childId: number): Promise<ProgressAnalysisResponse> {
-    const request: ProgressAnalyzeRequest = { childId };
-    return httpClient.post<ProgressAnalysisResponse>(
-      ENDPOINTS.progress.analyze,
-      request
-    );
-  }
-
-  /**
-   * Get quick progress summary (from cache if available)
-   */
-  static async getProgressSummary(childId: number): Promise<{
-    totalGames: number;
-    successRate: number;
-    currentLevel: string;
-  }> {
-    const progress = await this.getProgress(childId);
-    return {
-      totalGames: progress.totalGames,
-      successRate: progress.successRate,
-      currentLevel: progress.currentLevel,
-    };
+  static async getProgress(childId: number, period: ProgressPeriod): Promise<ProgressResponse> {
+    const tz = encodeURIComponent(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    return httpClient.get<ProgressResponse>(`${ENDPOINTS.progress.get(childId)}?period=${period}&tz=${tz}`, {
+      cache: false,
+    });
   }
 }
 

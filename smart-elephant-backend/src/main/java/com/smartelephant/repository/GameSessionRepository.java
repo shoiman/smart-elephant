@@ -25,6 +25,11 @@ public interface GameSessionRepository extends JpaRepository<GameSession, Long> 
             "ORDER BY completed_at DESC LIMIT 20", nativeQuery = true)
     List<GameSession> findLast20ByChildId(@Param("childId") Long childId);
 
+    /** Games finished since this moment, newest first (a period of the progress screen) */
+    @Query("SELECT gs FROM GameSession gs WHERE gs.child.id = :childId AND gs.completedAt >= :from " +
+            "ORDER BY gs.completedAt DESC")
+    List<GameSession> findCompletedSince(@Param("childId") Long childId, @Param("from") java.time.LocalDateTime from);
+
     /** Games finished since this moment ("today's stars") */
     long countByChildIdAndCompletedAtGreaterThanEqual(Long childId, java.time.LocalDateTime from);
 

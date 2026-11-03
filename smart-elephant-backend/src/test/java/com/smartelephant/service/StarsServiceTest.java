@@ -39,7 +39,7 @@ class StarsServiceTest {
     private final GameSessionRepository sessionRepository = mock(GameSessionRepository.class);
     private final AnimalRepository animalRepository = mock(AnimalRepository.class);
     private final StarsService service = new StarsService(
-            childRepository, stickerRepository, sessionRepository, animalRepository, CATALOG, clock);
+            childRepository, stickerRepository, sessionRepository, animalRepository, CATALOG, new ClientTime(clock));
 
     private final Animal elephant = animal(1L, "Elephant");
     private final Animal lion = animal(2L, "Lion");

@@ -30,6 +30,9 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
             "WHERE a.gameSession.id = :sessionId AND a.questionText = :questionText AND a.isCorrect = true")
     boolean existsCorrectAnswer(@Param("sessionId") Long sessionId, @Param("questionText") String questionText);
 
+    /** Answers of several games at once (progress screen) */
+    List<Answer> findByGameSessionIdIn(java.util.Collection<Long> gameSessionIds);
+
     /** Animals asked about in the session (a game is about one animal) */
     @Query("SELECT DISTINCT a.animal.id FROM Answer a WHERE a.gameSession.id = :sessionId")
     List<Long> findAnimalIdsInSession(@Param("sessionId") Long sessionId);

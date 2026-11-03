@@ -11,27 +11,6 @@ export interface TranslationMessages {
   readonly "animals.subtitle": string;
   readonly "animals.savanna.title": string;
   readonly "games.title": string;
-  readonly "progress.title": string;
-  readonly "progress.subtitle": string;
-  readonly "progress.loading": string;
-  readonly "progress.error": string;
-  readonly "progress.totalGames": string;
-  readonly "progress.successRate": string;
-  readonly "progress.currentLevel": string;
-  readonly "progress.correctAnswers": string;
-  readonly "progress.overallProgress": string;
-  readonly "progress.correct": string;
-  readonly "progress.recentGames": string;
-  readonly "progress.points": string;
-  readonly "progress.analysis": string;
-  readonly "progress.analyzing": string;
-  readonly "progress.analyzeProgress": string;
-  readonly "progress.strengths": string;
-  readonly "progress.improvements": string;
-  readonly "progress.recommendations": string;
-  readonly "progress.nextDifficulty": string;
-  readonly "progress.projectedLevel": string;
-  readonly "progress.lastGameAt": string;
   readonly "question.whoIsIt": string;
   readonly "reward.excellent": string;
   readonly "home.greeting": string;
@@ -84,6 +63,52 @@ export interface TranslationMessages {
   readonly "parentGate.hint": string;
   readonly "parentGate.hold": string;
   readonly "parentGate.back": string;
+  readonly "progress.title": string;
+  readonly "progress.world": string;
+  readonly "progress.lastGame": string;
+  readonly "progress.today": string;
+  readonly "progress.yesterday": string;
+  readonly "progress.period.label": string;
+  readonly "progress.period.week": string;
+  readonly "progress.period.month": string;
+  readonly "progress.period.all": string;
+  readonly "progress.games": string;
+  readonly "progress.minutes": string;
+  readonly "progress.animals": string;
+  readonly "progress.activity": string;
+  readonly "progress.questions": string;
+  readonly "progress.answers.title": string;
+  readonly "progress.answers.firstTry": string;
+  readonly "progress.answers.secondTry": string;
+  readonly "progress.answers.together": string;
+  readonly "progress.level.title": string;
+  readonly "progress.level.note": string;
+  readonly "progress.topics.title": string;
+  readonly "progress.topic.NAME": string;
+  readonly "progress.topic.HABITAT": string;
+  readonly "progress.topic.COLOR": string;
+  readonly "progress.topic.SOUND": string;
+  readonly "progress.topic.DIET": string;
+  readonly "progress.topic.SIZE": string;
+  readonly "progress.topic.UNIQUE": string;
+  readonly "progress.status.CONFIDENT": string;
+  readonly "progress.status.LEARNING": string;
+  readonly "progress.status.HARD_FOR_NOW": string;
+  readonly "progress.repeat.title": string;
+  readonly "progress.tip.title": string;
+  readonly "progress.tip.NAME": string;
+  readonly "progress.tip.HABITAT": string;
+  readonly "progress.tip.COLOR": string;
+  readonly "progress.tip.SOUND": string;
+  readonly "progress.tip.DIET": string;
+  readonly "progress.tip.SIZE": string;
+  readonly "progress.tip.UNIQUE": string;
+  readonly "progress.recent.title": string;
+  readonly "progress.recent.all": string;
+  readonly "progress.recent.less": string;
+  readonly "progress.recent.minutes": string;
+  readonly "progress.recent.stars": string;
+  readonly "progress.empty": string;
 }
 
 export type TranslationKey = keyof TranslationMessages;
@@ -100,27 +125,6 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "animals.subtitle": "בואו נכיר חברים חדשים",
     "animals.savanna.title": "חיות הסוואנה",
     "games.title": "משחקים",
-    "progress.title": "ההתקדמות שלי",
-    "progress.subtitle": "עקוב אחר ההתקדמות החינוכית שלך",
-    "progress.loading": "טוען תוכן...",
-    "progress.error": "שגיאה בטעינת נתונים",
-    "progress.totalGames": "סה״כ משחקים",
-    "progress.successRate": "שיעור הצלחה",
-    "progress.currentLevel": "רמה נוכחית",
-    "progress.correctAnswers": "תשובות נכונות",
-    "progress.overallProgress": "התקדמות כוללת",
-    "progress.correct": "נכון",
-    "progress.recentGames": "משחקים אחרונים",
-    "progress.points": "נקודות",
-    "progress.analysis": "ניתוח מפורט",
-    "progress.analyzing": "מנתח...",
-    "progress.analyzeProgress": "בקש ניתוח",
-    "progress.strengths": "חוזקות",
-    "progress.improvements": "תחומי שיפור",
-    "progress.recommendations": "המלצות",
-    "progress.nextDifficulty": "רמת קושי הבאה",
-    "progress.projectedLevel": "רמה צפויה",
-    "progress.lastGameAt": "המשחק האחרון",
     "question.whoIsIt": "מי זה?",
     "reward.excellent": "כל הכבוד!",
     "home.greeting": "שלום! בואו נשחק ונכיר חיות!",
@@ -173,6 +177,52 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "parentGate.hint": "לחצו והחזיקו 3 שניות",
     "parentGate.hold": "החזיקו כדי לפתוח",
     "parentGate.back": "חזרה לכוכבים",
+    "progress.title": "התקדמות",
+    "progress.world": "עולם החיות",
+    "progress.lastGame": "משחק אחרון: {day}",
+    "progress.today": "היום",
+    "progress.yesterday": "אתמול",
+    "progress.period.label": "תקופה",
+    "progress.period.week": "שבוע",
+    "progress.period.month": "חודש",
+    "progress.period.all": "כל הזמן",
+    "progress.games": "משחק|משחקים",
+    "progress.minutes": "דקה|דקות",
+    "progress.animals": "חיה|חיות",
+    "progress.activity": "פעילות בדקות",
+    "progress.questions": "שאלה|שאלות",
+    "progress.answers.title": "איך עונה",
+    "progress.answers.firstTry": "לבד, מהפעם הראשונה",
+    "progress.answers.secondTry": "בניסיון השני",
+    "progress.answers.together": "אמרנו ביחד",
+    "progress.level.title": "רמה: {level}",
+    "progress.level.note": "משנים את הרמה בדף הבית",
+    "progress.topics.title": "נושאי השאלות",
+    "progress.topic.NAME": "מי זה",
+    "progress.topic.HABITAT": "איפה גר",
+    "progress.topic.COLOR": "באיזה צבע",
+    "progress.topic.SOUND": "איזה קול עושה",
+    "progress.topic.DIET": "מה אוכל",
+    "progress.topic.SIZE": "באיזה גודל",
+    "progress.topic.UNIQUE": "מה מיוחד",
+    "progress.status.CONFIDENT": "בביטחון",
+    "progress.status.LEARNING": "בלמידה",
+    "progress.status.HARD_FOR_NOW": "עדיין קשה",
+    "progress.repeat.title": "לחזור בבית",
+    "progress.tip.title": "רעיון להיום",
+    "progress.tip.NAME": "{animal}: הראו תמונה או צעצוע ושאלו ״מי זה?״. תגידו את השם ביחד.",
+    "progress.tip.HABITAT": "{animal}: חפשו בספר איפה החיה הזאת גרה ותגידו את המקום ביחד.",
+    "progress.tip.COLOR": "{animal}: מצאו בבית דברים באותו צבע ותגידו את הצבע ביחד.",
+    "progress.tip.SOUND": "{animal}: חקו את הקול של החיה הזאת, והילד ינחש ויחזור אחריכם.",
+    "progress.tip.DIET": "{animal}: בארוחה שאלו מה החיה הזאת אוכלת. הראו אוכל דומה — כך המילה תיזכר מהר יותר.",
+    "progress.tip.SIZE": "{animal}: הראו בידיים אם החיה הזאת גדולה או קטנה, והשוו לצעצועים.",
+    "progress.tip.UNIQUE": "{animal}: הסתכלו יחד על התמונה ומצאו מה הכי מיוחד. הילד יראה ויגיד.",
+    "progress.recent.title": "משחקים אחרונים",
+    "progress.recent.all": "כל המשחקים",
+    "progress.recent.less": "להסתיר",
+    "progress.recent.minutes": "{n} דק׳",
+    "progress.recent.stars": "כוכבים: {n}",
+    "progress.empty": "עדיין אין משחקים בתקופה הזאת",
   },
   ru: {
     "app.name": "Умный слон",
@@ -185,27 +235,6 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "animals.subtitle": "Познакомься с новыми друзьями",
     "animals.savanna.title": "Животные саванны",
     "games.title": "Игры",
-    "progress.title": "Мой прогресс",
-    "progress.subtitle": "Следи за своим образовательным развитием",
-    "progress.loading": "Загрузка...",
-    "progress.error": "Ошибка при загрузке данных",
-    "progress.totalGames": "Всего игр",
-    "progress.successRate": "Процент успеха",
-    "progress.currentLevel": "Текущий уровень",
-    "progress.correctAnswers": "Правильные ответы",
-    "progress.overallProgress": "Общий прогресс",
-    "progress.correct": "правильно",
-    "progress.recentGames": "Недавние игры",
-    "progress.points": "очков",
-    "progress.analysis": "Подробный анализ",
-    "progress.analyzing": "Анализирует...",
-    "progress.analyzeProgress": "Запросить анализ",
-    "progress.strengths": "Сильные стороны",
-    "progress.improvements": "Области для улучшения",
-    "progress.recommendations": "Рекомендации",
-    "progress.nextDifficulty": "Следующий уровень сложности",
-    "progress.projectedLevel": "Прогнозируемый уровень",
-    "progress.lastGameAt": "Последняя игра",
     "question.whoIsIt": "Кто это?",
     "reward.excellent": "Молодец!",
     "home.greeting": "Привет! Давай играть и узнавать животных!",
@@ -258,6 +287,52 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "parentGate.hint": "Нажмите и держите 3 секунды",
     "parentGate.hold": "Держите, чтобы открыть",
     "parentGate.back": "Назад к звёздам",
+    "progress.title": "Прогресс",
+    "progress.world": "Мир «Животные»",
+    "progress.lastGame": "последняя игра {day}",
+    "progress.today": "сегодня",
+    "progress.yesterday": "вчера",
+    "progress.period.label": "Период",
+    "progress.period.week": "Неделя",
+    "progress.period.month": "Месяц",
+    "progress.period.all": "Всё время",
+    "progress.games": "игра|игры|игр",
+    "progress.minutes": "минута|минуты|минут",
+    "progress.animals": "животное|животных|животных",
+    "progress.activity": "Активность в минутах",
+    "progress.questions": "вопрос|вопроса|вопросов",
+    "progress.answers.title": "Как отвечает",
+    "progress.answers.firstTry": "Сам, с первого раза",
+    "progress.answers.secondTry": "Со второй попытки",
+    "progress.answers.together": "Сказали вместе",
+    "progress.level.title": "Уровень: {level}",
+    "progress.level.note": "Меняется на главной странице",
+    "progress.topics.title": "Темы вопросов",
+    "progress.topic.NAME": "Кто это",
+    "progress.topic.HABITAT": "Где живёт",
+    "progress.topic.COLOR": "Какого цвета",
+    "progress.topic.SOUND": "Как говорит",
+    "progress.topic.DIET": "Что ест",
+    "progress.topic.SIZE": "Какой величины",
+    "progress.topic.UNIQUE": "Чем особенный",
+    "progress.status.CONFIDENT": "уверенно",
+    "progress.status.LEARNING": "учится",
+    "progress.status.HARD_FOR_NOW": "пока трудно",
+    "progress.repeat.title": "Повторить дома",
+    "progress.tip.title": "Идея на сегодня",
+    "progress.tip.NAME": "{animal}: покажите картинку или игрушку и спросите «Кто это?». Назовите вместе.",
+    "progress.tip.HABITAT": "{animal}: найдите в книжке, где живёт это животное, и назовите место вместе.",
+    "progress.tip.COLOR": "{animal}: найдите дома вещи такого же цвета и назовите цвет вместе.",
+    "progress.tip.SOUND": "{animal}: изобразите, как говорит это животное, — пусть малыш угадает и повторит.",
+    "progress.tip.DIET": "{animal}: за обедом спросите, что ест это животное. Покажите похожую еду — так слово запомнится быстрее.",
+    "progress.tip.SIZE": "{animal}: покажите руками, большое это животное или маленькое, и сравните с игрушками.",
+    "progress.tip.UNIQUE": "{animal}: рассмотрите вместе картинку и найдите самое необычное. Пусть малыш покажет и назовёт.",
+    "progress.recent.title": "Последние игры",
+    "progress.recent.all": "Все игры",
+    "progress.recent.less": "Свернуть",
+    "progress.recent.minutes": "{n} мин",
+    "progress.recent.stars": "Звёзд: {n}",
+    "progress.empty": "Пока нет игр за этот период",
   },
   uk: {
     "app.name": "Розумний слон",
@@ -270,27 +345,6 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "animals.subtitle": "Познайомся з новими друзями",
     "animals.savanna.title": "Тварини савани",
     "games.title": "Ігри",
-    "progress.title": "Мій прогрес",
-    "progress.subtitle": "Слідкуй за своїм навчальним розвитком",
-    "progress.loading": "Завантаження...",
-    "progress.error": "Помилка при завантаженні даних",
-    "progress.totalGames": "Всього ігор",
-    "progress.successRate": "Відсоток успіху",
-    "progress.currentLevel": "Поточний рівень",
-    "progress.correctAnswers": "Правильні відповіді",
-    "progress.overallProgress": "Загальний прогрес",
-    "progress.correct": "правильно",
-    "progress.recentGames": "Недавні ігри",
-    "progress.points": "очків",
-    "progress.analysis": "Детальний аналіз",
-    "progress.analyzing": "Аналізує...",
-    "progress.analyzeProgress": "Запросити аналіз",
-    "progress.strengths": "Сильні сторони",
-    "progress.improvements": "Області для поліпшення",
-    "progress.recommendations": "Рекомендації",
-    "progress.nextDifficulty": "Наступний рівень складності",
-    "progress.projectedLevel": "Прогнозований рівень",
-    "progress.lastGameAt": "Остання гра",
     "question.whoIsIt": "Хто це?",
     "reward.excellent": "Молодець!",
     "home.greeting": "Привіт! Давай гратися та знайомитися з тваринами!",
@@ -343,5 +397,51 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "parentGate.hint": "Натисніть і тримайте 3 секунди",
     "parentGate.hold": "Тримайте, щоб відкрити",
     "parentGate.back": "Назад до зірок",
+    "progress.title": "Прогрес",
+    "progress.world": "Світ «Тварини»",
+    "progress.lastGame": "остання гра {day}",
+    "progress.today": "сьогодні",
+    "progress.yesterday": "вчора",
+    "progress.period.label": "Період",
+    "progress.period.week": "Тиждень",
+    "progress.period.month": "Місяць",
+    "progress.period.all": "Весь час",
+    "progress.games": "гра|гри|ігор",
+    "progress.minutes": "хвилина|хвилини|хвилин",
+    "progress.animals": "тварина|тварини|тварин",
+    "progress.activity": "Активність у хвилинах",
+    "progress.questions": "питання|питання|питань",
+    "progress.answers.title": "Як відповідає",
+    "progress.answers.firstTry": "Сам, з першого разу",
+    "progress.answers.secondTry": "З другої спроби",
+    "progress.answers.together": "Сказали разом",
+    "progress.level.title": "Рівень: {level}",
+    "progress.level.note": "Змінюється на головній сторінці",
+    "progress.topics.title": "Теми запитань",
+    "progress.topic.NAME": "Хто це",
+    "progress.topic.HABITAT": "Де живе",
+    "progress.topic.COLOR": "Якого кольору",
+    "progress.topic.SOUND": "Як говорить",
+    "progress.topic.DIET": "Що їсть",
+    "progress.topic.SIZE": "Якого розміру",
+    "progress.topic.UNIQUE": "Чим особливий",
+    "progress.status.CONFIDENT": "впевнено",
+    "progress.status.LEARNING": "вчиться",
+    "progress.status.HARD_FOR_NOW": "поки важко",
+    "progress.repeat.title": "Повторити вдома",
+    "progress.tip.title": "Ідея на сьогодні",
+    "progress.tip.NAME": "{animal}: покажіть картинку або іграшку й спитайте «Хто це?». Назвіть разом.",
+    "progress.tip.HABITAT": "{animal}: знайдіть у книжці, де живе ця тварина, і назвіть місце разом.",
+    "progress.tip.COLOR": "{animal}: знайдіть удома речі такого ж кольору й назвіть колір разом.",
+    "progress.tip.SOUND": "{animal}: зобразіть, як говорить ця тварина, — нехай малюк вгадає і повторить.",
+    "progress.tip.DIET": "{animal}: за обідом спитайте, що їсть ця тварина. Покажіть схожу їжу — так слово запам'ятається швидше.",
+    "progress.tip.SIZE": "{animal}: покажіть руками, велика ця тварина чи маленька, і порівняйте з іграшками.",
+    "progress.tip.UNIQUE": "{animal}: роздивіться разом картинку й знайдіть найнезвичніше. Нехай малюк покаже й назве.",
+    "progress.recent.title": "Останні ігри",
+    "progress.recent.all": "Усі ігри",
+    "progress.recent.less": "Згорнути",
+    "progress.recent.minutes": "{n} хв",
+    "progress.recent.stars": "Зірок: {n}",
+    "progress.empty": "Поки немає ігор за цей період",
   },
 };

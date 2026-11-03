@@ -69,7 +69,6 @@ export const ENDPOINTS = {
   // Progress
   progress: {
     get: (childId: number) => `/progress/${childId}`,
-    analyze: '/progress/analyze',
   },
 
   // Animals

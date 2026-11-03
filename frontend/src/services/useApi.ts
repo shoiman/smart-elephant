@@ -6,7 +6,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import GameService from './gameService';
 import QuestionService from './questionService';
-import ProgressService from './progressService';
 import AnimalService from './animalService';
 import type {
   AnswerResponse,
@@ -140,32 +139,6 @@ export function useSubmitAnswer() {
   );
 
   return { ...state, submitAnswer };
-}
-
-// ============================================================================
-// Progress Hooks
-// ============================================================================
-
-/**
- * useProgress - Get child's progress data
- */
-export function useProgress(childId: number | null) {
-  const fn = useCallback(
-    () => ProgressService.getProgress(childId!),
-    [childId]
-  );
-  return useAsync(fn, !!childId);
-}
-
-/**
- * useProgressAnalysis - Analyze child's progress with LLM
- */
-export function useProgressAnalysis(childId: number | null) {
-  const fn = useCallback(
-    () => ProgressService.analyzeProgress(childId!),
-    [childId]
-  );
-  return useAsync(fn, false); // manual trigger
 }
 
 // ============================================================================
