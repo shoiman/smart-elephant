@@ -98,7 +98,9 @@ class QuestionTemplatesTest {
     void everyTopicComesUpAtEveryDifficulty() {
         for (QuestionDifficulty difficulty : QuestionDifficulty.values()) {
             Map<Topic, Integer> counts = countTopics(difficulty);
-            assertThat(counts.keySet()).as(difficulty.name()).containsAll(EnumSet.allOf(Topic.class));
+            // NAME is not chosen at random: it is always the first question (see NameTopicTest)
+            assertThat(counts.keySet()).as(difficulty.name())
+                    .containsAll(EnumSet.complementOf(EnumSet.of(Topic.NAME)));
         }
     }
 

@@ -1,0 +1,33 @@
+{
+  "_comment": [
+    "Extra accepted forms for the 'Who is this?' (name) question, on top of the animal's own name.",
+    "The name itself is always accepted automatically (ru/uk: also any word starting with the name",
+    "without its last vowel, so 'корова' accepts 'коровка', 'коровушка').",
+    "Stems use the concepts.json syntax: 'stem' = word starts with it, '=word' = exact word, '~text' = substring.",
+    "Hebrew and Ukrainian children's simplifications stay empty until a speech therapist checks them.",
+    "rejectAnimals: other animals whose name would otherwise be accepted ('божья коровка' for a cow)."
+  ],
+  "elephant": { "ru": ["слонен", "слонят"], "uk": ["слоненя"] },
+  "lion":     { "ru": ["львен", "львят", "львиц"], "uk": ["левен", "левеня", "левиц"] },
+  "hippo":    { "ru": ["гиппопотам"], "uk": ["гіпопотам"] },
+  "cow":      { "ru": ["коровк"], "rejectAnimals": ["ladybug"] },
+  "pig":      { "ru": ["свин", "хрюш", "поросен", "поросят"], "uk": ["порося", "поросят"], "rejectAnimals": ["boar"] },
+  "sheep":    { "ru": ["овеч", "барашк", "баран"], "uk": ["овеч", "баран"] },
+  "chicken":  { "ru": ["куроч", "кур", "несушк"], "uk": ["куроч", "кур"] },
+  "horse":    { "ru": ["=конь", "коняш", "лошад", "конек"], "uk": ["конячк", "=коня"] },
+  "goat":     { "ru": ["козоч", "козлик"], "uk": ["кізк", "кізоч", "кіз"] },
+  "rabbit":   { "ru": ["зай", "крол"], "uk": ["зай", "крол"] },
+  "hedgehog": { "ru": ["ежик", "ежат", "ежон"], "uk": ["їжач"] },
+  "owl":      { "ru": ["филин"], "uk": ["пугач"] },
+  "squirrel": { "ru": ["белоч"], "uk": ["білоч"] },
+  "wolf":     { "ru": ["волч"], "uk": ["вовч"] },
+  "bird":     { "ru": ["птиц", "птич", "воробе", "воробу"], "uk": ["птах", "птич", "горобец", "горобч"] },
+  "bee":      { "uk": ["бджілк"] },
+  "ant":      { "ru": ["муравь", "мураш"], "uk": ["мураш"] },
+  "fly":      { "ru": ["мушк"] },
+  "frog":     { "ru": ["лягуш"], "uk": ["жабк", "жабен"] },
+  "duck":     { "ru": ["уточ", "утен", "утят"], "uk": ["каченя", "качечк"] },
+  "tiger":    { "ru": ["тигрен", "тигрят"], "uk": ["тигреня"] },
+  "whale":    { "ru": ["китен"], "uk": ["китеня"] },
+  "crocodile": { "ru": ["крокодильчик"] }
+}

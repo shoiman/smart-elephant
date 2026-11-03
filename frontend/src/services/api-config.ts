@@ -55,6 +55,11 @@ export const ENDPOINTS = {
     check: '/questions/check',
   },
 
+  // Azure audio for the host's lines (toddler level)
+  audio: {
+    hostLines: '/audio/host-lines',
+  },
+
   // Progress
   progress: {
     get: (childId: number) => `/progress/${childId}`,

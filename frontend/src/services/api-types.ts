@@ -47,8 +47,12 @@ export interface Question {
   animalId: number;
   animalName: string;
   questionText: string;
-  /** HABITAT | COLOR | SOUND | DIET | SIZE | UNIQUE */
+  /** NAME ("Who is this?") | HABITAT | COLOR | SOUND | DIET | SIZE | UNIQUE */
   topic?: string;
+  /** Host's feedback lines with Azure audio, text -> URL ("Попробуем ещё?", "Правильно! Слон серый") */
+  feedbackAudio?: Record<string, string>;
+  /** How many more questions about this animal can follow (0 = this is the last one) */
+  remainingQuestions?: number;
   /** Correct answer in the question's language (null if unknown) */
   answer?: string | null;
   /** mp3 with the answer read aloud (null when backend TTS is off) */

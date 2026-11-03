@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -41,12 +42,13 @@ public class LLMService {
      * Generate a question about an animal based on difficulty level.
      * Returns the question text together with its topic and correct answer.
      */
-    public LocalizedQuestion generateQuestion(
+    public Optional<LocalizedQuestion> generateQuestion(
             Animal animal,
             QuestionDifficulty difficulty,
             Integer childAge,
             GameLanguage language,
-            boolean allowUnique) {
+            boolean allowUnique,
+            Set<Topic> askedTopics) {
 
         log.info("Generating question for animal: {}, difficulty: {}, age: {}, language: {}",
                 animal.getName(), difficulty, childAge, language);
@@ -56,7 +58,8 @@ public class LLMService {
 
         // For now, return a mock question from localized templates
         // In Phase 2, we'll integrate actual Claude API
-        return questionTemplates.question(animal.getName(), difficulty, language, allowUnique,
+        // "Who is this?" first, then topics not asked yet about this animal
+        return questionTemplates.nextQuestion(animal.getName(), askedTopics, difficulty, language, allowUnique,
                 ThreadLocalRandom.current());
     }
 

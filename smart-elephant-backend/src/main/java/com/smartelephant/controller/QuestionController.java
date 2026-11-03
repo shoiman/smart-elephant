@@ -31,13 +31,18 @@ public class QuestionController {
      * GET /api/questions/next?childId={childId}&language={he|ru|uk}&level={toddler|middle|older}
      * language is optional; without it the child's profile language is used.
      * level is optional; the "what is special about it" question is asked only on "older"
+     * animal and asked are optional: the animal of the current game and the topics already asked about it
+     * ("NAME,COLOR"). Without them a new animal starts with "Who is this?".
      */
     @GetMapping("/next")
     public ResponseEntity<QuestionResponse> getNextQuestion(
             @RequestParam Long childId,
             @RequestParam(required = false) String language,
-            @RequestParam(required = false) String level) {
-        log.info("GET /questions/next?childId={}&language={}&level={}", childId, language, level);
+            @RequestParam(required = false) String level,
+            @RequestParam(required = false) String animal,
+            @RequestParam(required = false) String asked) {
+        log.info("GET /questions/next?childId={}&language={}&level={}&animal={}&asked={}",
+                childId, language, level, animal, asked);
 
         try {
             // Get child
@@ -45,7 +50,7 @@ public class QuestionController {
                     .orElseThrow(() -> new RuntimeException("Child not found: " + childId));
 
             // Generate next question
-            QuestionResponse response = questionService.generateNextQuestion(child, language, level);
+            QuestionResponse response = questionService.generateNextQuestion(child, language, level, animal, asked);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Error generating next question", e);

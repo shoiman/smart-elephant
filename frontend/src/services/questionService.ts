@@ -11,13 +11,24 @@ export class QuestionService {
   /**
    * Get next question for a child
    *
-   * GET /questions/next?childId={childId}&language={language}&level={level}
+   * GET /questions/next?childId={childId}&language={language}&level={level}&animal={animal}&asked={topics}
    * level (toddler | middle | older): the "what is special" question is asked only on "older"
+   * current: the animal of the current game and the topics already asked about it; without it the
+   * backend starts a new animal with "Who is this?"
    */
-  static async getNextQuestion(childId: number, language?: string, level?: string): Promise<Question> {
+  static async getNextQuestion(
+    childId: number,
+    language?: string,
+    level?: string,
+    current?: { readonly animal: string; readonly asked: readonly string[] },
+  ): Promise<Question> {
     const params = new URLSearchParams({ childId: String(childId) });
     if (language) params.set("language", language);
     if (level) params.set("level", level);
+    if (current) {
+      params.set("animal", current.animal);
+      params.set("asked", current.asked.join(","));
+    }
     const endpoint = `${ENDPOINTS.questions.next}?${params.toString()}`;
     // Never serve a cached question: every call must return a new one
     return httpClient.get<Question>(endpoint, { cache: false });

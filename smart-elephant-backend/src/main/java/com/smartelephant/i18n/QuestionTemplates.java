@@ -31,9 +31,12 @@ import java.util.random.RandomGenerator;
 @Component
 public class QuestionTemplates {
 
-    /** Question topics, aligned with the game's question sequence. */
+    /**
+     * Question topics, aligned with the game's question sequence.
+     * NAME ("Who is this?") is always the first question about an animal; it is never picked at random.
+     */
     public enum Topic {
-        HABITAT, COLOR, SOUND, DIET, SIZE, UNIQUE
+        NAME, HABITAT, COLOR, SOUND, DIET, SIZE, UNIQUE
     }
 
     /** A question phrased for each grammatical gender; identical text when the phrase is gender-neutral. */
@@ -64,6 +67,7 @@ public class QuestionTemplates {
 
     /** How hard each topic is on its own; used only to weight the choice of topic. */
     private static final Map<Topic, QuestionDifficulty> TOPIC_DIFFICULTY = Map.of(
+            Topic.NAME, QuestionDifficulty.EASY,
             Topic.HABITAT, QuestionDifficulty.EASY,
             Topic.COLOR, QuestionDifficulty.EASY,
             Topic.SOUND, QuestionDifficulty.EASY,
@@ -77,6 +81,9 @@ public class QuestionTemplates {
 
     static {
         TEMPLATES.put(GameLanguage.HE, Map.of(
+                // "Who is this?" agrees with the animal's gender: מי זה (m) / מי זאת (f)
+                Topic.NAME, List.of(
+                        Template.of("מי זה?", "מי זאת?")),
                 Topic.HABITAT, List.of(
                         Template.of("איפה גר {the}?", "איפה גרה {the}?"),
                         Template.of("איפה הבית של {the}?")),
@@ -97,6 +104,8 @@ public class QuestionTemplates {
         ));
 
         TEMPLATES.put(GameLanguage.RU, Map.of(
+                Topic.NAME, List.of(
+                        Template.of("Кто это?")),
                 Topic.HABITAT, List.of(
                         Template.of("Где живёт {name}?"),
                         Template.of("Как ты думаешь, где живёт {name}?")),
@@ -118,6 +127,8 @@ public class QuestionTemplates {
 
         // The Ukrainian key is "uk" (language code), not "ua" (country code)
         TEMPLATES.put(GameLanguage.UK, Map.of(
+                Topic.NAME, List.of(
+                        Template.of("Хто це?")),
                 Topic.HABITAT, List.of(
                         Template.of("Де живе {name}?"),
                         Template.of("Як ти думаєш, де живе {name}?")),
@@ -138,6 +149,8 @@ public class QuestionTemplates {
         ));
 
         TEMPLATES.put(GameLanguage.EN, Map.of(
+                Topic.NAME, List.of(
+                        Template.of("Who is this?")),
                 Topic.HABITAT, List.of(
                         Template.of("Where does the {name} live?"),
                         Template.of("Where is the home of the {name}?")),
@@ -203,14 +216,57 @@ public class QuestionTemplates {
      */
     public LocalizedQuestion question(String englishAnimalName, QuestionDifficulty difficulty,
                                       GameLanguage language, boolean allowUnique, RandomGenerator random) {
-        Set<Topic> available = catalog.find(englishAnimalName)
-                .map(AnimalContent::topics)
-                .orElse(EnumSet.allOf(Topic.class));
-        Topic topic = pickTopic(available, difficulty, allowUnique, random);
+        Topic topic = pickTopic(topicsOf(englishAnimalName), difficulty, allowUnique, random);
         return question(englishAnimalName, topic, language, random);
     }
 
-    /** Weighted random choice among the animal's topics. */
+    /**
+     * Next question in a series about one animal: "Who is this?" first, then a topic that has not been
+     * asked yet (weighted by difficulty, as in {@link #pickTopic}). Empty when every topic has been asked.
+     *
+     * @param asked topics already asked about this animal in the current game
+     */
+    public Optional<LocalizedQuestion> nextQuestion(String englishAnimalName, Set<Topic> asked,
+                                                    QuestionDifficulty difficulty, GameLanguage language,
+                                                    boolean allowUnique, RandomGenerator random) {
+        return nextTopic(topicsOf(englishAnimalName), asked, difficulty, allowUnique, random)
+                .map(topic -> question(englishAnimalName, topic, language, random));
+    }
+
+    /** How many questions about the animal are still left to ask after the asked ones. */
+    public int remainingQuestions(String englishAnimalName, Set<Topic> asked, boolean allowUnique) {
+        return remaining(topicsOf(englishAnimalName), asked, allowUnique, true).size();
+    }
+
+    static Optional<Topic> nextTopic(Set<Topic> available, Set<Topic> asked, QuestionDifficulty difficulty,
+                                     boolean allowUnique, RandomGenerator random) {
+        if (available.contains(Topic.NAME) && !asked.contains(Topic.NAME)) {
+            return Optional.of(Topic.NAME);
+        }
+        EnumSet<Topic> remaining = remaining(available, asked, allowUnique, false);
+        return remaining.isEmpty() ? Optional.empty() : Optional.of(pickTopic(remaining, difficulty, allowUnique, random));
+    }
+
+    private static EnumSet<Topic> remaining(Set<Topic> available, Set<Topic> asked, boolean allowUnique,
+                                            boolean includeName) {
+        EnumSet<Topic> remaining = available.isEmpty() ? EnumSet.noneOf(Topic.class) : EnumSet.copyOf(available);
+        remaining.removeAll(asked);
+        if (!allowUnique) {
+            remaining.remove(Topic.UNIQUE);
+        }
+        if (!includeName) {
+            remaining.remove(Topic.NAME);
+        }
+        return remaining;
+    }
+
+    private Set<Topic> topicsOf(String englishAnimalName) {
+        return catalog.find(englishAnimalName)
+                .map(AnimalContent::topics)
+                .orElse(EnumSet.allOf(Topic.class));
+    }
+
+    /** Weighted random choice among the animal's topics; NAME is never picked here (it is asked first). */
     static Topic pickTopic(Set<Topic> available, QuestionDifficulty difficulty, RandomGenerator random) {
         return pickTopic(available, difficulty, true, random);
     }
@@ -221,6 +277,7 @@ public class QuestionTemplates {
         if (!allowUnique) {
             allowed.remove(Topic.UNIQUE);
         }
+        allowed.remove(Topic.NAME);
         if (allowed.isEmpty()) {
             return Topic.HABITAT;
         }

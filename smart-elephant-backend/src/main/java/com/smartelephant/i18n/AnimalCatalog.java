@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -27,7 +28,10 @@ import java.util.Set;
  *   <li>{@code catalog.json} - which files to load</li>
  *   <li>{@code concepts.json} - keyword "concepts" (word stems per language) shared by all animals</li>
  *   <li>{@code animals/*.json} - animals, grouped by category</li>
+ *   <li>{@code name_forms.json} - extra accepted forms for the "Who is this?" question</li>
  * </ul>
+ * The "Who is this?" (NAME) topic is not written in the animal files: every animal gets it
+ * automatically, its answer is the animal's name and its rule accepts the name (see {@link #nameStem}).
  * The content is validated when the application starts: a broken file fails fast with a clear message
  * instead of producing wrong questions for a child.
  */
@@ -73,6 +77,14 @@ public class AnimalCatalog {
     /** What counts as a correct answer: any accepted concept and none of the rejected ones. */
     record Rule(List<Concept> accepted, List<Concept> rejected) {
     }
+
+    /** Extra accepted forms of an animal name (name_forms.json) and animals whose names must not be accepted. */
+    record NameForms(Map<GameLanguage, List<String>> stems, List<String> rejectAnimals) {
+        static final NameForms NONE = new NameForms(Map.of(), List.of());
+    }
+
+    /** Last letters dropped from a Russian/Ukrainian name, so "корова" also accepts "коровка". */
+    private static final String SLAVIC_ENDINGS = "аяоеьйиыуюіїє";
 
     /** Everything the game knows about one animal. */
     public record AnimalContent(String id, String nameEn, String category,
@@ -128,8 +140,29 @@ public class AnimalCatalog {
         if (loaded.isEmpty()) {
             throw new IllegalStateException("No animals found in " + INDEX);
         }
-        this.animals = Collections.unmodifiableList(loaded);
-        this.byKey = Map.copyOf(keys);
+
+        // "Who is this?": built from the names after all animals are known (rules may reject other animals)
+        Set<String> ids = new HashSet<>();
+        loaded.forEach(animal -> ids.add(animal.id()));
+        Map<String, NameForms> forms = new HashMap<>();
+        if (index.hasNonNull("nameForms")) {
+            String path = ROOT + index.get("nameForms").asText();
+            forms = parseNameForms(read(mapper, path), ids, path);
+        }
+        Map<String, Concept> nameConcepts = new HashMap<>();
+        for (AnimalContent animal : loaded) {
+            nameConcepts.put(animal.id(), nameConcept(animal, forms.getOrDefault(animal.id(), NameForms.NONE)));
+        }
+        List<AnimalContent> withNames = new ArrayList<>();
+        Map<String, AnimalContent> withNamesByKey = new HashMap<>();
+        for (AnimalContent animal : loaded) {
+            AnimalContent full = withNameTopic(animal, nameConcepts, forms.getOrDefault(animal.id(), NameForms.NONE));
+            withNames.add(full);
+            withNamesByKey.put(normalizeKey(full.id()), full);
+            withNamesByKey.put(normalizeKey(full.nameEn()), full);
+        }
+        this.animals = Collections.unmodifiableList(withNames);
+        this.byKey = Map.copyOf(withNamesByKey);
     }
 
     /** All animals, in file order. */
@@ -221,6 +254,112 @@ public class AnimalCatalog {
 
         return new AnimalContent(id, nameEn, category, Collections.unmodifiableMap(names),
                 Collections.unmodifiableMap(answers), Collections.unmodifiableMap(rules));
+    }
+
+    // ---------- "Who is this?" (NAME) ----------
+
+    private static Map<String, NameForms> parseNameForms(JsonNode root, Set<String> animalIds, String path) {
+        Map<String, NameForms> result = new HashMap<>();
+        Iterator<Map.Entry<String, JsonNode>> animalsIt = root.fields();
+        while (animalsIt.hasNext()) {
+            Map.Entry<String, JsonNode> animal = animalsIt.next();
+            if (animal.getKey().startsWith("_")) {
+                continue; // comments
+            }
+            String where = path + " [" + animal.getKey() + "]";
+            if (!animalIds.contains(animal.getKey())) {
+                throw new IllegalStateException(where + ": unknown animal id");
+            }
+            Map<GameLanguage, List<String>> stems = new EnumMap<>(GameLanguage.class);
+            List<String> reject = new ArrayList<>();
+            Iterator<Map.Entry<String, JsonNode>> entries = animal.getValue().fields();
+            while (entries.hasNext()) {
+                Map.Entry<String, JsonNode> entry = entries.next();
+                if (entry.getKey().equals("rejectAnimals")) {
+                    for (JsonNode id : entry.getValue()) {
+                        if (!animalIds.contains(id.asText())) {
+                            throw new IllegalStateException(where + ": rejectAnimals has unknown animal " + id.asText());
+                        }
+                        reject.add(id.asText());
+                    }
+                    continue;
+                }
+                GameLanguage language = languageOf(entry.getKey(), where);
+                List<String> list = new ArrayList<>();
+                for (JsonNode stem : entry.getValue()) {
+                    list.add(stem.asText());
+                }
+                stems.put(language, List.copyOf(list));
+            }
+            result.put(animal.getKey(), new NameForms(Map.copyOf(stems), List.copyOf(reject)));
+        }
+        return result;
+    }
+
+    private static GameLanguage languageOf(String code, String where) {
+        for (GameLanguage language : GameLanguage.values()) {
+            if (language.getCode().equals(code)) {
+                return language;
+            }
+        }
+        throw new IllegalStateException(where + ": unknown language '" + code + "'");
+    }
+
+    /** The animal's name in every language plus the extra forms from name_forms.json. */
+    private static Concept nameConcept(AnimalContent animal, NameForms forms) {
+        Map<GameLanguage, List<String>> stems = new EnumMap<>(GameLanguage.class);
+        for (GameLanguage language : GameLanguage.values()) {
+            List<String> list = new ArrayList<>();
+            list.add(prepareStem(nameStem(localizedName(animal, language), language)));
+            for (String extra : forms.stems().getOrDefault(language, List.of())) {
+                list.add(prepareStem(extra));
+            }
+            stems.put(language, List.copyOf(list));
+        }
+        return new Concept("NAME:" + animal.id(), stems);
+    }
+
+    /**
+     * Stem that accepts an animal name and its usual endings:
+     * "корова" -> "коров" ("коровка", "коровушка"), "слон" -> "слон" ("слоник"),
+     * "божья коровка" -> "~божьякоровк" (multi-word names match as a substring), "פיל" -> "פיל".
+     * Short stems (2 letters, "ёж", "עז") are matched as whole words by {@link AnswerChecker}.
+     */
+    static String nameStem(String name, GameLanguage language) {
+        String normalized = AnswerChecker.normalize(name);
+        boolean multiWord = normalized.contains(" ");
+        String stem = normalized.replace(" ", "");
+        boolean slavic = language == GameLanguage.RU || language == GameLanguage.UK;
+        if (slavic && stem.length() > 3 && SLAVIC_ENDINGS.indexOf(stem.charAt(stem.length() - 1)) >= 0) {
+            stem = stem.substring(0, stem.length() - 1);
+        }
+        return multiWord ? "~" + stem : stem;
+    }
+
+    /** Adds the NAME topic: its answer is the name ("Корова", "פרה"), its rule accepts the name. */
+    private static AnimalContent withNameTopic(AnimalContent animal, Map<String, Concept> nameConcepts, NameForms forms) {
+        Map<Topic, Rule> rules = new EnumMap<>(Topic.class);
+        rules.putAll(animal.rules());
+        List<Concept> rejected = forms.rejectAnimals().stream().map(nameConcepts::get).toList();
+        rules.put(Topic.NAME, new Rule(List.of(nameConcepts.get(animal.id())), rejected));
+
+        Map<GameLanguage, Map<Topic, String>> answers = new EnumMap<>(GameLanguage.class);
+        for (GameLanguage language : GameLanguage.values()) {
+            Map<Topic, String> byTopic = new EnumMap<>(Topic.class);
+            byTopic.putAll(animal.answers().get(language));
+            byTopic.put(Topic.NAME, capitalize(localizedName(animal, language)));
+            answers.put(language, Collections.unmodifiableMap(byTopic));
+        }
+        return new AnimalContent(animal.id(), animal.nameEn(), animal.category(), animal.names(),
+                Collections.unmodifiableMap(answers), Collections.unmodifiableMap(rules));
+    }
+
+    private static String localizedName(AnimalContent animal, GameLanguage language) {
+        return animal.name(language).map(LocalizedName::name).orElse(animal.nameEn());
+    }
+
+    private static String capitalize(String text) {
+        return text.isEmpty() ? text : text.substring(0, 1).toUpperCase(Locale.ROOT) + text.substring(1);
     }
 
     private static List<Concept> conceptList(JsonNode ids, Map<String, Concept> concepts, String where) {

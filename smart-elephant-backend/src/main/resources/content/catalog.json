@@ -1,5 +1,6 @@
 {
   "concepts": "concepts.json",
+  "nameForms": "name_forms.json",
   "animals": [
     "animals/classic.json",
     "animals/farm.json",

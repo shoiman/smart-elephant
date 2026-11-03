@@ -104,7 +104,7 @@ public class AnswerChecker {
      * Lowercase, "ё" -> "е", no Hebrew vowel marks, final Hebrew letters -> regular ones,
      * apostrophes/gershayim removed ("м'ясо" -> "мясо", "ג׳ירפה" -> "גירפה"), other symbols -> spaces.
      */
-    static String normalize(String text) {
+    public static String normalize(String text) {
         return Normalizer.normalize(text, Normalizer.Form.NFC).toLowerCase(Locale.ROOT)
                 .replace('ё', 'е')
                 .replaceAll("[\\u0591-\\u05C7]", "")

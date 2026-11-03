@@ -1,9 +1,14 @@
 /**
- * GamesPage - main game flow ("Who is it?").
+ * GamesPage - main game flow.
  *
- * Backend flow (unchanged API calls):
- * 1. POST /games/start → gameSessionId
- * 2. GET /questions/next → question about an animal
+ * One game is one animal: the first question is always "Who is this?" (it also picks the animal),
+ * the next ones are about the same animal ("What color is it?", "What does it eat?"...).
+ * If the child does not name the animal, the host says it together with the child and the game goes on.
+ *
+ * Backend flow:
+ * 1. GET /questions/next → "Who is this?" about a new animal (and how many questions it has)
+ * 2. POST /games/start → gameSessionId
+ * 3. GET /questions/next?animal=…&asked=… → next question about the same animal
  * 3. POST /games/answer → backend validates the answer
  * 4. POST /games/{id}/end → final score, progress update
  *
@@ -19,12 +24,10 @@ import { findAnimalByName } from "../data/animals/lookup";
 import { useSpeechRecognition, type RecognitionError } from "../hooks/useSpeechRecognition";
 import {
   AnswerOptions,
-  buildChoices,
-  findAnimalOptions,
+  buildQuestionChoices,
   HandHintIcon,
   shouldShowChoices,
   startHandHint,
-  toOptionTopic,
   ToddlerQuestion,
   useAnswerLevel,
 } from "../modules/answer-options";
@@ -39,6 +42,7 @@ import "./GamesPage.css";
 
 // Mock child ID - in real app, this would come from user auth/selection
 const MOCK_CHILD_ID = 1;
+/** At most this many questions about one animal ("Who is this?" included); fewer if the animal has fewer topics. */
 const QUESTIONS_PER_GAME = 5;
 // Toddler cards: a pressed card waits for the backend at most this long, then quietly comes back
 const TODDLER_ANSWER_TIMEOUT_MS = 5000;
@@ -74,12 +78,16 @@ export function GamesPage() {
   const [typedAnswer, setTypedAnswer] = useState("");
   const [result, setResult] = useState<GameEndResponse | null>(null);
   const [retryAction, setRetryAction] = useState<(() => void) | null>(null);
+  /** Number of questions in this game (one animal) */
+  const [gameLength, setGameLength] = useState(QUESTIONS_PER_GAME);
+  /** Topics already asked about the current animal; sent to the backend so it does not repeat them */
+  const askedTopicsRef = useRef<string[]>([]);
   const answerStartRef = useRef(0);
   const hasStartedRef = useRef(false);
 
   usePageHeader({
     progress:
-      phase === "finished" ? undefined : { current: Math.min(answeredCount + 1, QUESTIONS_PER_GAME), total: QUESTIONS_PER_GAME },
+      phase === "finished" ? undefined : { current: Math.min(answeredCount + 1, gameLength), total: gameLength },
   });
 
   const animal = findAnimalByName(question?.animalName);
@@ -91,7 +99,7 @@ export function GamesPage() {
   // Picture answer cards; shuffled once per question so they don't jump on re-render
   const level = useAnswerLevel();
   const choices = useMemo(
-    () => buildChoices(findAnimalOptions(animal?.id), toOptionTopic(question?.topic), level),
+    () => buildQuestionChoices(animal?.id, question?.topic, level),
     [animal?.id, question, level],
   );
   const showChoices = choices.length > 0 && shouldShowChoices(level, attempts);
@@ -150,14 +158,13 @@ export function GamesPage() {
   const usesToddlerScene = useCallback(
     (nextQuestion: Question) =>
       level === "toddler" &&
-      buildChoices(findAnimalOptions(findAnimalByName(nextQuestion.animalName)?.id), toOptionTopic(nextQuestion.topic), level).length > 0,
+      buildQuestionChoices(findAnimalByName(nextQuestion.animalName)?.id, nextQuestion.topic, level).length > 0,
     [level],
   );
 
-  const loadQuestion = useCallback(async () => {
-    setPhase("loading");
-    try {
-      const nextQuestion = await QuestionService.getNextQuestion(MOCK_CHILD_ID, language, level);
+  const showQuestion = useCallback(
+    (nextQuestion: Question) => {
+      if (nextQuestion.topic) askedTopicsRef.current = [...askedTopicsRef.current, nextQuestion.topic];
       setQuestion(nextQuestion);
       setAttempts(0);
       setHeardAnswer("");
@@ -166,37 +173,64 @@ export function GamesPage() {
       answerStartRef.current = Date.now();
       setPhase("question");
       if (!usesToddlerScene(nextQuestion)) askQuestion(nextQuestion);
-    } catch (error) {
-      console.error("Failed to load question:", error);
-      fail(() => void loadQuestion());
-    }
-  }, [askQuestion, fail, language, level, usesToddlerScene]);
+    },
+    [askQuestion, usesToddlerScene],
+  );
+
+  /** Next question about the same animal; the backend skips the topics already asked. */
+  const loadQuestion = useCallback(
+    async (animalName: string) => {
+      setPhase("loading");
+      try {
+        const nextQuestion = await QuestionService.getNextQuestion(MOCK_CHILD_ID, language, level, {
+          animal: animalName,
+          asked: askedTopicsRef.current,
+        });
+        showQuestion(nextQuestion);
+      } catch (error) {
+        console.error("Failed to load question:", error);
+        fail(() => void loadQuestion(animalName));
+      }
+    },
+    [fail, language, level, showQuestion],
+  );
 
   const startGame = useCallback(async () => {
     setPhase("starting");
     setAnsweredCount(0);
     setResult(null);
+    askedTopicsRef.current = [];
     try {
-      const started = await GameService.startGame({ childId: MOCK_CHILD_ID, numQuestions: QUESTIONS_PER_GAME });
+      // "Who is this?" about a new animal; it also tells how many questions this animal has
+      const first = await QuestionService.getNextQuestion(MOCK_CHILD_ID, language, level);
+      const length = Math.min(QUESTIONS_PER_GAME, 1 + (first.remainingQuestions ?? QUESTIONS_PER_GAME - 1));
+      setGameLength(length);
+      const started = await GameService.startGame({ childId: MOCK_CHILD_ID, numQuestions: length });
       setSessionId(started.gameSessionId);
-      await loadQuestion();
+      showQuestion(first);
     } catch (error) {
       console.error("Failed to start game:", error);
       fail(() => void startGame());
     }
-  }, [fail, loadQuestion]);
+  }, [fail, language, level, showQuestion]);
 
-  // Say the answer aloud: praise after a correct answer, or say it together with the child
+  // The host's feedback aloud: praise, encouragement after a miss, or the answer said together.
+  // Azure audio comes with the question (feedbackAudio, keyed by the exact text); the browser voice is
+  // only a fallback (Chrome has no Hebrew voice)
   useEffect(() => {
-    const answerAudio = question?.answerAudioUrl;
+    const voiced = question?.feedbackAudio ?? {};
+    const say = (text: string, fallbackUrl?: string | null) => {
+      const speak = () => speakText(text, language);
+      const url = voiced[text] ?? fallbackUrl;
+      if (url) playAudio(url, speak);
+      else speak();
+    };
     if (phase === "correct" && correctAnswer) {
-      const speak = () => speakText(`${t("game.correctTitle")} ${correctAnswer}`, language);
-      if (answerAudio) playAudio(answerAudio, speak);
-      else speak();
+      say(`${t("game.correctTitle")} ${correctAnswer}`, question?.answerAudioUrl);
     } else if (phase === "together" && togetherAnswer) {
-      const speak = () => speakText(togetherAnswer, language);
-      if (answerAudio) playAudio(answerAudio, speak);
-      else speak();
+      say(`${t("game.together")} ${togetherAnswer}`, question?.answerAudioUrl);
+    } else if (phase === "incorrect" && feedback) {
+      say(feedback);
     }
     // Only react to phase changes, not to re-renders
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -313,8 +347,8 @@ export function GamesPage() {
     speech.stop();
     const nextCount = answeredCount + 1;
     setAnsweredCount(nextCount);
-    if (nextCount < QUESTIONS_PER_GAME) {
-      await loadQuestion();
+    if (nextCount < gameLength && question) {
+      await loadQuestion(question.animalName);
       return;
     }
     if (sessionId === null) return;
