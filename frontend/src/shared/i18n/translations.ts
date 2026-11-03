@@ -80,6 +80,10 @@ export interface TranslationMessages {
   readonly "stars.next": string;
   readonly "stars.playMore": string;
   readonly "stars.parents": string;
+  readonly "parentGate.title": string;
+  readonly "parentGate.hint": string;
+  readonly "parentGate.hold": string;
+  readonly "parentGate.back": string;
 }
 
 export type TranslationKey = keyof TranslationMessages;
@@ -165,6 +169,10 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "stars.next": "חבר חדש",
     "stars.playMore": "משחקים עוד",
     "stars.parents": "להורים",
+    "parentGate.title": "להורים",
+    "parentGate.hint": "לחצו והחזיקו 3 שניות",
+    "parentGate.hold": "החזיקו כדי לפתוח",
+    "parentGate.back": "חזרה לכוכבים",
   },
   ru: {
     "app.name": "Умный слон",
@@ -246,6 +254,10 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "stars.next": "Новый друг",
     "stars.playMore": "Играть ещё",
     "stars.parents": "Для родителей",
+    "parentGate.title": "Для родителей",
+    "parentGate.hint": "Нажмите и держите 3 секунды",
+    "parentGate.hold": "Держите, чтобы открыть",
+    "parentGate.back": "Назад к звёздам",
   },
   uk: {
     "app.name": "Розумний слон",
@@ -327,5 +339,9 @@ export const translations: Readonly<Record<Language, TranslationMessages>> = {
     "stars.next": "Новий друг",
     "stars.playMore": "Грати ще",
     "stars.parents": "Для батьків",
+    "parentGate.title": "Для батьків",
+    "parentGate.hint": "Натисніть і тримайте 3 секунди",
+    "parentGate.hold": "Тримайте, щоб відкрити",
+    "parentGate.back": "Назад до зірок",
   },
 };

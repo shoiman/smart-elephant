@@ -4,6 +4,7 @@ import { HomePage } from "../../pages/HomePage";
 import { AnimalsPage } from "../../pages/AnimalsPage";
 import { GamesPage } from "../../pages/GamesPage";
 import { ProgressPage } from "../../pages/ProgressPage";
+import { ParentZone } from "../../components/ParentGate/ParentZone";
 import { StarsPage } from "../../pages/StarsPage";
 import { MainLayout } from "../layouts/MainLayout";
 
@@ -15,8 +16,10 @@ export function AppRouter() {
         <Route path="animals" element={<AnimalsPage />} />
         <Route path="games" element={<GamesPage />} />
         <Route path="stars" element={<StarsPage />} />
-        {/* The old progress page, for parents; the parent gate and the new page come next */}
-        <Route path="parent/progress" element={<ProgressPage />} />
+        {/* Parents' zone: every page behind the hold-to-unlock gate. The new progress page comes next */}
+        <Route path="parent" element={<ParentZone />}>
+          <Route path="progress" element={<ProgressPage />} />
+        </Route>
         <Route path="progress" element={<Navigate replace to="/stars" />} />
       </Route>
     </Routes>

@@ -1,0 +1,119 @@
+/* Parent gate (design/results-screen/results-redesign.html, "Замок") */
+
+.parent-gate {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-8) var(--space-4);
+}
+
+.parent-gate__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 360px;
+  padding: var(--space-6) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.parent-gate__lock {
+  width: 40px;
+  height: 40px;
+  color: var(--color-green);
+}
+
+.parent-gate__title {
+  margin-top: var(--space-2);
+  color: var(--color-ink);
+  font-family: var(--font-heading);
+  font-size: 1.0625rem;
+  font-weight: 800;
+}
+
+.parent-gate__hint {
+  margin: 6px 0 var(--space-4);
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption);
+}
+
+.parent-gate__hold {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  cursor: pointer;
+  /* A long press must not scroll, select text or open the iOS callout */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.parent-gate__hold:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.parent-gate__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Starts at the top and fills clockwise */
+  transform: rotate(-90deg);
+}
+
+/* In RTL the ring fills the other way round, like the reading direction */
+[dir="rtl"] .parent-gate__ring {
+  transform: rotate(-90deg) scaleY(-1);
+}
+
+.parent-gate__ring-track,
+.parent-gate__ring-fill {
+  fill: none;
+  stroke-width: 6;
+}
+
+.parent-gate__ring-track {
+  stroke: var(--color-sage-light);
+}
+
+.parent-gate__ring-fill {
+  stroke: var(--color-green);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  /* Released early: the ring slides back to empty from where it stopped */
+  transition: stroke-dashoffset 400ms var(--ease-out);
+}
+
+.parent-gate__hold--holding .parent-gate__ring-fill {
+  stroke-dashoffset: 0;
+  /* Must match HOLD_MS in ParentGate.tsx */
+  transition: stroke-dashoffset 3s linear;
+}
+
+.parent-gate__hand {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.parent-gate__back {
+  margin-top: var(--space-6);
+  text-decoration: none;
+}
